@@ -1,6 +1,6 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
+import Footer from "@/src/components/Footer";
+import Header from "@/src/components/Header";
+import Hero from "@/src/components/Hero";
 
 const Layout = ({children, showHero = false}) => {
     return (

@@ -1,13 +1,13 @@
 import { Routes, Route, Navigate } from "react-router-dom"
 import Layout from "./layouts/Layout"
-import HomePage from "./Pages/HomePage";
+import BusinessProfilePage from "./pages/BusinessProfilePage";
 
 const AppRoutes = () =>{
     return(
         <Routes>
             <Route 
-                path="/manage-restaurant"
-                element={<Layout><ManageRestaurantPage/></Layout>}/>
+                path="/manage-business"
+                element={<Layout><BusinessProfilePage/></Layout>}/>
             <Route 
                 path="/*" 
                 element={<Navigate to="/"/>}/>
