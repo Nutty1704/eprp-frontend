@@ -1,6 +1,6 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
 import { Toaster } from 'sonner'
+import AppRoutes from './AppRouter'
 
 function App() {
   return (
@@ -10,9 +10,7 @@ function App() {
         position='bottom-right'
         richColors
       />
-      <Routes>
-
-      </Routes>
+      <AppRoutes/>
     </>
   )
 }
