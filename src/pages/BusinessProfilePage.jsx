@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Layout from "../layouts/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
 import { Button } from "../components/ui/button";
 import { useGetMyBusiness, useUpdateMyBusiness, useCreateMyBusiness } from "../api/MyBusinessApi";
@@ -135,16 +134,13 @@ const BusinessProfilePage = () => {
   
   if (isLoadingBusiness) {
     return (
-      <Layout>
         <div className="container mx-auto py-6 text-center">
           Loading business information...
         </div>
-      </Layout>
     );
   }
   
   return (
-    <Layout>
       <div className="container mx-auto px-4 sm:px-6 py-6">
         <Tabs defaultValue="business-info">
           <TabsList className="w-full border-b overflow-x-auto flex-nowrap justify-start sm:justify-center">
@@ -199,7 +195,6 @@ const BusinessProfilePage = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </Layout>
   );
 };
 
