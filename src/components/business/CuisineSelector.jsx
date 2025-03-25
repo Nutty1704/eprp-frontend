@@ -5,6 +5,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { ScrollArea } from "../ui/scroll-area";
 import { cuisineOptions } from "../../types/cuisineoptions";
+import { Alert, AlertDescription } from "../ui/alert";
 
 const CuisineSelector = ({ selectedCuisines = [], onChange }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,6 +32,11 @@ const CuisineSelector = ({ selectedCuisines = [], onChange }) => {
         <CardTitle>Cuisines</CardTitle>
       </CardHeader>
       <CardContent>
+        <Alert className="mb-6 bg-blue-50 border-blue-200">
+          <AlertDescription>
+            Did we miss out on a cuisines you offer? Let us know by sending a support inquiry.
+          </AlertDescription>
+        </Alert>
         <div className="mb-4">
           <Input
             placeholder="Search cuisines..."
