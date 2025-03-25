@@ -6,6 +6,7 @@ import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { Plus, Trash2 } from "lucide-react";
 import { Alert, AlertDescription } from "../ui/alert";
+import { Separator } from "../ui/separator";
 
 const days = [
   { key: "mon", label: "Mon" },
@@ -85,6 +86,11 @@ const OpeningHoursSection = ({ openingHours, onHoursChange }) => {
         <CardTitle>Opening Hours</CardTitle>
       </CardHeader>
       <CardContent>
+        <Alert className="mb-4 bg-blue-50 border-blue-200">
+          <AlertDescription>
+            You can add multiple time slots for split schedules (e.g., lunch and dinner hours).
+          </AlertDescription>
+        </Alert>
         <div className="space-y-4">
           {days.map((day) => (
             <div key={day.key} className="border rounded-md p-4">
@@ -162,11 +168,7 @@ const OpeningHoursSection = ({ openingHours, onHoursChange }) => {
           ))}
         </div>
         
-        <Alert className="mt-4 bg-blue-50 border-blue-200">
-          <AlertDescription>
-            You can add multiple time slots for split schedules (e.g., lunch and dinner hours).
-          </AlertDescription>
-        </Alert>
+        
       </CardContent>
     </Card>
   );
