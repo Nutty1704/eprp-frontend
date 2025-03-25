@@ -7,6 +7,7 @@ import ProfileImageSection from "../components/ProfileImageSection";
 import BusinessDetailsForm from "../components/business/BusinessDetailsForm";
 import OpeningHoursSection from "../components/business/OpeningHoursSection";
 import CuisineSelector from "../components/business/CuisineSelector";
+import MenuPage from "../components/business/MenuPage";
 
 /**
  * Business Profile Management Page
@@ -297,10 +298,7 @@ const BusinessProfilePage = () => {
         </TabsContent>
         
         <TabsContent value="menu">
-          <div className="p-4 text-center">
-            <h3 className="text-lg font-medium">Menu Management Coming Soon</h3>
-            <p className="text-gray-500 mt-2">This section will allow you to add, edit, and organize your menu items.</p>
-          </div>
+          <MenuPage />
         </TabsContent>
       </Tabs>
     </div>
