@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import AuthDialog from '../AuthDialog';
 import useAuthStore from '@/src/stores/auth-store';
+import RatingComponent from './RatingComponent';
 
 const RestaurantCard = ({ 
   id, 
@@ -41,7 +42,6 @@ const RestaurantCard = ({
 
   return (
     <div className="w-full max-w-sm border border-[#8B0000] rounded-lg overflow-hidden">
-      {/* Restaurant Image */}
       <div className="h-48 overflow-hidden">
         <img 
           src={image} 
@@ -50,25 +50,16 @@ const RestaurantCard = ({
         />
       </div>
       
-      {/* Rating & Reviews */}
-      <div className="px-4 py-2 flex items-center justify-between">
-        <div className="flex items-center">
-          {renderStars(rating)}
-        </div>
-        <div className="text-sm text-gray-600">
-          {reviewCount} Reviews
-        </div>
-        <div className="font-bold text-lg text-[#8B0000]">
-          {rating}/5
-        </div>
+      <div className="px-4 flex items-center justify-between">
+        <RatingComponent 
+          ratings={{ overall: rating }}
+          useBackground={true}
+          size="lg"
+        />      
       </div>
       
       {/* Action Buttons */}
-      <div className="flex justify-between p-4">
-        <button className="bg-[#8B0000] text-white px-4 py-1 rounded">
-          Like
-        </button>
-        
+      <div className="flex justify-between px-4 pb-4">
         {isAuthenticated ? (
           <button 
             onClick={handleWriteReview} 

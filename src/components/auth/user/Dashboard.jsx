@@ -56,7 +56,7 @@ const Dashboard = () => {
           <p className="text-center text-gray-600 mb-8 inter-regular">Browse Unique Cuisines in Monash</p>
           
           <div className="relative">
-            <div className="flex w overflow-x-auto justify-between gap-4 py-4 px-2 scrollbar-hide">
+            <div className="flex overflow-x-auto justify-between gap-4 py-4 px-2 scrollbar-hide">
               {cuisines.map((cuisine, index) => (
                 <CuisineCard 
                   key={index}
