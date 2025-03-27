@@ -1,7 +1,8 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Toaster } from 'sonner'
-import Dashboard from './components/auth/dashboard/Dashboard'
+import Dashboard from './components/auth/user/Dashboard'
+import ReviewsPage from './components/auth/user/ReviewsPage'
 // import AppRoutes from './AppRouter'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/reviews" element={<ReviewsPage />} />
       </Routes>
     </>
   )
