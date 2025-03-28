@@ -1,6 +1,7 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Toaster } from 'sonner'
+import OwnerDashboard from './components/owner/OwnerDashboard.jsx'
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
         richColors
       />
       <Routes>
-
+        <Route path="/" element={<div>Home page</div>} />
+        <Route path='/owner' element={<OwnerDashboard />} />
       </Routes>
     </>
   )
