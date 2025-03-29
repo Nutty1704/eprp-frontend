@@ -30,10 +30,10 @@ const ReviewSuccess = ({
                         backgroundPosition: "0% 50%"
                     }}
                     animate={{
-                        backgroundPosition: "124% 50%"
+                        backgroundPosition: "200% 50%"
                     }}
                     transition={{
-                        duration: 6,
+                        duration: 8,
                         repeat: Infinity,
                         ease: "linear"
                     }}
