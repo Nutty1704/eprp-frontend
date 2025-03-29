@@ -61,11 +61,6 @@ const OwnerDashboard = () => {
 
 	return (
 		<div className="w-full max-w-4xl mx-auto px-4 py-8 min-h-screen">
-            <AuthDialog>
-                <Button className="flex items-center gap-2 bg-red-600 text-white hover:bg-red-700">
-                    Login
-                </Button>
-            </AuthDialog>
 			{/* Heading + Add Button */}
 			<div className="flex justify-between items-center mb-6">
 				<h1 className="text-3xl font-bold text-gray-900">
