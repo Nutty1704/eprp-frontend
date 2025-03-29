@@ -1,8 +1,9 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Toaster } from 'sonner'
-import Dashboard from './components/auth/user/Dashboard'
-import ReviewsPage from './components/auth/user/ReviewsPage'
+import Dashboard from '@/src/pages/Dashboard'
+import ReviewsPage from '@/src/pages/ReviewsPage'
+import CustomerLayout from './layouts/CustomerLayout'
 // import AppRoutes from './AppRouter'
 
 function App() {
@@ -14,8 +15,10 @@ function App() {
         richColors
       />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/reviews" element={<ReviewsPage />} />
+        <Route path="/" element={<CustomerLayout/>}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
+        </Route>
       </Routes>
     </>
   )

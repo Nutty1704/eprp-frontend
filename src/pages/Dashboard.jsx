@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import Header from './Header';
-import SearchBar from './SearchBar';
-import CuisineCard from './CuisineCard';
+import Header from '@/src/components/ui/Header';
+import SearchBar from '@/src/components/ui/SearchBar';
+import CuisineCard from '@/src/components/business/CuisineCard';
 import useAuthStore from '@/src/stores/auth-store';
-import PopularSpots from './PopularSpots';
+import PopularSpots from '@/src/components/business/PopularSpots';
 
 const Dashboard = () => {
   const { isAuthenticated, checkAuthStatus } = useAuthStore();
@@ -37,7 +37,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 overflow-y-hidden">
-      <Header isAuthenticated={isAuthenticated} />
+      {/* <Header isAuthenticated={isAuthenticated} /> */}
       
       <div className="relative h-[45vh] bg-cover bg-center" style={{ backgroundImage: 'url("/monash-background.jpg")' }}>
         <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center px-4">

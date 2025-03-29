@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AuthDialog from '../AuthDialog';
-import Logout from '../Logout';
+import AuthDialog from '../auth/AuthDialog';
+import Logout from '../auth/Logout';
 import { Button } from '@/components/ui/button';
 
 const Header = ({ isAuthenticated }) => {

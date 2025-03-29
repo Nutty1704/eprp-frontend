@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Star } from 'lucide-react';
-import RatingComponent from './RatingComponent';
+import RatingComponent from '../ui/RatingComponent';
 
 const ReviewCard = ({ 
   restaurantName,

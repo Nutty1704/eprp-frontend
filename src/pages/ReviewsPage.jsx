@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './Header';
-import ReviewCard from './ReviewCard';
-import RatingBreakdown from './RatingBreakdown';
+import Header from '@/src/components/ui/Header';
+import ReviewCard from '@/src/components/review/ReviewCard';
+import RatingBreakdown from '@/src/components/review/RatingBreakdown';
 
 const ReviewsPage = () => {
   const reviews = [
@@ -54,7 +54,7 @@ const ReviewsPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <Header isAuthenticated={true} />
+      {/* <Header isAuthenticated={true} /> */}
       
       <div className="flex flex-col items-center py-8 px-4">
         <div className="w-full max-w-2xl mb-8">

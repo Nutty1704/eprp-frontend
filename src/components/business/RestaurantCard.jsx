@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AuthDialog from '../AuthDialog';
+import AuthDialog from '../auth/AuthDialog';
 import useAuthStore from '@/src/stores/auth-store';
-import RatingComponent from './RatingComponent';
+import RatingComponent from '../ui/RatingComponent';
 
 const RestaurantCard = ({ 
   id, 
