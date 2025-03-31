@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Toaster } from 'sonner'
-import OwnerDashboard from './components/owner/OwnerDashboard.jsx'
+import OwnerDashboard from './components/admin/OwnerDashboard.jsx'
 
 function App() {
   return (
