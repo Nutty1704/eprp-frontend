@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
 import { toast } from 'sonner';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 import MenuCard from './MenuCard';
 import AddMenuItemDialog from './AddMenuItemDialog';
 import { useGetMyBusiness, useUpdateMyBusiness } from '../../api/MyBusinessApi';
-import { Card } from '../ui/card';
+import { Card } from '@/components/ui/card';
 
 const MenuPage = () => {
   const [menuItems, setMenuItems] = useState([]);

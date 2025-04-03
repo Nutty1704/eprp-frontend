@@ -1,5 +1,4 @@
 import { Routes, Route, Navigate } from "react-router-dom"
-import Layout from "./layouts/Layout"
 import BusinessProfilePage from "./pages/BusinessProfilePage";
 
 const AppRoutes = () =>{
@@ -7,7 +6,7 @@ const AppRoutes = () =>{
         <Routes>
             <Route 
                 path="/manage-business"
-                element={<Layout><BusinessProfilePage/></Layout>}/>
+                element={<BusinessProfilePage/>}/>
             <Route 
                 path="/*" 
                 element={<Navigate to="/"/>}/>

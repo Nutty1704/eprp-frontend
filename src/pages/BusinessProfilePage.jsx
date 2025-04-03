@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
-import { Button } from "../components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useGetMyBusiness, useUpdateMyBusiness, useCreateMyBusiness } from "../api/MyBusinessApi";
 import ProfileImageSection from "../components/ProfileImageSection";

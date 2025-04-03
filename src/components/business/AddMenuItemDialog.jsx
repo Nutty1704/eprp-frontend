@@ -6,10 +6,10 @@ import {
   DialogTitle,
   DialogFooter,
   DialogDescription
-} from "../ui/dialog";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const AddMenuItemDialog = ({ open, onClose, onSave, editItem = null }) => {
   const [name, setName] = useState(editItem?.name || '');
