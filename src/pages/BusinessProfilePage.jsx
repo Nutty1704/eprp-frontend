@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useGetMyBusiness, useUpdateMyBusiness, useCreateMyBusiness } from "../api/MyBusinessApi";
+import { useGetMyBusiness, useUpdateMyBusiness, useCreateMyBusiness } from "../lib/api/MyBusinessApi";
 import ProfileImageSection from "../components/ProfileImageSection";
 import BusinessDetailsForm from "../components/business/BusinessDetailsForm";
 import OpeningHoursSection from "../components/business/OpeningHoursSection";

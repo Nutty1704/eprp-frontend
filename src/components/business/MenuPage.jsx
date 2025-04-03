@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import MenuCard from './MenuCard';
 import AddMenuItemDialog from './AddMenuItemDialog';
-import { useGetMyBusiness, useUpdateMyBusiness } from '../../api/MyBusinessApi';
+import { useGetMyBusiness, useUpdateMyBusiness } from '../../lib/api/MyBusinessApi';
 import { Card } from '@/components/ui/card';
 
 const MenuPage = () => {
