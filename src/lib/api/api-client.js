@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_BACKEND_URL
+const baseURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'; // just for development
 
 if (!baseURL) {
     throw new Error("Backend URL is not defined in .env");
