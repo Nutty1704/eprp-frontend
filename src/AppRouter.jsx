@@ -1,16 +1,17 @@
-import { Routes, Route, Navigate } from "react-router-dom"
-import BusinessProfilePage from "./pages/BusinessProfilePage";
+import { Routes, Route } from "react-router-dom"
+import Dashboard from '@/src/pages/Dashboard'
+import ReviewsPage from '@/src/pages/ReviewsPage'
+import CustomerLayout from '@/src/layouts/CustomerLayout'
+
 
 const AppRoutes = () =>{
     return(
-        <Routes>
-            <Route 
-                path="/manage-business"
-                element={<BusinessProfilePage/>}/>
-            <Route 
-                path="/*" 
-                element={<Navigate to="/"/>}/>
-        </Routes>
+      <Routes>
+        <Route path="/" element={<CustomerLayout/>}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
+        </Route>
+      </Routes>
     )
 }
 
