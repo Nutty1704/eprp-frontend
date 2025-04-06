@@ -6,7 +6,7 @@ import PopularSpots from '@/src/components/business/PopularSpots';
 import cuisines from "@/test_data/cuisines.json";
 
 const Dashboard = () => {
-  const { isAuthenticated, checkAuthStatus } = useAuthStore();
+  const { checkAuthStatus } = useAuthStore();
 
   useEffect(() => {
     checkAuthStatus('customer');

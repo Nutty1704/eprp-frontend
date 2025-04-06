@@ -21,12 +21,7 @@ const PopularSpots = () => {
           {restaurants.map(restaurant => (
             <RestaurantCard
               key={restaurant.id}
-              id={restaurant.id}
-              name={restaurant.name}
-              image={restaurant.imageUrl}
-              reviewCount={restaurant.reviewCount}
-              rating={restaurant.rating}
-              onWriteReview={handleWriteReview}
+              business={restaurant}
             />
           ))}
         </div>
