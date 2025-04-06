@@ -1,3 +1,4 @@
+import AppRoutes from './AppRouter'
 import React, { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Toaster } from 'sonner'
@@ -21,16 +22,7 @@ function App() {
         position='bottom-right'
         richColors
       />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/' element={<CustomerLayout />}>
-          <Route path='/write-a-review/:businessId' element={
-            <ProtectRoute>
-              <PostReview />
-            </ProtectRoute>
-          } />
-        </Route>
-      </Routes>
+      <AppRoutes/>
     </>
   )
 }
