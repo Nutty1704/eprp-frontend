@@ -1,12 +1,14 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import AppRoutes from './AppRouter'
+import React, { useEffect } from 'react'
 import { Toaster } from 'sonner'
-import Dashboard from '@/src/pages/Dashboard'
-import ReviewsPage from '@/src/pages/ReviewsPage'
-import CustomerLayout from './layouts/CustomerLayout'
-// import AppRoutes from './AppRouter'
+import useAuthStore from './stores/auth-store'
 
 function App() {
+  const { checkAuthStatus } = useAuthStore();
+  useEffect(() => {
+    checkAuthStatus('customer');
+  }, []);
+
   return (
     <>
       <Toaster
@@ -14,12 +16,7 @@ function App() {
         position='bottom-right'
         richColors
       />
-      <Routes>
-        <Route path="/" element={<CustomerLayout/>}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/reviews" element={<ReviewsPage />} />
-        </Route>
-      </Routes>
+      <AppRoutes/>
     </>
   )
 }

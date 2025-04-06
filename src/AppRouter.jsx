@@ -1,33 +1,18 @@
-// import { Routes, Route, Navigate } from "react-router-dom"
-// import Layout from "./layouts/Layout"
-// import HomePage from "./Pages/HomePage";
-// import AuthCallbackPage from "./Pages/AuthCallbackPage";
-// import UserProfilePage from "./Pages/UserProfilePage";
-// import ProtectedRoute from "./auth/ProtectedRoute";
-// import ManageRestaurantPage from "./Pages/ManageRestaurantPage";
+import { Routes, Route } from "react-router-dom"
+import Dashboard from '@/src/pages/Dashboard'
+import ReviewsPage from '@/src/pages/ReviewsPage'
+import CustomerLayout from '@/src/layouts/CustomerLayout'
 
-// const AppRoutes = () =>{
-//     return(
-//         <Routes>
-//             <Route 
-//                 path="/" 
-//                 element={<Layout showHero><HomePage /></Layout>}/>
-//             <Route 
-//                 path="/auth-callback" 
-//                 element={<AuthCallbackPage/>}/>
-//             <Route element={<ProtectedRoute/>}>
-//                 <Route 
-//                     path="/user-profile"
-//                     element={<Layout><UserProfilePage/></Layout>}/>
-//                     <Route 
-//                     path="/manage-restaurant"
-//                     element={<Layout><ManageRestaurantPage/></Layout>}/>
-//             </Route>
-//             <Route 
-//                 path="/*" 
-//                 element={<Navigate to="/"/>}/>
-//         </Routes>
-//     )
-// }
 
-// export default AppRoutes;
+const AppRoutes = () =>{
+    return(
+      <Routes>
+        <Route path="/" element={<CustomerLayout/>}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
+        </Route>
+      </Routes>
+    )
+}
+
+export default AppRoutes;
