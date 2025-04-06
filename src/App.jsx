@@ -1,9 +1,14 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import AppRoutes from './AppRouter'
+import React, { useEffect } from 'react'
 import { Toaster } from 'sonner'
-import OwnerDashboard from './components/admin/OwnerDashboard.jsx'
+import useAuthStore from './stores/auth-store'
 
 function App() {
+  const { checkAuthStatus } = useAuthStore();
+  useEffect(() => {
+    checkAuthStatus('customer');
+  }, []);
+
   return (
     <>
       <Toaster
@@ -11,10 +16,7 @@ function App() {
         position='bottom-right'
         richColors
       />
-      <Routes>
-        <Route path="/" element={<div>Home page</div>} />
-        <Route path='/owner' element={<OwnerDashboard />} />
-      </Routes>
+      <AppRoutes/>
     </>
   )
 }
