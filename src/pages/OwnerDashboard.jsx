@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import BusinessCard from "./BusinessCard";
-import { getOwnerBusinesses } from "../../lib/api/owner";
+import BusinessCard from "../components/admin/BusinessCard";
+import { getOwnerBusinesses } from "../lib/api/owner";
 import { toast } from "sonner";
-import AddBusinessDialog from "./AddBusinessDialog";
-import AuthDialog from "../auth/AuthDialog";
+import AddBusinessDialog from "../components/admin/AddBusinessDialog";
+import AuthDialog from "../components/auth/AuthDialog";
 
 const OwnerDashboard = () => {
 	const [businesses, setBusinesses] = useState([]);

@@ -1,33 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import RestaurantCard from './RestaurantCard';
+import restaurants from '@/test_data/businesses.json';
 
 const PopularSpots = () => {
   const navigate = useNavigate();
-  
-  const restaurants = [
-    { 
-      id: 1, 
-      name: "Papparich", 
-      image: "#", 
-      reviewCount: 178, 
-      rating: 3.5 
-    },
-    { 
-      id: 2, 
-      name: "Sushi Hub", 
-      image: "#", 
-      reviewCount: 838, 
-      rating: 4.5 
-    },
-    { 
-      id: 3, 
-      name: "Grill'd", 
-      image: "#", 
-      reviewCount: 55, 
-      rating: 3.5 
-    },
-  ];
+
   
   const handleWriteReview = (restaurantId) => {
     navigate(`/review/${restaurantId}`);
@@ -45,7 +23,7 @@ const PopularSpots = () => {
               key={restaurant.id}
               id={restaurant.id}
               name={restaurant.name}
-              image={restaurant.image}
+              image={restaurant.imageUrl}
               reviewCount={restaurant.reviewCount}
               rating={restaurant.rating}
               onWriteReview={handleWriteReview}

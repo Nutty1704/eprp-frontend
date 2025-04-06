@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AuthDialog from '../auth/AuthDialog';
-import Logout from '../auth/Logout';
+import AuthDialog from '@/src/components/auth/AuthDialog';
+import Logout from '@/src/components/auth/Logout';
 import { Button } from '@/components/ui/button';
+import useAuthStore from '@/src/stores/auth-store';
 
-const Header = ({ isAuthenticated }) => {
+const Header = ({ }) => {
+  const { isAuthenticated } = useAuthStore();
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className=" mx-auto px-4 sm:px-6 ">
@@ -21,19 +24,16 @@ const Header = ({ isAuthenticated }) => {
             <Link to="/" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium">
               Home
             </Link>
-            <Link to="/review" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium">
-              Make A Review
-            </Link>
             
             {isAuthenticated ? (
               <Logout>
-                <Button className="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded">
-                  Sign Out
+                <Button className="bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 rounded">
+                  Logout
                 </Button>
               </Logout>
             ) : (
               <AuthDialog>
-                <Button className="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded">
+                <Button className="bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 rounded">
                   Sign In
                 </Button>
               </AuthDialog>

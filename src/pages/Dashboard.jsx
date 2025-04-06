@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import Header from '@/src/components/ui/Header';
 import SearchBar from '@/src/components/ui/SearchBar';
 import CuisineCard from '@/src/components/business/CuisineCard';
 import useAuthStore from '@/src/stores/auth-store';
 import PopularSpots from '@/src/components/business/PopularSpots';
+import cuisines from "@/test_data/cuisines.json";
 
 const Dashboard = () => {
   const { isAuthenticated, checkAuthStatus } = useAuthStore();
@@ -12,34 +12,10 @@ const Dashboard = () => {
     checkAuthStatus('customer');
   }, [checkAuthStatus]);
 
-  const cuisines = [
-    {
-      name: 'Chinese',
-      spots: 3,
-      image: '#'
-    },
-    {
-      name: 'Japanese',
-      spots: 1,
-      image: '#'
-    },
-    {
-      name: 'Indian',
-      spots: 2,
-      image: '#'
-    },
-    {
-      name: 'Malaysian',
-      spots: 1,
-      image: '#'
-    }
-  ];
-
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 overflow-y-hidden">
-      {/* <Header isAuthenticated={isAuthenticated} /> */}
       
-      <div className="relative h-[45vh] bg-cover bg-center" style={{ backgroundImage: 'url("/monash-background.jpg")' }}>
+      <div className="relative h-[45vh] bg-cover bg-center" style={{ backgroundImage: 'url("/dashboard-hero.jpg")' }}>
         <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-center px-4">
           <h1 className="text-4xl md:text-5xl text-white font-bold mb-4 rubik-bold">Discover Best Eats in Monash!</h1>
           <p className="text-white text-lg md:text-xl mb-8 max-w-2xl inter-regular">
@@ -62,7 +38,7 @@ const Dashboard = () => {
                   key={index}
                   name={cuisine.name}
                   spots={cuisine.spots}
-                  image={cuisine.image}
+                  image={`/assets/cuisines/${cuisine.name.toLowerCase()}.jpg`}
                 />
               ))}
             </div>

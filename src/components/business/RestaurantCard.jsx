@@ -50,11 +50,12 @@ const RestaurantCard = ({
         />
       </div>
       
-      <div className="px-4 flex items-center justify-between">
+      <div className="px-4 flex flex-col lg:flex-row items-start lg:items-center justify-between pt-2 mb-2">
+        <h3 className='inter-semibold text-xl'>{name}</h3>
         <RatingComponent 
           ratings={{ overall: rating }}
           useBackground={true}
-          size="lg"
+          size="md"
         />      
       </div>
       
@@ -63,13 +64,13 @@ const RestaurantCard = ({
         {isAuthenticated ? (
           <button 
             onClick={handleWriteReview} 
-            className="bg-[#8B0000] text-white px-4 py-1 rounded"
+            className="bg-primary text-primary-foreground px-4 py-1 rounded"
           >
             Write a review
           </button>
         ) : (
           <AuthDialog>
-            <button className="bg-[#8B0000] text-white px-4 py-1 rounded">
+            <button className="bg-primary text-primary-foreground px-4 py-1 rounded">
               Write a review
             </button>
           </AuthDialog>

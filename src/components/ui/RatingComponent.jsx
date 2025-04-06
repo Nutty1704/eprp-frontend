@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Star } from 'lucide-react';
 
-const RatingComponent = ({ 
+const RatingComponent = ({
   ratings = {}, 
   useBackground = true,
-  size = 'md'
+  size = 'md',
+  prefix
 }) => {
   const categoryIcons = {
     food: '🍔',
@@ -35,7 +36,7 @@ const RatingComponent = ({
         {[...Array(fullStars)].map((_, index) => (
           <Star
             key={`star-full-${index}`}
-            className={`${starSize} text-[#8B0000] fill-[#8B0000]`}
+            className={`${starSize} text-primary fill-primary`}
           />
         ))}
         
@@ -43,7 +44,7 @@ const RatingComponent = ({
           <div className="relative">
             <Star className={`${starSize} text-gray-300`} />
             <div className="absolute inset-0 overflow-hidden w-1/2">
-              <Star className={`${starSize} text-[#8B0000] fill-[#8B0000]`} />
+              <Star className={`${starSize} text-primary fill-primary`} />
             </div>
           </div>
         )}
@@ -69,8 +70,8 @@ const RatingComponent = ({
         <div key={type} className={pillClass}>
             {categoryIcons[type] ? (
             <span className="mr-1">{categoryIcons[type]}</span>
-            ) : type === 'overall' ? (
-            <span className="mr-1 font-medium text-xs">Overall:</span>
+            ) : prefix ? (
+            <span className="mr-1 font-medium text-xs">{prefix}</span>
             ) : null}
             
             {renderStars(rating)}
