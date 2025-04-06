@@ -3,7 +3,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form';
 import { z } from 'zod'
 import FormField from './FormField';
-import { Button } from '@/src/components/ui/button';
+import { Button } from '@/components/ui/button';
 
 const baseSchema = z.object({
     email: z.string().email({ message: "Not a valid email" }),
