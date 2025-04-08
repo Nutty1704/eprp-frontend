@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import SearchBar from '@/src/components/ui/SearchBar';
-import CuisineCard from '@/src/components/business/CuisineCard';
 import useAuthStore from '@/src/stores/auth-store';
-import PopularSpots from '@/src/components/business/PopularSpots';
-import cuisines from "@/test_data/cuisines.json";
+import PopularSpots from '@/src/components/business/dashboard/PopularSpots';
+import CuisineSection from '@/src/components/business/dashboard/CuisineSection';
 
 const Dashboard = () => {
   const { checkAuthStatus } = useAuthStore();
@@ -26,25 +25,7 @@ const Dashboard = () => {
         </div>
       </div>
       
-      <section className="py-12 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-2 rubik-bold">Browse by Cuisine</h2>
-          <p className="text-center text-gray-600 mb-8 inter-regular">Browse Unique Cuisines in Monash</p>
-          
-          <div className="relative">
-            <div className="flex overflow-x-auto justify-between gap-4 py-4 px-2 scrollbar-hide">
-              {cuisines.map((cuisine, index) => (
-                <CuisineCard 
-                  key={index}
-                  name={cuisine.name}
-                  spots={cuisine.spots}
-                  image={`/assets/cuisines/${cuisine.name.toLowerCase()}.jpg`}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <CuisineSection />
       
       <PopularSpots />
 
