@@ -2,6 +2,20 @@ import React from 'react'
 import RatingComponent from '@/src/components/ui/RatingComponent'
 import { Button } from '@/components/ui/button'
 import OpenBadge from '../card/OpenBadge'
+import GalleryDialog from '../../ui/GalleryDialog'
+
+const getGalleryTitle = (name) => {
+    return name.endsWith('s') ? (
+      <span>
+        <span className="text-primary">{name}</span>' Gallery
+      </span>
+    ) : (
+      <span>
+        <span className="text-primary">{name}</span>'s Gallery
+      </span>
+    )
+  }
+  
 
 const BusinessHeader = ({ business }) => {
     return (
@@ -50,11 +64,13 @@ const BusinessHeader = ({ business }) => {
                 </div>
             </div>
             <div className='absolute right-3 bottom-3 flex flex-col gap-1.5 z-10'>
+                <GalleryDialog images={business.images} title={getGalleryTitle(business.name)}>
                 <Button variant='translucent'>
                     See all {business.images.length} photos
                 </Button>
-            </div>
+            </GalleryDialog>
         </div>
+        </div >
     )
 }
 
