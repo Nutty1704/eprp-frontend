@@ -1,21 +1,21 @@
 import React from 'react'
-import RatingComponent from '@/src/components/ui/RatingComponent'
 import { Button } from '@/components/ui/button'
 import OpenBadge from '../card/OpenBadge'
-import GalleryDialog from '../../ui/GalleryDialog'
+import GalleryDialog from '@/src/components/ui/GalleryDialog'
+import Rating from '@/src/components/ui/Rating'
 
 const getGalleryTitle = (name) => {
     return name.endsWith('s') ? (
-      <span>
-        <span className="text-primary">{name}</span>' Gallery
-      </span>
+        <span>
+            <span className="text-primary">{name}</span>' Gallery
+        </span>
     ) : (
-      <span>
-        <span className="text-primary">{name}</span>'s Gallery
-      </span>
+        <span>
+            <span className="text-primary">{name}</span>'s Gallery
+        </span>
     )
-  }
-  
+}
+
 
 const BusinessHeader = ({ business }) => {
     return (
@@ -35,23 +35,11 @@ const BusinessHeader = ({ business }) => {
 
             <div className='absolute left-3 bottom-3 flex flex-col gap-1.5 z-10'>
                 <h3 className='text-white rubik-bold text-2xl lg:text-4xl'>{business.name}</h3>
-                <div className='flex items-center gap-1.5 lg:hidden'>
-                    {/* Rating Component for mobile */}
-                    <RatingComponent
-                        size='md'
-                        ratings={{ overall: business.rating }}
-                        useBackground={false}
-                        ratingTextClass='text-white font-medium text-sm'
-                    />
-                    <span className='inter-medium text-gray-200 text-sm'>({business.review_count} reviews)</span>
-                </div>
-                <div className='items-center gap-1.5 hidden lg:flex'>
-                    {/* Rating component for desktop */}
-                    <RatingComponent
-                        size='lg'
-                        ratings={{ overall: business.rating }}
-                        useBackground={false}
-                        ratingTextClass='text-white font-medium text-sm'
+                <div className='flex items-center gap-1.5'>
+                    <Rating
+                        rating={business.rating}
+                        textClass='text-sm text-white'
+                        iconClass='h-4 w-4'
                     />
                     <span className='inter-medium text-gray-200 text-sm'>({business.review_count} reviews)</span>
                 </div>
@@ -65,12 +53,12 @@ const BusinessHeader = ({ business }) => {
             </div>
             <div className='absolute right-3 bottom-3 flex flex-col gap-1.5 z-10'>
                 <GalleryDialog images={business.images} title={getGalleryTitle(business.name)}>
-                <Button variant='translucent'>
-                    See all {business.images.length} photos
-                </Button>
-            </GalleryDialog>
+                    <Button variant='translucent'>
+                        See all {business.images.length} photos
+                    </Button>
+                </GalleryDialog>
+            </div>
         </div>
-        </div >
     )
 }
 

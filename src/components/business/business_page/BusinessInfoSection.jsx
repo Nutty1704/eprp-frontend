@@ -5,9 +5,10 @@ import { Globe, Mail, Pen, Phone, Share } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import useAuthStore from '@/src/stores/auth-store'
 import AuthDialog from '../../auth/AuthDialog'
-import RatingComponent from '../../ui/RatingComponent'
+import Rating from '@/src/components/ui/Rating'
 import Location from '../Location'
 import BusinessAbout from './BusinessAbout'
+import { reviewIcons } from '@/src/config/Icons'
 
 const ReviewButton = () => (
     <Button className='flex items-center gap-2'>
@@ -52,18 +53,31 @@ const BusinessInfoSection = ({ business }) => {
                 <div className='flex flex-col gap-2.5 order-2 md:order-1'>
                     {/* Rating Section */}
                     <div className='flex flex-col gap-2.5 items-start mx-1.5 my-1.5 w-full'>
-                        <span className='rubik-bold text-2xl'>Rating (Fix design)</span>
-                        <div className='px-3 py-1 w-full'>
-                            <RatingComponent
-                                size='xl'
-                                useBackground={false}
-                                ratingTextClass={'font-medium text-sm text-black'}
-                                ratings={{
-                                    overall: business.rating,
-                                    food: business.foodRating,
-                                    ambience: business.ambienceRating,
-                                    service: business.serviceRating
-                                }}
+                        <span className='rubik-bold text-2xl'>Rating Breakdown</span>
+                        <div className='px-3 py-1 w-full space-y-2'>
+                            <Rating
+                                rating={business.rating}
+                                prefix="Overall:"
+                                textClass="text-sm text-gray-700"
+                                prefixClass="font-medium text-black min-w-24"
+                            />
+                            <Rating
+                                rating={business.foodRating}
+                                prefix={`Food ${reviewIcons.food}`}
+                                textClass="text-sm text-gray-700"
+                                prefixClass="font-medium text-black min-w-24"
+                            />
+                            <Rating
+                                rating={business.serviceRating}
+                                prefix={`Service ${reviewIcons.service}`}
+                                textClass="text-sm text-gray-700"
+                                prefixClass="font-medium text-black min-w-24"
+                            />
+                            <Rating
+                                rating={business.ambienceRating}
+                                prefix={`Ambience ${reviewIcons.ambience}`}
+                                textClass="text-sm text-gray-700"
+                                prefixClass="font-medium text-black min-w-24"
                             />
                         </div>
                     </div>
@@ -111,7 +125,7 @@ const BusinessInfoSection = ({ business }) => {
                             </div>
                             <div className='flex items-center gap-2.5'>
                                 <Phone className='w-4 h-4 text-primary' />
-                                <a href={`tel:${business.phone}`}className='hover:underline decoration-primary'>
+                                <a href={`tel:${business.phone}`} className='hover:underline decoration-primary'>
                                     {business.phone}
                                 </a>
                             </div>
