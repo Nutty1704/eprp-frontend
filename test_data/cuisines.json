@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Chinese",
+        "spots": 3
+    },
+    {
+        "name": "Japanese",
+        "spots": 1
+    },
+    {
+        "name": "Indian",
+        "spots": 2
+    },
+    {
+        "name": "Malaysian",
+        "spots": 1
+    }
+]
