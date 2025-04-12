@@ -1,44 +1,88 @@
-import React from 'react'
+import { cn } from '@/lib/utils';
+import React from 'react';
 
-function isOpen(openingHours) {
-    const now = new Date();
+function formatTimeToAmPm(timeStr) {
+    const [hour, minute] = timeStr.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hour, minute);
+    return date.toLocaleTimeString([], {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    });
+}
 
+function capitalize(word) {
+    return word[0].toUpperCase() + word.slice(1);
+}
+
+function isOpenNow(openingHours) {
     const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+    const now = new Date();
     const currentDay = days[now.getDay()];
-
-    const currentHour = now.getHours();
-    const currentMinute = now.getMinutes();
-    const currentTime = currentHour * 60 + currentMinute; // Convert to minutes since midnight
-
+    const currentTime = now.toTimeString().slice(0, 5); // "HH:MM"
     const today = openingHours[currentDay];
 
-    if (!today || !today.isOpen || today.timeSlots.length === 0) return false;
+    if (today?.isOpen) {
+        for (const slot of today.timeSlots) {
+            if (currentTime >= slot.open && currentTime <= slot.close) {
+                return {
+                    isOpen: true,
+                    message: `${formatTimeToAmPm(slot.open)} to ${formatTimeToAmPm(slot.close)}`,
+                };
+            }
+        }
 
-    for (const slot of today.timeSlots) {
-        const [openHour, openMinute] = slot.open.split(':').map(Number);
-        const [closeHour, closeMinute] = slot.close.split(':').map(Number);
-
-        const openTime = openHour * 60 + openMinute;
-        const closeTime = closeHour * 60 + closeMinute;
-
-        if (currentTime >= openTime && currentTime < closeTime) {
-            return true;
+        // Not currently open, but may open later today
+        for (const slot of today.timeSlots) {
+            if (currentTime < slot.open) {
+                return {
+                    isOpen: false,
+                    message: `Opens today at ${formatTimeToAmPm(slot.open)}`,
+                };
+            }
         }
     }
 
-    return false;
+    // If no slots today or today has passed, look ahead
+    for (let i = 1; i <= 7; i++) {
+        const nextDayIndex = (now.getDay() + i) % 7;
+        const nextDay = days[nextDayIndex];
+        const next = openingHours[nextDay];
+        if (next?.isOpen && next.timeSlots.length > 0) {
+            return {
+                isOpen: false,
+                message: `Opens ${capitalize(nextDay)} at ${formatTimeToAmPm(next.timeSlots[0].open)}`,
+            };
+        }
+    }
+
+    return {
+        isOpen: false,
+        message: 'No upcoming hours available',
+    };
 }
 
-const OpenBadge = ({ openingHours, className }) => {
+
+
+const OpenBadge = ({ openingHours, className = '', showMessage = false, messageClass }) => {
+    const { isOpen, message } = isOpenNow(openingHours);
+
     return (
-        <div className={className}>
-            {isOpen(openingHours) ? (
-                <span className="bg-green-600 text-white text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Open</span>
-            ) : (
-                <span className="bg-red-500 text-white text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">Closed</span>
+        <div className={`flex items-center gap-2 ${className}`}>
+            <span
+                className={`text-white text-xs font-semibold px-2.5 py-0.5 rounded ${isOpen ? 'bg-green-600' : 'bg-red-500 dark:bg-red-200 dark:text-red-900'
+                    }`}
+            >
+                {isOpen ? 'Open' : 'Closed'}
+            </span>
+            {showMessage && (
+                <span className={cn("text-xs text-gray-700", messageClass)}>
+                    {isOpen ? `${message}` : `${message}`}
+                </span>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default OpenBadge
+export default OpenBadge;
