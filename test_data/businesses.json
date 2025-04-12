@@ -1,0 +1,1052 @@
+[
+  {
+    "_id": "67e301103312114c7f4cd0b0",
+    "name": "Spice Garden",
+    "description": "Authentic Indian cuisine with vegetarian and vegan options.",
+    "email": "contact@spice-garden.com",
+    "phone": "+1-555-234-5678",
+    "address": "456 Culinary Ave, Metropolis, NY 10001",
+    "rating": 4.5,
+    "foodRating": 4.7,
+    "serviceRating": 4.3,
+    "ambienceRating": 4.4,
+    "review_count": 278,
+    "imageUrl": "https://res.cloudinary.com/dodjlennr/image/upload/v1743942459/test/nxowyuk72i0ea887jpa8.jpg",
+    "images": [
+      "https://chilliindia.com.au/wp-content/uploads/2024/01/Indian-cuisine-in-Melbourne.webp",
+      "https://www.contiki.com/six-two/app/uploads/2024/03/IMG-20240318-WA0007-e1710844435378.jpg",
+      "https://imgix.theurbanlist.com/content/article/best-indian-restaurants-melbourne-6.png?auto=format%2Ccompress&ixlib=php-4.1.0&w=728",
+      "https://chilliindia.com.au/wp-content/uploads/2024/01/Indian-cuisine-in-Melbourne.webp",
+      "https://www.contiki.com/six-two/app/uploads/2024/03/IMG-20240318-WA0007-e1710844435378.jpg",
+      "https://imgix.theurbanlist.com/content/article/best-indian-restaurants-melbourne-6.png?auto=format%2Ccompress&ixlib=php-4.1.0&w=728",
+      "https://chilliindia.com.au/wp-content/uploads/2024/01/Indian-cuisine-in-Melbourne.webp",
+      "https://www.contiki.com/six-two/app/uploads/2024/03/IMG-20240318-WA0007-e1710844435378.jpg",
+      "https://imgix.theurbanlist.com/content/article/best-indian-restaurants-melbourne-6.png?auto=format%2Ccompress&ixlib=php-4.1.0&w=728"
+    ],
+    "owner_id": "60f5e4f27a3e3a001f9e4a02",
+    "price_range_id": "60f5e4f27a3e3a001f9e4b02",
+    "menuItems": [
+      {
+        "name": "Butter Chicken",
+        "price": 18.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423246/menu-items/butter-chicken.jpg"
+      },
+      {
+        "name": "Vegetable Biryani",
+        "price": 16.5,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423247/menu-items/veg-biryani.jpg"
+      },
+      {
+        "name": "Palak Paneer",
+        "price": 15.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423248/menu-items/palak-paneer.jpg"
+      },
+      {
+        "name": "Garlic Naan",
+        "price": 3.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423249/menu-items/garlic-naan.jpg"
+      }
+    ],
+    "cuisines": [
+      "Indian",
+      "Vegetarian",
+      "Vegan"
+    ],
+    "openingHours": {
+      "mon": {
+        "isOpen": false,
+        "timeSlots": []
+      },
+      "tue": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "wed": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "thu": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "fri": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sat": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "12:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sun": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "12:00",
+            "close": "21:00"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "_id": "67e301103312114c7f4cd0b3",
+    "name": "Tokyo Sushi Bar",
+    "description": "Upscale sushi bar with fresh fish flown in daily from Japan.",
+    "email": "reservations@tokyosushi.com",
+    "phone": "+1-555-567-8901",
+    "address": "222 Sakura Blvd, Japantown, CA, 94115",
+    "rating": 4.9,
+    "foodRating": 5,
+    "serviceRating": 4.8,
+    "ambienceRating": 4.7,
+    "review_count": 189,
+    "imageUrl": "https://res.cloudinary.com/dodjlennr/image/upload/v1743942675/test/q6bgcqrew2n6pg6jzpr9.jpg",
+    "images": [
+      "https://res.cloudinary.com/sample/image/upload/v1615423267/restaurants/tokyo-interior.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423268/restaurants/tokyo-sushi1.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423267/restaurants/tokyo-interior.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423268/restaurants/tokyo-sushi1.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423269/restaurants/tokyo-sushi2.jpg"
+    ],
+    "owner_id": "60f5e4f27a3e3a001f9e4a05",
+    "price_range_id": "60f5e4f27a3e3a001f9e4b04",
+    "menuItems": [
+      {
+        "name": "Chef's Omakase",
+        "price": 120,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423270/menu-items/omakase.jpg"
+      },
+      {
+        "name": "Signature Sashimi Platter",
+        "price": 65,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423271/menu-items/sashimi-platter.jpg"
+      },
+      {
+        "name": "Uni Nigiri",
+        "price": 18,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423272/menu-items/uni-nigiri.jpg"
+      },
+      {
+        "name": "Toro Nigiri",
+        "price": 16,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423273/menu-items/toro-nigiri.jpg"
+      }
+    ],
+    "cuisines": [
+      "Japanese",
+      "Sushi",
+      "Asian"
+    ],
+    "openingHours": {
+      "mon": {
+        "isOpen": false,
+        "timeSlots": []
+      },
+      "tue": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "22:00"
+          }
+        ]
+      },
+      "wed": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "22:00"
+          }
+        ]
+      },
+      "thu": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "22:00"
+          }
+        ]
+      },
+      "fri": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sat": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sun": {
+        "isOpen": false,
+        "timeSlots": []
+      }
+    }
+  },
+  {
+    "_id": "67e301103312114c7f4cd0b9",
+    "name": "La Piazza",
+    "description": "Authentic Italian trattoria with homemade pasta and wood-fired pizzas.",
+    "email": "reservations@lapiazza.com",
+    "phone": "+1-555-333-4444",
+    "address": "456 Via Roma, Little Italy, NY 10013",
+    "rating": 4.7,
+    "foodRating": 4.8,
+    "serviceRating": 4.6,
+    "ambienceRating": 4.7,
+    "review_count": 512,
+    "imageUrl": "https://res.cloudinary.com/dodjlennr/image/upload/v1743942630/test/fqgepoclnk2pxaao4b3p.jpg",
+    "images": [
+      "https://res.cloudinary.com/sample/image/upload/v1635423245/italian/piazza-interior.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1635423246/italian/piazza-pasta.jpg"
+    ],
+    "owner_id": "60f5e4f27a3e3a001f9e4b03",
+    "price_range_id": "60f5e4f27a3e3a001f9e4c03",
+    "menuItems": [
+      {
+        "name": "Truffle Tagliatelle",
+        "price": 22.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1635423247/menu/truffle-pasta.jpg"
+      },
+      {
+        "name": "Margherita Pizza",
+        "price": 16.5,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1635423248/menu/margherita.jpg"
+      }
+    ],
+    "cuisines": [
+      "Italian",
+      "Pizza",
+      "Mediterranean"
+    ],
+    "openingHours": {
+      "mon": {
+        "isOpen": false,
+        "timeSlots": []
+      },
+      "tue": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "wed": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "thu": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "fri": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sat": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "12:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sun": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "12:00",
+            "close": "21:00"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "_id": "67e301103312114c7f4cd0b5",
+    "name": "Golden Dragon Chinese",
+    "description": "Traditional Chinese restaurant specializing in Sichuan and Cantonese cuisine.",
+    "email": "orders@goldendragon.com",
+    "phone": "+1-555-789-0123",
+    "address": "444 Dynasty Way, Chinatown, NY 10013",
+    "rating": 4.3,
+    "foodRating": 4.5,
+    "serviceRating": 4.1,
+    "ambienceRating": 4.2,
+    "review_count": 631,
+    "imageUrl": "https://res.cloudinary.com/dodjlennr/image/upload/v1743942710/test/uzwi7zyhc9cshp1snewx.jpg",
+    "images": [
+      "https://res.cloudinary.com/sample/image/upload/v1615423283/restaurants/golden-dragon-interior.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423284/restaurants/golden-dragon-food1.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423285/restaurants/golden-dragon-food2.jpg"
+    ],
+    "owner_id": "60f5e4f27a3e3a001f9e4a07",
+    "price_range_id": "60f5e4f27a3e3a001f9e4b02",
+    "menuItems": [
+      {
+        "name": "Kung Pao Chicken",
+        "price": 15.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423286/menu-items/kung-pao.jpg"
+      },
+      {
+        "name": "Peking Duck",
+        "price": 38.5,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423287/menu-items/peking-duck.jpg"
+      },
+      {
+        "name": "Mapo Tofu",
+        "price": 14.5,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423288/menu-items/mapo-tofu.jpg"
+      },
+      {
+        "name": "Hot and Sour Soup",
+        "price": 6.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423289/menu-items/hot-sour-soup.jpg"
+      }
+    ],
+    "cuisines": [
+      "Chinese",
+      "Sichuan",
+      "Cantonese"
+    ],
+    "openingHours": {
+      "mon": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "11:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "tue": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "11:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "wed": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "11:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "thu": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "11:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "fri": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "11:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sat": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "11:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sun": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "12:00",
+            "close": "22:00"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "_id": "67e301103312114c7f4cd0b0",
+    "name": "Spice Garden",
+    "description": "Authentic Indian cuisine with vegetarian and vegan options.",
+    "email": "contact@spice-garden.com",
+    "phone": "+1-555-234-5678",
+    "address": "456 Culinary Ave, Metropolis, NY 10001",
+    "rating": 4.5,
+    "foodRating": 4.7,
+    "serviceRating": 4.3,
+    "ambienceRating": 4.4,
+    "review_count": 278,
+    "imageUrl": "https://res.cloudinary.com/dodjlennr/image/upload/v1743942459/test/nxowyuk72i0ea887jpa8.jpg",
+    "images": [
+      "https://res.cloudinary.com/sample/image/upload/v1615423243/restaurants/spice-garden-interior.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423244/restaurants/spice-garden-food1.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423245/restaurants/spice-garden-food2.jpg"
+    ],
+    "owner_id": "60f5e4f27a3e3a001f9e4a02",
+    "price_range_id": "60f5e4f27a3e3a001f9e4b02",
+    "menuItems": [
+      {
+        "name": "Butter Chicken",
+        "price": 18.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423246/menu-items/butter-chicken.jpg"
+      },
+      {
+        "name": "Vegetable Biryani",
+        "price": 16.5,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423247/menu-items/veg-biryani.jpg"
+      },
+      {
+        "name": "Palak Paneer",
+        "price": 15.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423248/menu-items/palak-paneer.jpg"
+      },
+      {
+        "name": "Garlic Naan",
+        "price": 3.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423249/menu-items/garlic-naan.jpg"
+      }
+    ],
+    "cuisines": [
+      "Indian",
+      "Vegetarian",
+      "Vegan"
+    ],
+    "openingHours": {
+      "mon": {
+        "isOpen": false,
+        "timeSlots": []
+      },
+      "tue": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "wed": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "thu": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "fri": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sat": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "12:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sun": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "12:00",
+            "close": "21:00"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "_id": "67e301103312114c7f4cd0b3",
+    "name": "Tokyo Sushi Bar",
+    "description": "Upscale sushi bar with fresh fish flown in daily from Japan.",
+    "email": "reservations@tokyosushi.com",
+    "phone": "+1-555-567-8901",
+    "address": "222 Sakura Blvd, Japantown, CA, 94115",
+    "rating": 4.9,
+    "foodRating": 5,
+    "serviceRating": 4.8,
+    "ambienceRating": 4.7,
+    "review_count": 189,
+    "imageUrl": "https://res.cloudinary.com/dodjlennr/image/upload/v1743942675/test/q6bgcqrew2n6pg6jzpr9.jpg",
+    "images": [
+      "https://res.cloudinary.com/sample/image/upload/v1615423267/restaurants/tokyo-interior.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423268/restaurants/tokyo-sushi1.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423269/restaurants/tokyo-sushi2.jpg"
+    ],
+    "owner_id": "60f5e4f27a3e3a001f9e4a05",
+    "price_range_id": "60f5e4f27a3e3a001f9e4b04",
+    "menuItems": [
+      {
+        "name": "Chef's Omakase",
+        "price": 120,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423270/menu-items/omakase.jpg"
+      },
+      {
+        "name": "Signature Sashimi Platter",
+        "price": 65,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423271/menu-items/sashimi-platter.jpg"
+      },
+      {
+        "name": "Uni Nigiri",
+        "price": 18,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423272/menu-items/uni-nigiri.jpg"
+      },
+      {
+        "name": "Toro Nigiri",
+        "price": 16,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423273/menu-items/toro-nigiri.jpg"
+      }
+    ],
+    "cuisines": [
+      "Japanese",
+      "Sushi",
+      "Asian"
+    ],
+    "openingHours": {
+      "mon": {
+        "isOpen": false,
+        "timeSlots": []
+      },
+      "tue": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "22:00"
+          }
+        ]
+      },
+      "wed": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "22:00"
+          }
+        ]
+      },
+      "thu": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "22:00"
+          }
+        ]
+      },
+      "fri": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sat": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sun": {
+        "isOpen": false,
+        "timeSlots": []
+      }
+    }
+  },
+  {
+    "_id": "67e301103312114c7f4cd0b9",
+    "name": "La Piazza",
+    "description": "Authentic Italian trattoria with homemade pasta and wood-fired pizzas.",
+    "email": "reservations@lapiazza.com",
+    "phone": "+1-555-333-4444",
+    "address": "456 Via Roma, Little Italy, NY 10013",
+    "rating": 4.7,
+    "foodRating": 4.8,
+    "serviceRating": 4.6,
+    "ambienceRating": 4.7,
+    "review_count": 512,
+    "imageUrl": "https://res.cloudinary.com/dodjlennr/image/upload/v1743942630/test/fqgepoclnk2pxaao4b3p.jpg",
+    "images": [
+      "https://res.cloudinary.com/sample/image/upload/v1635423245/italian/piazza-interior.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1635423246/italian/piazza-pasta.jpg"
+    ],
+    "owner_id": "60f5e4f27a3e3a001f9e4b03",
+    "price_range_id": "60f5e4f27a3e3a001f9e4c03",
+    "menuItems": [
+      {
+        "name": "Truffle Tagliatelle",
+        "price": 22.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1635423247/menu/truffle-pasta.jpg"
+      },
+      {
+        "name": "Margherita Pizza",
+        "price": 16.5,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1635423248/menu/margherita.jpg"
+      }
+    ],
+    "cuisines": [
+      "Italian",
+      "Pizza",
+      "Mediterranean"
+    ],
+    "openingHours": {
+      "mon": {
+        "isOpen": false,
+        "timeSlots": []
+      },
+      "tue": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "wed": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "thu": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "fri": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sat": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "12:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sun": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "12:00",
+            "close": "21:00"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "_id": "67e301103312114c7f4cd0b5",
+    "name": "Golden Dragon Chinese",
+    "description": "Traditional Chinese restaurant specializing in Sichuan and Cantonese cuisine.",
+    "email": "orders@goldendragon.com",
+    "phone": "+1-555-789-0123",
+    "address": "444 Dynasty Way, Chinatown, NY 10013",
+    "rating": 4.3,
+    "foodRating": 4.5,
+    "serviceRating": 4.1,
+    "ambienceRating": 4.2,
+    "review_count": 631,
+    "imageUrl": "https://res.cloudinary.com/dodjlennr/image/upload/v1743942710/test/uzwi7zyhc9cshp1snewx.jpg",
+    "images": [
+      "https://res.cloudinary.com/sample/image/upload/v1615423283/restaurants/golden-dragon-interior.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423284/restaurants/golden-dragon-food1.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423285/restaurants/golden-dragon-food2.jpg"
+    ],
+    "owner_id": "60f5e4f27a3e3a001f9e4a07",
+    "price_range_id": "60f5e4f27a3e3a001f9e4b02",
+    "menuItems": [
+      {
+        "name": "Kung Pao Chicken",
+        "price": 15.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423286/menu-items/kung-pao.jpg"
+      },
+      {
+        "name": "Peking Duck",
+        "price": 38.5,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423287/menu-items/peking-duck.jpg"
+      },
+      {
+        "name": "Mapo Tofu",
+        "price": 14.5,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423288/menu-items/mapo-tofu.jpg"
+      },
+      {
+        "name": "Hot and Sour Soup",
+        "price": 6.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423289/menu-items/hot-sour-soup.jpg"
+      }
+    ],
+    "cuisines": [
+      "Chinese",
+      "Sichuan",
+      "Cantonese"
+    ],
+    "openingHours": {
+      "mon": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "11:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "tue": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "11:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "wed": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "11:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "thu": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "11:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "fri": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "11:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sat": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "11:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sun": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "12:00",
+            "close": "22:00"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "_id": "67e301103312114c7f4cd0b3",
+    "name": "Tokyo Sushi Bar",
+    "description": "Upscale sushi bar with fresh fish flown in daily from Japan.",
+    "email": "reservations@tokyosushi.com",
+    "phone": "+1-555-567-8901",
+    "address": "222 Sakura Blvd, Japantown, CA, 94115",
+    "rating": 4.9,
+    "foodRating": 5,
+    "serviceRating": 4.8,
+    "ambienceRating": 4.7,
+    "review_count": 189,
+    "imageUrl": "https://res.cloudinary.com/dodjlennr/image/upload/v1743942675/test/q6bgcqrew2n6pg6jzpr9.jpg",
+    "images": [
+      "https://res.cloudinary.com/sample/image/upload/v1615423267/restaurants/tokyo-interior.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423268/restaurants/tokyo-sushi1.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1615423269/restaurants/tokyo-sushi2.jpg"
+    ],
+    "owner_id": "60f5e4f27a3e3a001f9e4a05",
+    "price_range_id": "60f5e4f27a3e3a001f9e4b04",
+    "menuItems": [
+      {
+        "name": "Chef's Omakase",
+        "price": 120,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423270/menu-items/omakase.jpg"
+      },
+      {
+        "name": "Signature Sashimi Platter",
+        "price": 65,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423271/menu-items/sashimi-platter.jpg"
+      },
+      {
+        "name": "Uni Nigiri",
+        "price": 18,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423272/menu-items/uni-nigiri.jpg"
+      },
+      {
+        "name": "Toro Nigiri",
+        "price": 16,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1615423273/menu-items/toro-nigiri.jpg"
+      }
+    ],
+    "cuisines": [
+      "Japanese",
+      "Sushi",
+      "Asian"
+    ],
+    "openingHours": {
+      "mon": {
+        "isOpen": false,
+        "timeSlots": []
+      },
+      "tue": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "22:00"
+          }
+        ]
+      },
+      "wed": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "22:00"
+          }
+        ]
+      },
+      "thu": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "22:00"
+          }
+        ]
+      },
+      "fri": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sat": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:30",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sun": {
+        "isOpen": false,
+        "timeSlots": []
+      }
+    }
+  },
+  {
+    "_id": "67e301103312114c7f4cd0b9",
+    "name": "La Piazza",
+    "description": "Authentic Italian trattoria with homemade pasta and wood-fired pizzas.",
+    "email": "reservations@lapiazza.com",
+    "phone": "+1-555-333-4444",
+    "address": "456 Via Roma, Little Italy, NY 10013",
+    "rating": 4.7,
+    "foodRating": 4.8,
+    "serviceRating": 4.6,
+    "ambienceRating": 4.7,
+    "review_count": 512,
+    "imageUrl": "https://res.cloudinary.com/dodjlennr/image/upload/v1743942630/test/fqgepoclnk2pxaao4b3p.jpg",
+    "images": [
+      "https://res.cloudinary.com/sample/image/upload/v1635423245/italian/piazza-interior.jpg",
+      "https://res.cloudinary.com/sample/image/upload/v1635423246/italian/piazza-pasta.jpg"
+    ],
+    "owner_id": "60f5e4f27a3e3a001f9e4b03",
+    "price_range_id": "60f5e4f27a3e3a001f9e4c03",
+    "menuItems": [
+      {
+        "name": "Truffle Tagliatelle",
+        "price": 22.99,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1635423247/menu/truffle-pasta.jpg"
+      },
+      {
+        "name": "Margherita Pizza",
+        "price": 16.5,
+        "imageUrl": "https://res.cloudinary.com/sample/image/upload/v1635423248/menu/margherita.jpg"
+      }
+    ],
+    "cuisines": [
+      "Italian",
+      "Pizza",
+      "Mediterranean"
+    ],
+    "openingHours": {
+      "mon": {
+        "isOpen": false,
+        "timeSlots": []
+      },
+      "tue": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "wed": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "thu": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "22:00"
+          }
+        ]
+      },
+      "fri": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "17:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sat": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "12:00",
+            "close": "23:00"
+          }
+        ]
+      },
+      "sun": {
+        "isOpen": true,
+        "timeSlots": [
+          {
+            "open": "12:00",
+            "close": "21:00"
+          }
+        ]
+      }
+    }
+  }
+]
