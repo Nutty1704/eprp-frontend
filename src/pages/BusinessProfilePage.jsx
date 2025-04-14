@@ -8,6 +8,7 @@ import BusinessDetailsForm from "../components/business/BusinessDetailsForm";
 import OpeningHoursSection from "../components/business/OpeningHoursSection";
 import CuisineSelector from "../components/business/CuisineSelector";
 import MenuPage from "../components/business/MenuPage";
+import MultipleImageUploadSection from "../components/business/MultiImageUpload";
 
 /**
  * Business Profile Management Page
@@ -36,6 +37,7 @@ const BusinessProfilePage = () => {
     website: "",
     address: "",
     imageUrl: "",
+    images: [],
     openingHours: defaultOpeningHours,
     cuisines: []
   });
@@ -45,8 +47,13 @@ const BusinessProfilePage = () => {
   const { updateBusiness, isLoading: isUpdating } = useUpdateMyBusiness();
   const { createBusiness, isLoading: isCreating } = useCreateMyBusiness();
   
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState("");
+  // State for profile image
+  const [selectedProfileImage, setSelectedProfileImage] = useState(null);
+  const [profileImagePreview, setProfileImagePreview] = useState("");
+
+  // State for multiple business images
+  const [newSelectedImages, setNewSelectedImages] = useState([]); // Files selected via MultipleImageUploadSection
+  const [imagesToDelete, setImagesToDelete] = useState([]);
   
   // Load business data when available
   useEffect(() => {
@@ -59,6 +66,7 @@ const BusinessProfilePage = () => {
         website: businessData.website || "",
         address: businessData.address || "",
         imageUrl: businessData.imageUrl || "",
+        images: businessData.images || [],
         // Format opening hours properly, ensuring the structure matches our component
         openingHours: businessData.openingHours 
           ? Object.keys(defaultOpeningHours).reduce((acc, day) => {
@@ -77,6 +85,10 @@ const BusinessProfilePage = () => {
       };
       
       setBusiness(formattedData);
+      setNewSelectedImages([]);
+      setImagesToDelete([]);
+      setSelectedProfileImage(null);
+      setProfileImagePreview("");
     }
   }, [businessData]);
   
@@ -108,25 +120,42 @@ const BusinessProfilePage = () => {
     }));
   };
   
-  // Handle image selection
-  const handleImageChange = (e) => {
+  // Handle profile image selection
+  const handleProfileImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedImage(file);
-      setImagePreview(URL.createObjectURL(file));
+      setSelectedProfileImage(file);
+      setProfileImagePreview(URL.createObjectURL(file));
     }
-  };
+  };;
   
-  // Handle image deletion
-  const handleDeleteImage = () => {
+  // Handle profile image deletion
+  const handleDeleteProfileImage = () => {
     setBusiness(prev => ({
       ...prev,
-      imageUrl: ""
+      imageUrl: "" // Clear URL in state
     }));
-    setSelectedImage(null);
-    setImagePreview("");
+    setSelectedProfileImage(null); // Clear selected file
+    setProfileImagePreview("");    // Clear preview
+    // Note: Actual deletion from storage happens on save if imageUrl is empty or a new image is uploaded
   };
   
+  // Handle newly selected business images from child component
+  const handleNewImagesChange = (files) => {
+    setNewSelectedImages(files);
+  };
+
+  // Handle request to delete an existing business image from child component
+  const handleDeleteExistingImageRequest = (imageUrl) => {
+    // Add URL to the deletion list if not already there
+    setImagesToDelete(prev => [...new Set([...prev, imageUrl])]);
+    // Visually remove it from the displayed existing images in the parent state
+    setBusiness(prev => ({
+        ...prev,
+        images: prev.images.filter(url => url !== imageUrl)
+    }));
+  };
+
   // Validate form before submission
   const validateForm = () => {
     if (!business.businessName) {
@@ -195,8 +224,23 @@ const BusinessProfilePage = () => {
       formData.append("cuisines", JSON.stringify(business.cuisines));
     }
     
-    if (selectedImage) {
-      formData.append("profile_image", selectedImage);
+    // Append profile image if a new one is selected
+    if (selectedProfileImage) {
+      formData.append("profile_image", selectedProfileImage);
+    } else if (!business.imageUrl && businessData?.imageUrl) {
+        // If the imageUrl was cleared in state AND there was an image before, signal deletion
+        formData.append("delete_profile_image", "true"); // Signal to backend
+    }
+
+    // Append newly selected business images
+    newSelectedImages.forEach((file) => {
+      // Use the same field name for all images; backend (e.g., multer) handles arrays
+      formData.append("images", file);
+    });
+
+    // Append list of existing image URLs to delete
+    if (imagesToDelete.length > 0) {
+      formData.append("imagesToDelete", JSON.stringify(imagesToDelete));
     }
     
     try {
@@ -216,9 +260,6 @@ const BusinessProfilePage = () => {
       
       // Refresh data
       refetch();
-      
-      // Clear selected image after successful update
-      setSelectedImage(null);
     } catch (error) {
       toast.error("Error", {
         description: error.message || "There was an error saving your business information"
@@ -251,14 +292,20 @@ const BusinessProfilePage = () => {
           <form onSubmit={handleSubmit}>
             <ProfileImageSection 
               imageUrl={business.imageUrl} 
-              imagePreview={imagePreview}
-              onImageChange={handleImageChange}
-              onDeleteImage={handleDeleteImage}
+              imagePreview={profileImagePreview}
+              onImageChange={handleProfileImageChange}
+              onDeleteImage={handleDeleteProfileImage}
             />
             
             <BusinessDetailsForm 
               business={business}
               onInputChange={handleInputChange}
+            />
+
+            <MultipleImageUploadSection
+              existingImages={business.images} 
+              onNewImagesChange={handleNewImagesChange} 
+              onDeleteExistingImage={handleDeleteExistingImageRequest} 
             />
             
             <OpeningHoursSection 
