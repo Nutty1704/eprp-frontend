@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -80,11 +78,8 @@ const OpeningHoursSection = ({ openingHours, onHoursChange }) => {
   };
   
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Opening Hours</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <div>
+      <div>
         <Alert className="mb-4 bg-blue-50 border-blue-200">
           <AlertDescription>
             You can add multiple time slots for split schedules (e.g., lunch and dinner hours).
@@ -168,8 +163,8 @@ const OpeningHoursSection = ({ openingHours, onHoursChange }) => {
         </div>
         
         
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

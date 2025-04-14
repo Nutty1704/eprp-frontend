@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { cuisineOptions } from "../../types/cuisineoptions";
+import { cuisineOptions } from "@/src/config/Cuisine";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const CuisineSelector = ({ selectedCuisines = [], onChange }) => {
@@ -27,11 +26,8 @@ const CuisineSelector = ({ selectedCuisines = [], onChange }) => {
   };
   
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Cuisines</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <div>
+      <div>
         <Alert className="mb-6 bg-blue-50 border-blue-200">
           <AlertDescription>
             Did we miss out on a cuisines you offer? Let us know by sending a support inquiry.
@@ -88,8 +84,8 @@ const CuisineSelector = ({ selectedCuisines = [], onChange }) => {
             })}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

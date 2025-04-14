@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 
 const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteImage }) => {
   return (
-    <Card className="mb-6">
-      <CardContent className="pt-6">
+    <div className="mb-6">
+      <div className="pt-6">
         <div className="flex flex-col sm:flex-row items-center gap-6">
           <div className="w-32 h-32 border rounded-md flex items-center justify-center overflow-hidden bg-gray-50">
             {(imageUrl || imagePreview) ? (
@@ -54,8 +53,8 @@ const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteIm
             </div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

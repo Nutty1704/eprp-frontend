@@ -1,12 +1,11 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
 const BusinessDetailsForm = ({ business, onInputChange }) => {
   return (
-    <Card className="mb-6">
-      <CardContent className="grid gap-6 pt-6">
+    <div className="mb-6">
+      <div className="grid gap-6 pt-6">
         <div className="grid gap-2">
           <Label htmlFor="businessName">Name</Label>
           <Input 
@@ -87,8 +86,8 @@ const BusinessDetailsForm = ({ business, onInputChange }) => {
             placeholder="Ground Floor, Campus Centre, 21 Chancellors Walk"
           />
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

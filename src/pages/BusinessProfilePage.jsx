@@ -3,11 +3,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useGetMyBusiness, useUpdateMyBusiness, useCreateMyBusiness } from "../lib/api/MyBusinessApi";
-import ProfileImageSection from "../components/ProfileImageSection";
-import BusinessDetailsForm from "../components/business/BusinessDetailsForm";
-import OpeningHoursSection from "../components/business/OpeningHoursSection";
-import CuisineSelector from "../components/business/CuisineSelector";
-import MenuPage from "../components/business/MenuPage";
+import ProfileImageSection from "../components/admin/business-form/ProfileImageSection";
+import BusinessDetailsForm from "../components/admin/business-form/BusinessDetailsForm";
+import OpeningHoursSection from "../components/admin/business-form/OpeningHoursSection";
+import CuisineSelector from "../components/admin/business-form/CuisineSelector";
+import MenuPage from "../components/admin/menu/MenuPage";
+import CollapsibleSection from "../components/ui/CollapsibleSection";
 
 /**
  * Business Profile Management Page
@@ -249,29 +250,35 @@ const BusinessProfilePage = () => {
         
         <TabsContent value="business-info" className="mt-6">
           <form onSubmit={handleSubmit}>
-            <ProfileImageSection 
-              imageUrl={business.imageUrl} 
-              imagePreview={imagePreview}
-              onImageChange={handleImageChange}
-              onDeleteImage={handleDeleteImage}
-            />
+            <CollapsibleSection title='Profile Image'>
+              <ProfileImageSection
+                imageUrl={business.imageUrl}
+                imagePreview={imagePreview}
+                onImageChange={handleImageChange}
+                onDeleteImage={handleDeleteImage}
+              />
+            </CollapsibleSection>
             
-            <BusinessDetailsForm 
-              business={business}
-              onInputChange={handleInputChange}
-            />
+            <CollapsibleSection title='Business Details'>
+              <BusinessDetailsForm
+                business={business}
+                onInputChange={handleInputChange}
+              />
+            </CollapsibleSection>
             
-            <OpeningHoursSection 
-              openingHours={business.openingHours}
-              onHoursChange={handleHoursChange}
-            />
+            <CollapsibleSection title='Opening Hours'>
+              <OpeningHoursSection
+                openingHours={business.openingHours}
+                onHoursChange={handleHoursChange}
+              />
+            </CollapsibleSection>
             
-            <div className="my-6">
-              <CuisineSelector 
+            <CollapsibleSection title='Cuisines'>
+              <CuisineSelector
                 selectedCuisines={business.cuisines}
                 onChange={handleCuisinesChange}
               />
-            </div>
+            </CollapsibleSection>
             
             <div className="mt-6 flex justify-center sm:justify-end">
               <Button 
