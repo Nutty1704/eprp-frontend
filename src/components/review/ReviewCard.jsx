@@ -1,40 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Heart, Star } from 'lucide-react';
-import RatingComponent from '../ui/RatingComponent';
+import { format } from 'date-fns'
+import Rating from '../ui/Rating';
+import { reviewIcons } from '@/src/config/Icons';
 
 const ReviewCard = ({
   review,
   restaurantName = "ABC",
 }) => {
   return (
-    <div className="bg-slate-100 rounded-lg shadow-md p-4 mb-4 max-w-6xl w-full">
-      <div className="flex justify-between items-start mb-2 w-full">
+    <div className="bg-slate-100 rounded-lg shadow-md p-4 mb-4 max-w-6xl w-full inter-regular">
+      <div className="flex justify-between items-center mb-2 w-full">
         <div className='flex items-center min-w-1/2 justify-between gap-3'>
           <h3 className="text-xl font-semibold rubik-bold">{restaurantName}</h3>
           <div className="flex items-center">
             <Star className="h-4 w-4 text-primary fill-primary mr-1" />
             <span className="text-primary text-sm font-medium">{review.rating}/5</span>
-            <span className="text-gray-500 text-xs ml-2">{review.createdAt}</span>
           </div>
         </div>
+        <span className="text-gray-600 font-medium text-xs ml-2">
+          {format(new Date(review.createdAt), 'd MMMM yyyy')}
+        </span>
       </div>
 
-      <p className="text-gray-700 my-3 inter-regular">{review.text}</p>
+      <p className="text-gray-700 my-3">{review.text}</p>
 
-      <RatingComponent 
-        ratings={{ 
-          food: review.foodRating, 
-          service: review.serviceRating, 
-          ambience: review.ambienceRating 
-        }}
-        useBackground={true}
-        size="md"
-      />
+      <div className="space-y-1.5">
+        <Rating
+          rating={review.foodRating}
+          prefix={`Food ${reviewIcons.food}`}
+          textClass="text-sm"
+          prefixClass="font-medium min-w-24"
+          iconClass="h-4 w-4"
+        />
+        <Rating
+          rating={review.serviceRating}
+          prefix={`Service ${reviewIcons.service}`}
+          textClass="text-sm"
+          prefixClass="font-medium min-w-24"
+          iconClass="h-4 w-4"
+        />
+        <Rating
+          rating={review.ambienceRating}
+          prefix={`Ambience ${reviewIcons.ambience}`}
+          textClass="text-sm"
+          prefixClass="font-medium min-w-24"
+          iconClass="h-4 w-4"
+        />
+      </div>
 
-      <div className="flex items-center justify-end mt-2">
-        <button className="flex items-center inter-medium gap-1">
-          <Heart className='h-3.5 w-3.5 fill-primary text-primary' />
+      <div className="flex items-center justify-end mt-4">
+        <button className="flex items-center inter-medium gap-1.5">
+          <Heart className='h-5 w-5 fill-primary text-primary' />
           <span>{review.upvotes}</span>
         </button>
       </div>
