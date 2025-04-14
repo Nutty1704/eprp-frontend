@@ -25,6 +25,7 @@ const BusinessCard = ({ name, location, url, avgRating, imageUrl, description })
             href={url}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             className="text-sm text-blue-600 hover:underline block"
           >
             {url}

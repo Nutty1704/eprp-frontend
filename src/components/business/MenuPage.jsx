@@ -6,12 +6,15 @@ import MenuCard from './MenuCard';
 import AddMenuItemDialog from './AddMenuItemDialog';
 import { useGetMyBusiness, useUpdateMyBusiness } from '../../lib/api/MyBusinessApi';
 import { Card } from '@/components/ui/card';
+import { useParams } from 'react-router-dom';
 
 const MenuPage = () => {
+  const { businessId } = useParams();
   const [menuItems, setMenuItems] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
-  const { business, isLoading, refetch } = useGetMyBusiness();
+  // const { business, isLoading, refetch } = useGetMyBusiness();
+  const { business, isLoading, refetch } = useGetMyBusiness(businessId);
   const { updateBusiness, isLoading: isUpdating } = useUpdateMyBusiness();
 
   useEffect(() => {
