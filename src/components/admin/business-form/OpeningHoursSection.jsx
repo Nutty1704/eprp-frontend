@@ -1,3 +1,4 @@
+import { useFormContext, Controller } from "react-hook-form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,7 +16,10 @@ const days = [
   { key: "sun", label: "Sun" },
 ];
 
-const OpeningHoursSection = ({ openingHours, onHoursChange }) => {
+const OpeningHoursSection = () => {
+  const { control, setValue, watch } = useFormContext();
+  const openingHours = watch("openingHours");
+  
   // Validate time slot
   const validateTimeSlot = (open, close) => {
     if (!open || !close) return false;
@@ -28,7 +32,7 @@ const OpeningHoursSection = ({ openingHours, onHoursChange }) => {
   
   // Handle checkbox change
   const handleIsOpenChange = (day, checked) => {
-    onHoursChange(day, {
+    setValue(`openingHours.${day}`, {
       ...openingHours[day],
       isOpen: checked,
       timeSlots: checked 
@@ -36,7 +40,7 @@ const OpeningHoursSection = ({ openingHours, onHoursChange }) => {
           ? openingHours[day].timeSlots 
           : [{ open: "10:00", close: "20:00" }]
         : []
-    });
+    }, { shouldValidate: true });
   };
   
   // Add a new time slot to a day
@@ -46,10 +50,7 @@ const OpeningHoursSection = ({ openingHours, onHoursChange }) => {
       { open: "10:00", close: "20:00" }
     ];
     
-    onHoursChange(day, {
-      ...openingHours[day],
-      timeSlots: updatedTimeSlots
-    });
+    setValue(`openingHours.${day}.timeSlots`, updatedTimeSlots, { shouldValidate: true });
   };
   
   // Remove a time slot from a day
@@ -57,25 +58,15 @@ const OpeningHoursSection = ({ openingHours, onHoursChange }) => {
     const updatedTimeSlots = [...openingHours[day].timeSlots];
     updatedTimeSlots.splice(index, 1);
     
-    onHoursChange(day, {
-      ...openingHours[day],
-      timeSlots: updatedTimeSlots
-    });
+    setValue(`openingHours.${day}.timeSlots`, updatedTimeSlots, { shouldValidate: true });
   };
   
   // Update a time slot
   const updateTimeSlot = (day, index, field, value) => {
-    const updatedTimeSlots = [...openingHours[day].timeSlots];
-    updatedTimeSlots[index] = {
-      ...updatedTimeSlots[index],
-      [field]: value
-    };
-    
-    onHoursChange(day, {
-      ...openingHours[day],
-      timeSlots: updatedTimeSlots
-    });
+    setValue(`openingHours.${day}.timeSlots.${index}.${field}`, value, { shouldValidate: true });
   };
+  
+  if (!openingHours) return null;
   
   return (
     <div>
@@ -89,12 +80,19 @@ const OpeningHoursSection = ({ openingHours, onHoursChange }) => {
           {days.map((day) => (
             <div key={day.key} className="border rounded-md p-4">
               <div className="flex items-center mb-4">
-                <Checkbox
-                  id={`open-${day.key}`}
-                  checked={openingHours[day.key]?.isOpen}
-                  onCheckedChange={(checked) => 
-                    handleIsOpenChange(day.key, checked)
-                  }
+                <Controller
+                  name={`openingHours.${day.key}.isOpen`}
+                  control={control}
+                  render={({ field }) => (
+                    <Checkbox
+                      id={`open-${day.key}`}
+                      checked={field.value}
+                      onCheckedChange={(checked) => {
+                        field.onChange(checked);
+                        handleIsOpenChange(day.key, checked);
+                      }}
+                    />
+                  )}
                 />
                 <Label
                   htmlFor={`open-${day.key}`}
@@ -108,22 +106,28 @@ const OpeningHoursSection = ({ openingHours, onHoursChange }) => {
                 <div className="pl-6 space-y-3">
                   {openingHours[day.key].timeSlots.map((timeSlot, index) => (
                     <div key={index} className="flex flex-wrap items-center gap-2">
-                      <Input
-                        type="time"
-                        value={timeSlot.open}
-                        onChange={(e) => 
-                          updateTimeSlot(day.key, index, "open", e.target.value)
-                        }
-                        className="w-24 sm:w-32"
+                      <Controller
+                        name={`openingHours.${day.key}.timeSlots.${index}.open`}
+                        control={control}
+                        render={({ field }) => (
+                          <Input
+                            type="time"
+                            {...field}
+                            className="w-24 sm:w-32"
+                          />
+                        )}
                       />
                       <span className="text-sm">—</span>
-                      <Input
-                        type="time"
-                        value={timeSlot.close}
-                        onChange={(e) => 
-                          updateTimeSlot(day.key, index, "close", e.target.value)
-                        }
-                        className="w-24 sm:w-32"
+                      <Controller
+                        name={`openingHours.${day.key}.timeSlots.${index}.close`}
+                        control={control}
+                        render={({ field }) => (
+                          <Input
+                            type="time"
+                            {...field}
+                            className="w-24 sm:w-32"
+                          />
+                        )}
                       />
                       
                       {!validateTimeSlot(timeSlot.open, timeSlot.close) && (
@@ -161,8 +165,6 @@ const OpeningHoursSection = ({ openingHours, onHoursChange }) => {
             </div>
           ))}
         </div>
-        
-        
       </div>
     </div>
   );

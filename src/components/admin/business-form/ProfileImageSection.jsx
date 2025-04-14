@@ -1,12 +1,46 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useFormContext } from "react-hook-form";
+import { Loader2 } from "lucide-react";
 
 const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteImage }) => {
+  const [isUploading, setIsUploading] = useState(false);
+  const { formState: { errors } } = useFormContext();
+  
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    // File validation
+    if (file.size > 10 * 1024 * 1024) {
+      alert("File is too large. Maximum size is 10MB.");
+      return;
+    }
+    
+    if (!["image/jpeg", "image/png", "image/jpg"].includes(file.type)) {
+      alert("Only JPEG and PNG files are allowed.");
+      return;
+    }
+    
+    setIsUploading(true);
+    try {
+      await onImageChange(e);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert("Failed to upload image");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   return (
     <div className="mb-6">
       <div className="pt-6">
         <div className="flex flex-col sm:flex-row items-center gap-6">
           <div className="w-32 h-32 border rounded-md flex items-center justify-center overflow-hidden bg-gray-50">
-            {(imageUrl || imagePreview) ? (
+            {isUploading ? (
+              <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+            ) : (imageUrl || imagePreview) ? (
               <img 
                 src={imagePreview || imageUrl} 
                 alt="Business Profile" 
@@ -31,14 +65,24 @@ const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteIm
                   const fileInput = document.getElementById('profile-image-upload');
                   fileInput.click();
                 }}
+                disabled={isUploading}
+                aria-label="Upload new profile picture"
               >
-                Upload new picture
+                {isUploading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Uploading...
+                  </>
+                ) : (
+                  "Upload new picture"
+                )}
               </Button>
               
               <Button 
                 variant="destructive" 
                 onClick={onDeleteImage}
-                disabled={!imageUrl && !imagePreview}
+                disabled={(!imageUrl && !imagePreview) || isUploading}
+                aria-label="Delete profile picture"
               >
                 Delete
               </Button>
@@ -46,11 +90,14 @@ const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteIm
               <input
                 id="profile-image-upload"
                 type="file"
-                accept="image/*"
+                accept="image/jpeg,image/png"
                 className="hidden"
-                onChange={onImageChange}
+                onChange={handleImageChange}
               />
             </div>
+            {errors.images && (
+              <p className="text-red-500 text-sm mt-2">{errors.images.message}</p>
+            )}
           </div>
         </div>
       </div>
