@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { Copy } from 'lucide-react';
 import ToolTip from '../ui/Tooltip';
 
-const Location = ({ address, className }) => {
+const Location = ({ address, className='h-full w-full' }) => {
     return (
         <div className={cn('inter-regular text-sm', className)}>
             <APIProvider apiKey={import.meta.env.VITE_GOOGLE_API_KEY}>
