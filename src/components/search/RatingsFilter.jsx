@@ -28,9 +28,7 @@ const RatingsFilter = ({ minRating, onChange }) => {
   };
   
   return (
-    <div>
-      <Label className="text-base font-medium mb-3 block">Rating</Label>
-      
+    <div>    
       <RadioGroup
         value={String(currentRating)}
         onValueChange={handleRatingChange}

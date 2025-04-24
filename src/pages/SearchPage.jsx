@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Label } from "@/components/ui/label";
 import { useSearchBusinesses } from '../lib/api/SearchApi';
 import SearchBar from '../components/search/SearchBar';
 import CuisineFilter from '../components/search/CuisineFilter';
@@ -128,40 +135,65 @@ const SearchPage = () => {
   const filteredBusinesses = businesses.filter(
     business => business.rating >= searchParams.minRating
   );
+
+  const defaultOpenFilters = ["cuisines", "ratings", "sort"];
   
   return (
     <div className="container mx-auto py-8 px-4">
-      <div className="mb-8">
-        <SearchBar className="max-w-4xl mx-auto" />
+      <div className="mb-8 flex justify-center">
+        <SearchBar className="max-w-4xl w-full" />
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Filters sidebar */}
-        <div className="space-y-6">
+        <div className="md:col-span-1">
           <Card>
-            <CardContent className="pt-6">
-              <h3 className="text-lg font-semibold mb-4">Filters</h3>
-              
-              <div className="mb-6">
-                <CuisineFilter 
-                  selectedCuisines={searchParams.selectedCuisines}
-                  onChange={handleCuisineChange}
-                />
-              </div>
-              
-              <div className="mb-6">
-                <RatingsFilter 
-                  minRating={searchParams.minRating}
-                  onChange={handleRatingChange}
-                />
-              </div>
-              
-              <div>
-                <SortOptions 
-                  sortOption={searchParams.sortOption}
-                  onChange={handleSortChange}
-                />
-              </div>
+            <CardContent className="p-2 md:p-4">
+              <Label className="text-base font-medium mb-3 block">Filters</Label>
+              <Accordion
+                  type="multiple" // Allow multiple sections open
+                  defaultValue={defaultOpenFilters} // Set which are open initially
+                  className="w-full space-y-1" // Add small space between items
+                >
+                {/* --- Cuisine Filter Item --- */}
+                <AccordionItem value="cuisines">
+                  <AccordionTrigger className="text-sm md:text-base font-semibold hover:no-underline py-2 px-1"> {/* Adjust styling */}
+                    Cuisines
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-3 pb-2"> {/* Adjust padding */}
+                    <CuisineFilter
+                      selectedCuisines={searchParams.selectedCuisines}
+                      onChange={handleCuisineChange}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+
+                {/* --- Rating Filter Item --- */}
+                <AccordionItem value="ratings">
+                  <AccordionTrigger className="text-sm md:text-base font-semibold hover:no-underline py-2 px-1">
+                    Ratings
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-3 pb-2">
+                    <RatingsFilter
+                      minRating={searchParams.minRating}
+                      onChange={handleRatingChange}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+
+                {/* --- Sort Options Item --- */}
+                <AccordionItem value="sort">
+                  <AccordionTrigger className="text-sm md:text-base font-semibold hover:no-underline py-2 px-1">
+                    Sort By
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-3 pb-2">
+                    <SortOptions
+                      sortOption={searchParams.sortOption}
+                      onChange={handleSortChange}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </CardContent>
           </Card>
         </div>
@@ -176,7 +208,10 @@ const SearchPage = () => {
             <>
               <div className="mb-4">
                 <p className="text-gray-600">
-                  Showing {filteredBusinesses.length} of {pagination.total} results
+                Showing {filteredBusinesses.length} of {pagination.total} results
+                    {searchParams.searchQuery && (
+                      <span> for &apos;<span className="font-semibold">{searchParams.searchQuery}</span>&apos;</span>
+                    )}
                 </p>
               </div>
               

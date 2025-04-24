@@ -13,8 +13,6 @@ const SortOptions = ({ sortOption, onChange }) => {
   
   return (
     <div>
-      <Label className="text-base font-medium mb-3 block">Sort By</Label>
-      
       <RadioGroup
         value={sortOption}
         onValueChange={onChange}

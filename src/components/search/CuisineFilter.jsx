@@ -52,7 +52,6 @@ const CuisineFilter = ({ selectedCuisines, onChange }) => {
   return (
     <div>
       <div className="flex justify-between items-center mb-3">
-        <Label className="text-base font-medium">Cuisine</Label>
         {selectedCuisinesList.length > 0 && (
           <Button 
             variant="link" 
