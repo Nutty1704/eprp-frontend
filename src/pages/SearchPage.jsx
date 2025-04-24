@@ -158,29 +158,17 @@ const SearchPage = () => {
   const defaultOpenFilters = ["cuisines", "ratings", "sort"];
   const searchAttempted = searchParams.searchQuery || searchParams.selectedCuisines;
 
-  // Optional helper to update URL (call this from handlers if desired)
-  // const updateUrl = (newParams) => {
-  //     const urlParams = new URLSearchParams();
-  //     if (newParams.searchQuery) urlParams.set('q', newParams.searchQuery);
-  //     if (newParams.selectedCuisines) urlParams.set('selectedCuisines', newParams.selectedCuisines);
-  //     if (newParams.minRating > 0) urlParams.set('rating', String(newParams.minRating));
-  //     if (newParams.sortOption !== 'createdAt') urlParams.set('sort', newParams.sortOption);
-  //     if (newParams.page > 1) urlParams.set('page', String(newParams.page));
-  //     navigate(`${location.pathname}?${urlParams.toString()}`, { replace: true });
-  // };
-
-
   return (
     <>
       {/* Full Width Wave Section */}
-      <div className="relative mb-6 md:mb-10 rounded-b-lg md:rounded-b-xl overflow-hidden shadow-inner bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="relative mb-6 md:mb-10 b-lg md:b-xl overflow-hidden shadow-inner bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <WavyBackground
-            className="absolute inset-0 z-0 opacity-10 md:opacity-20"
+            className="absolute inset-0 z-0 opacity-70 md:opacity-70"
             animationDuration={30}
         />
-        <div className="relative z-10 flex justify-center py-8 sm:py-10 md:py-10">
-           <div className="container mx-auto px-4">
-             <SearchBar className="max-w-4xl w-full mx-auto" placeholder="Search by Business Name or Cuisine" />
+        <div className="relative z-10 py-8 sm:py-10 md:py-10">
+           <div className="container mx-auto pt-5 flex justify-center">
+             <SearchBar className=" max-w-4xl w-full mx-auto" placeholder="Search by Business Name or Cuisine" />
            </div>
         </div>
       </div>
