@@ -1,10 +1,12 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 const CuisineCard = ({ name, spots, image }) => {
+
+  const encodedCuisineName = encodeURIComponent(name);
+
   return (
     <Link 
-      to={`/cuisine/${name.toLowerCase()}`} 
+      to={`/search?selectedCuisines=${encodedCuisineName}`} 
       className="flex-shrink-0 group"
     >
       <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-lg mx-auto mb-3 transition transform group-hover:scale-105">
