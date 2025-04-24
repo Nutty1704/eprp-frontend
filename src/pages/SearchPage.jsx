@@ -15,6 +15,7 @@ import CuisineFilter from '../components/search/CuisineFilter';
 import RatingsFilter from '../components/search/RatingsFilter';
 import SortOptions from '../components/search/SortOptions';
 import BusinessCard from '../components/search/BusinessCard';
+import WavyBackground from '../components/ui/WavyBackground';
 
 import {
   Pagination,
@@ -139,13 +140,21 @@ const SearchPage = () => {
   const defaultOpenFilters = ["cuisines", "ratings", "sort"];
   
   return (
-    <div className="container mx-auto py-8 px-4">
-      <div className="mb-8 flex justify-center">
-        <SearchBar className="max-w-4xl w-full" />
+    <div className="container mx-auto pb-8">
+
+      <div className="relative mb-6 md:mb-10 b-lg md:b-xl overflow-hidden shadow-inner bg-gradient-to-br from-blue-50 via-white to-purple-50"> 
+        <WavyBackground
+            className="absolute inset-0 z-0 opacity-10 md:opacity-80" 
+            animationDuration={30} // Slower animation
+        />
+        <div className="container mx-auto pt-12 pb-4 px-4">
+           <div className="mb-0 flex justify-center">
+             <SearchBar className="max-w-4xl w-full mx-auto" /> 
+           </div>
+        </div>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        {/* Filters sidebar */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 px-4">
         <div className="md:col-span-1">
           <Card>
             <CardContent className="p-2 md:p-4">
