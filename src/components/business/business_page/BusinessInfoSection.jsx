@@ -4,18 +4,22 @@ import { Button } from '@/components/ui/button'
 import { Globe, Mail, Pen, Phone, Share } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import useAuthStore from '@/src/stores/auth-store'
-import AuthDialog from '../../auth/AuthDialog'
+import AuthDialog from '@/src/components/auth/AuthDialog'
 import Rating from '@/src/components/ui/Rating'
 import Location from '../Location'
 import BusinessAbout from './BusinessAbout'
 import { reviewIcons } from '@/src/config/Icons'
 
-const ReviewButton = () => (
-    <Button className='flex items-center gap-2'>
+const ReviewButton = React.forwardRef((props, ref) => (
+    <Button
+        className='flex items-center gap-2'
+        ref={ref}
+        {...props}
+    >
         <Pen className='w-4 h-4' />
         Write a review
     </Button>
-)
+))
 
 const BusinessInfoSection = ({ business }) => {
     const { isAuthenticated } = useAuthStore();
