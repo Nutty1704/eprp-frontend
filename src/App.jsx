@@ -1,5 +1,5 @@
 import AppRoutes from './AppRouter'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Toaster } from 'sonner'
 import useAuthStore from './stores/auth-store'
 
