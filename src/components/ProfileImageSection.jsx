@@ -7,9 +7,26 @@ const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteIm
       <CardContent className="pt-6">
         <div className="flex flex-col sm:flex-row items-center gap-6">
           <div className="w-32 h-32 border rounded-md flex items-center justify-center overflow-hidden bg-gray-50">
-            {(imageUrl || imagePreview) ? (
+            {/* {(imageUrl || imagePreview) ? (
               <img 
                 src={imagePreview || imageUrl} 
+                alt="Business Profile" 
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="text-gray-400 text-sm text-center p-2">
+                No image
+              </div>
+            )} */}
+            {imagePreview ? (
+              <img 
+                src={imagePreview} 
+                alt="Business Profile Preview" 
+                className="w-full h-full object-cover"
+              />
+            ) : imageUrl ? (
+              <img 
+                src={imageUrl} 
                 alt="Business Profile" 
                 className="w-full h-full object-cover"
               />
@@ -26,6 +43,7 @@ const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteIm
             
             <div className="flex flex-wrap gap-3 justify-center sm:justify-start">
               <Button 
+                type="button" // prevents form submission and refetch
                 variant="secondary" 
                 className="bg-red-50 text-red-600 hover:bg-red-100"
                 onClick={() => {

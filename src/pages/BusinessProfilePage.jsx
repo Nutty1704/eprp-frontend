@@ -101,7 +101,7 @@ const BusinessProfilePage = () => {
 
 			setBusiness(formattedData);
 		}
-	}, [businessData]);
+	}, [businessData, businessId]);
 
 	// Handle form input changes
 	const handleInputChange = (e) => {
@@ -268,6 +268,7 @@ const BusinessProfilePage = () => {
 
 			// Clear selected image after successful update
 			setSelectedImage(null);
+      setImagePreview("");
 		} catch (error) {
 			toast.error("Error", {
 				description:
@@ -391,7 +392,7 @@ const BusinessProfilePage = () => {
 				</TabsContent>
 
 				<TabsContent value="menu">
-					<MenuPage />
+					<MenuPage key={businessId} businessId={businessId}/>
 				</TabsContent>
 			</Tabs>
 		</div>

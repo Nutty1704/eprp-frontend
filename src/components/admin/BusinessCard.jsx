@@ -6,7 +6,7 @@ const BusinessCard = ({ name, location, url, avgRating, imageUrl, description })
     <div className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm flex">
       {/* Left: Full-height image block */}
       {imageUrl && (
-        <div className="w-40 h-auto">
+        <div className="w-40 h-32">
           <img
             src={imageUrl}
             alt={name}
@@ -21,15 +21,9 @@ const BusinessCard = ({ name, location, url, avgRating, imageUrl, description })
         <div className="flex flex-col gap-1 w-[55%]">
           <h2 className="text-xl font-semibold text-gray-800">{name}</h2>
           <p className="text-sm text-gray-600">{location}</p>
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="text-sm text-blue-600 hover:underline block"
-          >
+          <p className="text-sm text-gray-600 break-words">
             {url}
-          </a>
+          </p>
           <p className="text-sm text-yellow-600 mt-1">⭐ {avgRating} / 5</p>
         </div>
 

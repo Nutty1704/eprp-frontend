@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import BusinessCard from "../components/admin/BusinessCard";
 import AddBusinessDialog from "../components/admin/AddBusinessDialog";
-import { useGetMyBusinesses } from "../lib/api/MyBusinessApi"; // ✅ New hook
+import { useGetMyBusinesses } from "../lib/api/MyBusinessApi"; 
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 
@@ -65,9 +65,9 @@ const OwnerDashboard = () => {
 						>
 							<BusinessCard
 								name={biz.name}
-								location={biz.location}
+								location={biz.address}
 								url={biz.url}
-								avgRating={biz.avgRating}
+								avgRating={biz.rating}
 								imageUrl={biz.imageUrl}
 								description={biz.description}
 							/>
