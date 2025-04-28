@@ -147,8 +147,9 @@ const MenuPage = ({ businessId }) => {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 py-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
+    <div className="container mx-auto px-4 sm:px-6">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6"> */}
+      <div className='flex flex-wrap gap-6 items-center'>
         {menuItems.map((item, index) => (
           <MenuCard
             key={item._id}
@@ -163,11 +164,11 @@ const MenuPage = ({ businessId }) => {
         
         {/* Add New Item Card */}
         <Card 
-          className="flex items-center justify-center bg-pink-100 border-dashed border-2 border-pink-300 cursor-pointer hover:bg-pink-200 transition-colors duration-300"
+          className="flex items-center justify-center hover:bg-gray-100 border-dashed border-2 border-primary cursor-pointer transition-colors duration-300 min-w-48"
           onClick={() => handleOpenDialog()}
         >
-          <div className="text-center">
-            <Plus className="mx-auto h-12 w-12 text-pink-500" />
+          <div className="text-center text-primary min-h-56 flex flex-col items-center justify-center">
+            <Plus className="mx-auto h-12 w-12" />
             <p className="mt-2 text-pink-700 font-medium">Add Menu Item</p>
           </div>
         </Card>
