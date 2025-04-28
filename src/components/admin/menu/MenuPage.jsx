@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import { toast } from 'sonner';
 import MenuCard from './MenuCard';
 import AddMenuItemDialog from './AddMenuItemDialog';
-import { useGetMyBusiness, useUpdateMyBusiness } from '../../lib/api/MyBusinessApi';
+import { useGetMyBusiness, useUpdateMyBusiness } from '@/src/lib/api/MyBusinessApi';
 import { Card } from '@/components/ui/card';
 
 const MenuPage = () => {

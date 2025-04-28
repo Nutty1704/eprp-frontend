@@ -1,58 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Star } from 'lucide-react';
-import RatingComponent from '../ui/RatingComponent';
+import { Heart, Star } from 'lucide-react';
+import { format } from 'date-fns'
+import Rating from '../ui/Rating';
+import { reviewIcons } from '@/src/config/Icons';
 
-const ReviewCard = ({ 
-  restaurantName,
-  reviewDate,
-  reviewText,
-  overallRating,
-  foodRating,
-  serviceRating,
-  valueRating,
-  likeCount
+const ReviewCard = ({
+  review,
+  restaurantName = "ABC",
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 mb-4 max-w-6xl w-full">
-      <div className="flex justify-between items-start mb-2">
-        <div>
+    <div className="bg-slate-100 rounded-lg shadow-md p-4 mb-4 max-w-6xl w-full inter-regular">
+      <div className="flex justify-between items-center mb-2 w-full">
+        <div className='flex items-center min-w-1/2 justify-between gap-3'>
           <h3 className="text-xl font-semibold rubik-bold">{restaurantName}</h3>
           <div className="flex items-center">
-            <Star className="h-4 w-4 text-[#8B0000] fill-[#8B0000] mr-1" />
-            <span className="text-[#8B0000] text-sm font-medium">{overallRating}/5</span>
-            <span className="text-gray-500 text-xs ml-2">{reviewDate}</span>
+            <Star className="h-4 w-4 text-primary fill-primary mr-1" />
+            <span className="text-primary text-sm font-medium">{review.rating}/5</span>
           </div>
         </div>
+        <span className="text-gray-600 font-medium text-xs ml-2">
+          {format(new Date(review.createdAt), 'd MMMM yyyy')}
+        </span>
       </div>
 
-      <p className="text-gray-700 my-3 inter-regular">{reviewText}</p>
+      <p className="text-gray-700 my-3">{review.text}</p>
 
-      <RatingComponent 
-        ratings={{ 
-          food: foodRating, 
-          service: serviceRating, 
-          value: valueRating 
-        }}
-        useBackground={true}
-        size="md"
-      />
+      <div className="space-y-1.5">
+        <Rating
+          rating={review.foodRating}
+          prefix={`Food ${reviewIcons.food}`}
+          textClass="text-sm"
+          prefixClass="font-medium min-w-24"
+          iconClass="h-4 w-4"
+        />
+        <Rating
+          rating={review.serviceRating}
+          prefix={`Service ${reviewIcons.service}`}
+          textClass="text-sm"
+          prefixClass="font-medium min-w-24"
+          iconClass="h-4 w-4"
+        />
+        <Rating
+          rating={review.ambienceRating}
+          prefix={`Ambience ${reviewIcons.ambience}`}
+          textClass="text-sm"
+          prefixClass="font-medium min-w-24"
+          iconClass="h-4 w-4"
+        />
+      </div>
 
-      <div className="flex items-center justify-end mt-2">
-        <button className="flex items-center text-gray-600 hover:text-[#8B0000]">
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="h-5 w-5 mr-1" 
-            viewBox="0 0 20 20" 
-            fill="currentColor"
-          >
-            <path 
-              fillRule="evenodd" 
-              d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" 
-              clipRule="evenodd" 
-            />
-          </svg>
-          <span>{likeCount}</span>
+      <div className="flex items-center justify-end mt-4">
+        <button className="flex items-center inter-medium gap-1.5">
+          <Heart className='h-5 w-5 fill-primary text-primary' />
+          <span>{review.upvotes}</span>
         </button>
       </div>
     </div>
@@ -60,14 +61,7 @@ const ReviewCard = ({
 };
 
 ReviewCard.propTypes = {
-  restaurantName: PropTypes.string.isRequired,
-  reviewDate: PropTypes.string.isRequired,
-  reviewText: PropTypes.string.isRequired,
-  overallRating: PropTypes.number.isRequired,
-  foodRating: PropTypes.number.isRequired,
-  serviceRating: PropTypes.number.isRequired,
-  valueRating: PropTypes.number.isRequired,
-  likeCount: PropTypes.number.isRequired
+  review: PropTypes.object.isRequired,
 };
 
 export default ReviewCard;
