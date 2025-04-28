@@ -25,6 +25,17 @@ const Header = ({ }) => {
               Home
             </Link>
             
+
+            {isAuthenticated ? (
+              <Link to="/profile" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium">
+                Profile
+              </Link>
+            ) : (
+              <Link to="/profile" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium">
+                Profile
+              </Link>
+            )}
+            
             {isAuthenticated ? (
               <Logout>
                 <Button className="bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 rounded">

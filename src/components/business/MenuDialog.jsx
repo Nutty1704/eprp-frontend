@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../../components/ui/dialog"; // Adjust import path as needed
+} from "../../../components/ui/dialog"; 
 
 const MenuDialog = ({ restaurant, trigger }) => {
   if (!restaurant || !restaurant.menuItems) {
