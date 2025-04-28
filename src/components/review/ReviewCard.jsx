@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Heart, Star } from 'lucide-react';
 import { format } from 'date-fns'
@@ -9,6 +9,19 @@ const ReviewCard = ({
   review,
   restaurantName = "ABC",
 }) => {
+  const [isReplying, setIsReplying] = useState(false);
+  const [replyText, setReplyText] = useState('');
+
+  const handleReply = () => {
+    setIsReplying(true);
+  };
+
+  const handleSubmit = () => {
+    onReplySubmit(replyText);
+    setIsReplying(false);
+    setReplyText('');
+  };
+
   return (
     <div className="bg-slate-100 rounded-lg shadow-md p-4 mb-4 max-w-6xl w-full inter-regular">
       <div className="flex justify-between items-center mb-2 w-full">
