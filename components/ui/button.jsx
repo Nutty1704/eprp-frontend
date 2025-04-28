@@ -14,11 +14,13 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border border-gray-400 bg-transparent shadow-sm hover:bg-accent text-gray-600 hover:text-gray-700",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        translucent: "bg-black/40 text-primary-foreground hover:bg-black/60",
+        outlineDark: "border rounded-sm bg-transparent text-primary-foreground",
       },
       size: {
         default: "h-9 px-4 py-2",
@@ -37,10 +39,10 @@ const buttonVariants = cva(
 const Button = React.forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
   const Comp = asChild ? Slot : "button"
   return (
-    (<Comp
+    <Comp
       className={cn(buttonVariants({ variant, size, className }))}
       ref={ref}
-      {...props} />)
+      {...props} />
   );
 })
 Button.displayName = "Button"

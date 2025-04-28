@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useFormContext, Controller } from "react-hook-form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { cuisineOptions } from "../../types/cuisineoptions";
+import { cuisineOptions } from "@/src/config/Cuisine";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-const CuisineSelector = ({ selectedCuisines = [], onChange }) => {
+const CuisineSelector = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const { control, formState: { errors }, setValue, watch } = useFormContext();
+  
+  // Get the current value of cuisines from the form
+  const selectedCuisines = watch("cuisines") || [];
   
   // Filter cuisines based on search term
   const filteredCuisines = cuisineOptions.filter(cuisine => 
@@ -17,24 +21,26 @@ const CuisineSelector = ({ selectedCuisines = [], onChange }) => {
   
   // Handle checkbox change
   const handleCuisineToggle = (cuisineId) => {
+    let newCuisines;
+    
     if (selectedCuisines.includes(cuisineId)) {
       // Remove if already selected
-      onChange(selectedCuisines.filter(id => id !== cuisineId));
+      newCuisines = selectedCuisines.filter(id => id !== cuisineId);
     } else {
       // Add if not selected
-      onChange([...selectedCuisines, cuisineId]);
+      newCuisines = [...selectedCuisines, cuisineId].sort();
     }
+    
+    // Update form value with validation
+    setValue("cuisines", newCuisines, { shouldValidate: true });
   };
   
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Cuisines</CardTitle>
-      </CardHeader>
-      <CardContent>
+    <div>
+      <div>
         <Alert className="mb-6 bg-blue-50 border-blue-200">
           <AlertDescription>
-            Did we miss out on a cuisines you offer? Let us know by sending a support inquiry.
+            Did we miss out on a cuisine you offer? Let us know by sending a support inquiry.
           </AlertDescription>
         </Alert>
         <div className="mb-4">
@@ -50,14 +56,27 @@ const CuisineSelector = ({ selectedCuisines = [], onChange }) => {
           Selected: {selectedCuisines.length} cuisines
         </div>
         
-        <ScrollArea className="h-64 rounded-md border p-4">
+        {errors.cuisines && (
+          <div className="text-sm text-red-500 mb-2">
+            {errors.cuisines.message}
+          </div>
+        )}
+        
+        <ScrollArea className={`h-64 rounded-md border p-4 ${errors.cuisines ? 'border-red-500' : ''}`}>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {filteredCuisines.map((cuisine) => (
               <div key={cuisine.id} className="flex items-center space-x-2">
-                <Checkbox 
-                  id={`cuisine-${cuisine.id}`} 
-                  checked={selectedCuisines.includes(cuisine.id)}
-                  onCheckedChange={() => handleCuisineToggle(cuisine.id)}
+                <Controller
+                  name={`cuisines.${cuisine.id}`} // Using a unique path for each checkbox
+                  control={control}
+                  defaultValue={selectedCuisines.includes(cuisine.id)}
+                  render={({ field }) => (
+                    <Checkbox 
+                      id={`cuisine-${cuisine.id}`} 
+                      checked={selectedCuisines.includes(cuisine.id)}
+                      onCheckedChange={() => handleCuisineToggle(cuisine.id)}
+                    />
+                  )}
                 />
                 <Label 
                   htmlFor={`cuisine-${cuisine.id}`}
@@ -81,15 +100,15 @@ const CuisineSelector = ({ selectedCuisines = [], onChange }) => {
             {selectedCuisines.map(cuisineId => {
               const cuisine = cuisineOptions.find(c => c.id === cuisineId);
               return cuisine ? (
-                <div key={cuisine.id} className="bg-red-100 text-red-800 text-xs rounded-full px-3 py-1">
+                <div key={cuisine.id} className="bg-gray-200 font-medium text-xs rounded-full px-3 py-1">
                   {cuisine.label}
                 </div>
               ) : null;
             })}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

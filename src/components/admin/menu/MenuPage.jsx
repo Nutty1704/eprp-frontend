@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import MenuCard from './MenuCard';
 import AddMenuItemDialog from './AddMenuItemDialog';
-import { useGetBusinessById, useGetMyBusiness, useUpdateMyBusiness } from '../../lib/api/MyBusinessApi';
+import { useGetBusinessById, useGetMyBusiness, useUpdateMyBusiness } from '@/src/lib/api/MyBusinessApi';
 import { Card } from '@/components/ui/card';
 
 const MenuPage = ({ businessId }) => {
@@ -148,7 +148,7 @@ const MenuPage = ({ businessId }) => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 py-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
         {menuItems.map((item, index) => (
           <MenuCard
             key={item._id}
