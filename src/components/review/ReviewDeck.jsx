@@ -1,9 +1,51 @@
-import { ArrowDownUp, Filter, Heart, MessageSquareText } from 'lucide-react'
-import React, { useState } from 'react'
+import { ArrowDownUp, MessageSquareText } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
 import ReviewCard from './ReviewCard'
-import reviews from '@/test_data/reviews.json'
+import { useReviews } from '@/src/hooks/useReviews'
+import { Skeleton } from '@/components/ui/skeleton'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
-const ReviewDeck = ({ }) => {
+const SORT_OPTIONS = [
+  { 
+    label: 'Newest', 
+    value: { field: 'createdAt', direction: 'desc' },
+    icon: '↓'
+  },
+  { 
+    label: 'Oldest', 
+    value: { field: 'createdAt', direction: 'asc' },
+    icon: '↑'
+  },
+  { 
+    label: 'Highest Rating', 
+    value: { field: 'rating', direction: 'desc' },
+    icon: '↓'
+  },
+  { 
+    label: 'Lowest Rating', 
+    value: { field: 'rating', direction: 'asc' },
+    icon: '↑'
+  },
+  { 
+    label: 'Most Upvoted', 
+    value: { field: 'upvotes', direction: 'desc' },
+    icon: '↓'
+  }
+];
+
+const ReviewDeck = ({ customerId, businessId }) => {
+    const [sortOption, setSortOption] = useState(SORT_OPTIONS[0]);
+    
+    const {
+        reviews,
+        isLoading, 
+        isFetching,
+        error
+    } = useReviews({
+        customerId,
+        businessId,
+        sort: sortOption.value
+    });
 
     return (
         <div className='bg-primary min-h-[50vh] w-full relative mt-40 flex items-start justify-center pt-10'>
@@ -26,25 +68,68 @@ const ReviewDeck = ({ }) => {
                     </div>
 
                     <div className='flex items-center justify-end gap-4 lg:pr-20 text-sm inter-medium'>
-                        <div className='flex items-center gap-2 rounded-full bg-slate-200 py-1 px-4 shadow-sm'>
-                            <ArrowDownUp className='w-4 h-4' />
-                            Sort
-                        </div>
-                        <div className='flex items-center gap-2 rounded-full bg-slate-200 py-1 px-4 shadow-sm'>
-                            <Filter className='w-4 h-4' />
-                            Filter
-                        </div>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger className='flex items-center gap-2 rounded-full bg-slate-200 py-1 px-4 shadow-sm cursor-pointer hover:bg-slate-300'>
+                                <ArrowDownUp className='w-4 h-4' />
+                                Sort: {sortOption.label}
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                {SORT_OPTIONS.map((option) => (
+                                    <DropdownMenuItem 
+                                        key={option.label}
+                                        onClick={() => setSortOption(option)}
+                                        className={`${sortOption.label === option.label ? 'bg-slate-100 font-medium' : ''}`}
+                                    >
+                                        <span className="mr-2">{option.icon}</span>
+                                        {option.label}
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </div>
 
-                {/* Reviews */}
-                <div className='grid grid-col-1 lg:grid-cols-2 gap-y-4 gap-8 mt-8'>
-                    {reviews.map((review) => (
-                        <ReviewCard review={review} />
-                    ))}
-                </div>
-            </div>
+                {/* Loading state */}
+                {isLoading && (
+                    <div className='grid grid-col-1 lg:grid-cols-2 gap-y-4 gap-8 mt-8 w-full'>
+                        {[...Array(6)].map((_, index) => (
+                            <Skeleton
+                                key={index}
+                                className="h-40 shadow-lg"
+                            />
+                        ))}
+                    </div>
+                )}
 
+                {/* Error state */}
+                {error && (
+                    <div className='text-red-500 my-8'>
+                        Failed to load reviews. Please try again.
+                    </div>
+                )}
+
+                {/* Reviews */}
+                {!isLoading && !error && (
+                    <div className='grid grid-col-1 lg:grid-cols-2 gap-y-4 gap-8 mt-8 w-full'>
+                        {reviews.length === 0 ? (
+                            <div className='col-span-full text-center py-12 text-slate-500'>
+                                No reviews found.<br />Be the <span className='text-primary'>first</span> to leave one!
+                            </div>
+                        ) : (
+                            reviews.map((review) => (
+                                <ReviewCard key={review.id} review={review} />
+                            ))
+                        )}
+                    </div>
+                )}
+
+                {/* Refreshing indicator */}
+                {!isLoading && isFetching && (
+                    <div className='text-sm text-slate-400 mt-4 text-center'>
+                        Updating...
+                    </div>
+                )}
+            </div>
         </div>
     )
 }

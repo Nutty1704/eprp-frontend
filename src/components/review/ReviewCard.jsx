@@ -29,7 +29,7 @@ const ReviewCard = ({
           <h3 className="text-xl font-semibold rubik-bold">{restaurantName}</h3>
           <div className="flex items-center">
             <Star className="h-4 w-4 text-primary fill-primary mr-1" />
-            <span className="text-primary text-sm font-medium">{review.rating}/5</span>
+            <span className="text-primary text-sm font-medium">{review.rating?.toFixed(2)}/5</span>
           </div>
         </div>
         <span className="text-gray-600 font-medium text-xs ml-2">
@@ -41,6 +41,7 @@ const ReviewCard = ({
 
       <div className="space-y-1.5">
         <Rating
+          asInt={true}
           rating={review.foodRating}
           prefix={`Food ${reviewIcons.food}`}
           textClass="text-sm"
@@ -48,6 +49,7 @@ const ReviewCard = ({
           iconClass="h-4 w-4"
         />
         <Rating
+          asInt={true}
           rating={review.serviceRating}
           prefix={`Service ${reviewIcons.service}`}
           textClass="text-sm"
@@ -55,6 +57,7 @@ const ReviewCard = ({
           iconClass="h-4 w-4"
         />
         <Rating
+          asInt={true}
           rating={review.ambienceRating}
           prefix={`Ambience ${reviewIcons.ambience}`}
           textClass="text-sm"
