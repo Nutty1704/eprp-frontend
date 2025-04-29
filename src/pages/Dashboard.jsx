@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import SearchBar from '@/src/components/ui/SearchBar';
+import SearchBar from '@/src/components/search/SearchBar';
 import useAuthStore from '@/src/stores/auth-store';
 import PopularSpots from '@/src/components/business/dashboard/PopularSpots';
 import CuisineSection from '@/src/components/business/dashboard/CuisineSection';

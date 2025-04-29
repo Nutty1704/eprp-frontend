@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
+import { Trash2 } from 'lucide-react';
 
-const MenuCard = ({ number, name, price, imageUrl, onEdit }) => {
+const MenuCard = ({ number, name, price, imageUrl, onEdit, onDelete }) => {
   return (
     <Card className="overflow-hidden bg-pink-50 hover:shadow-md transition-shadow duration-300">
       <div className="relative">
@@ -19,10 +20,19 @@ const MenuCard = ({ number, name, price, imageUrl, onEdit }) => {
       </div>
       <CardContent className="p-4">
         <div className="flex justify-between items-center">
-          <h3 className="font-medium text-gray-900">
+          <h3 className="font-medium text-gray-900 truncate">
             {number}. {name}
           </h3>
-          <span className="font-medium text-gray-900">${price.toFixed(2)}</span>
+          <div className='flex items-center gap-2'>
+            <span className="font-medium text-gray-900">${price.toFixed(2)}</span>
+            <Trash2 
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
+              className="h-5 w-5 text-red-500 cursor-pointer hover:text-red-700 transition-colors duration-200"
+            />
+          </div>
         </div>
       </CardContent>
     </Card>

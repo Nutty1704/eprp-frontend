@@ -80,7 +80,22 @@ export const useGetBusinessById = (businessId) => {
     fetchBusiness();
   }, [businessId]);
 
-  return { business, isLoading, error };
+  const refetch = async () => {
+    if (!businessId) return;
+    try {
+      setIsLoading(true);
+      const response = await axios.get(`${API_URL}/business/${businessId}`);
+      setBusiness(response.data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching business:", err);
+      setError(err.response?.data?.message || "Failed to fetch business");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { business, isLoading, error, refetch };
 };
 
 /**

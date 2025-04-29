@@ -4,6 +4,8 @@ import ReviewsPage from '@/src/pages/ReviewsPage'
 import CustomerLayout from '@/src/layouts/CustomerLayout'
 import OwnerDashboard from "./pages/OwnerDashboard"
 import BusinessPage from "./pages/business/BusinessPage"
+import SearchPage from "./pages/SearchPage"
+import BusinessProfilePage from "./pages/BusinessProfilePage"
 
 
 const AppRoutes = () =>{
@@ -13,8 +15,10 @@ const AppRoutes = () =>{
           <Route path="/" element={<Dashboard />} />
           <Route path="/business/:id" element={<BusinessPage />} />
           <Route path="/reviews" element={<ReviewsPage />} />
+          <Route path="/search" element={<SearchPage/>}/>
         </Route>
         <Route path="/owner" element={<OwnerDashboard />} />
+        <Route path="/manage-business" element={<BusinessProfilePage/>}/>
       </Routes>
     )
 }

@@ -1,16 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
 import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+} from "@/components/ui/dialog";
 import MenuCard from './MenuCard';
 import AddMenuItemDialog from './AddMenuItemDialog';
-import { useGetMyBusiness, useUpdateMyBusiness } from '@/src/lib/api/MyBusinessApi';
+import { useGetBusinessById, useGetMyBusiness, useUpdateMyBusiness } from '@/src/lib/api/MyBusinessApi';
 import { Card } from '@/components/ui/card';
 
-const MenuPage = () => {
+const MenuPage = ({ businessId }) => {
+  // const { businessId } = useParams();
   const [menuItems, setMenuItems] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
-  const { business, isLoading, refetch } = useGetMyBusiness();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  // const { business, isLoading, refetch } = useGetMyBusiness();
+  const { business, isLoading, refetch } = useGetBusinessById(businessId);
   const { updateBusiness, isLoading: isUpdating } = useUpdateMyBusiness();
 
   useEffect(() => {
@@ -27,6 +41,11 @@ const MenuPage = () => {
   const handleCloseDialog = () => {
     setEditingItem(null);
     setDialogOpen(false);
+  };
+
+  const handleDeleteClick = (item) => {
+    setItemToDelete(item);
+    setDeleteDialogOpen(true);
   };
 
   const handleSaveMenuItem = async (formData, itemId) => {
@@ -90,6 +109,28 @@ const MenuPage = () => {
     }
   };
 
+  const confirmDelete = async () => {
+    try {
+      if (!itemToDelete) return;
+  
+      const updatedMenuItems = menuItems.filter(i => i._id !== itemToDelete._id);
+  
+      const businessFormData = new FormData();
+      businessFormData.append('menuItems', JSON.stringify(updatedMenuItems));
+  
+      await updateBusiness(businessFormData, business._id);
+  
+      setMenuItems(updatedMenuItems);
+      toast.success('Menu item deleted');
+    } catch (error) {
+      console.error('Error deleting menu item:', error);
+      toast.error('Failed to delete menu item');
+    } finally {
+      setDeleteDialogOpen(false);
+      setItemToDelete(null);
+    }
+  };
+  
   if (isLoading) {
     return (
       <div className="container mx-auto py-6 text-center">
@@ -107,7 +148,7 @@ const MenuPage = () => {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 py-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
         {menuItems.map((item, index) => (
           <MenuCard
             key={item._id}
@@ -116,12 +157,13 @@ const MenuPage = () => {
             price={item.price}
             imageUrl={item.imageUrl}
             onEdit={() => handleOpenDialog(item)}
+            onDelete={() => handleDeleteClick(item)}
           />
         ))}
         
         {/* Add New Item Card */}
         <Card 
-          className="flex items-center justify-center h-48 bg-pink-100 border-dashed border-2 border-pink-300 cursor-pointer hover:bg-pink-200 transition-colors duration-300"
+          className="flex items-center justify-center bg-pink-100 border-dashed border-2 border-pink-300 cursor-pointer hover:bg-pink-200 transition-colors duration-300"
           onClick={() => handleOpenDialog()}
         >
           <div className="text-center">
@@ -137,6 +179,37 @@ const MenuPage = () => {
         onSave={handleSaveMenuItem}
         editItem={editingItem}
       />
+
+      <AddMenuItemDialog
+        open={dialogOpen}
+        onClose={handleCloseDialog}
+        onSave={handleSaveMenuItem}
+        editItem={editingItem}
+      />
+
+      {/* Confirm Delete Dialog */}
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Menu Item</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete <strong>{itemToDelete?.name}</strong>?
+              This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button variant="destructive" onClick={confirmDelete}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
