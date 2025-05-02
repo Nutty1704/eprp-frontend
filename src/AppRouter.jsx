@@ -6,6 +6,7 @@ import OwnerDashboard from "./pages/OwnerDashboard"
 import BusinessPage from "./pages/business/BusinessPage"
 import SearchPage from "./pages/SearchPage"
 import BusinessProfilePage from "./pages/BusinessProfilePage"
+import BusinessForm from "./components/admin/business-form/BusinessForm"
 
 
 const AppRoutes = () =>{
@@ -19,7 +20,7 @@ const AppRoutes = () =>{
         </Route>
         <Route path="/owner" element={<OwnerDashboard />} />
         <Route path="/owner/business/:businessId" element={<BusinessProfilePage />} />
-        <Route path="/manage-business" element={<BusinessProfilePage/>}/>
+        <Route path="/owner/business/new" element={<BusinessProfilePage />} />
       </Routes>
     )
 }

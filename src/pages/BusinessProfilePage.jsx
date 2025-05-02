@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import {
   useGetBusinessById,
@@ -28,6 +28,7 @@ const defaultOpeningHours = {
 };
 
 const BusinessProfilePage = () => {
+  const navigate = useNavigate();
   const { businessId } = useParams();
   const {
     business: businessData,
@@ -94,9 +95,6 @@ const BusinessProfilePage = () => {
         formData.append(key, data[key]);
       }
     }
-  
-    console.log("Profile Image:", data.profileImage);
-    console.log("Is File:", data.profileImage instanceof File);
 
     // Append single profile image
     if (data.profileImage instanceof File) {
@@ -119,6 +117,7 @@ const BusinessProfilePage = () => {
       } else {
         await createBusiness(formData);
         toast.success("Business created successfully");
+        navigate("/owner");
       }
 
       refetch();
@@ -146,12 +145,13 @@ const BusinessProfilePage = () => {
   return (
     <div className="container mx-auto px-4 sm:px-6 py-6">
       <Tabs value={activeTab} onValueChange={setActiveTab}>
+      {businessId && (
         <TabsList className="w-full border-b flex-nowrap justify-start sm:justify-center">
           <TabsTrigger value="business-info" className="flex-1">Business Information</TabsTrigger>
           <TabsTrigger value="reviews" className="flex-1">Reviews</TabsTrigger>
           <TabsTrigger value="menu" className="flex-1">Menu</TabsTrigger>
         </TabsList>
-
+      )}
         <TabsContent value="business-info" className="mt-6">
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -182,16 +182,22 @@ const BusinessProfilePage = () => {
           </FormProvider>
         </TabsContent>
 
-        <TabsContent value="reviews">
-          <div className="p-4 text-center">
-            <h3 className="text-lg font-medium">Reviews Management</h3>
-            <p className="text-gray-500 mt-2">This section will allow you to view and respond to customer reviews.</p>
-          </div>
-        </TabsContent>
+        {businessId && (
+          <TabsContent value="reviews">
+            <div className="p-4 text-center">
+              <h3 className="text-lg font-medium">Reviews Management</h3>
+              <p className="text-gray-500 mt-2">
+                This section will allow you to view and respond to customer reviews.
+              </p>
+            </div>
+          </TabsContent>
+        )}
 
-        <TabsContent value="menu" className="mt-6">
-          <MenuPage businessId={businessId} />
-        </TabsContent>
+        {businessId && (
+          <TabsContent value="menu" className="mt-6">
+            <MenuPage businessId={businessId} />
+          </TabsContent>
+        )}
       </Tabs>
     </div>
   );

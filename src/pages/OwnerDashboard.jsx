@@ -45,11 +45,12 @@ const OwnerDashboard = () => {
 				<h1 className="text-3xl font-bold text-gray-900">
 					Your businesses
 				</h1>
-				{/* <AddBusinessDialog /> */}
-				<Button className="flex items-center gap-2 bg-red-600 text-white hover:bg-red-700">
-					<Plus className="w-4 h-4" />
-					Add Business
-				</Button>
+        <Link to="/owner/business/new">
+          <Button className="flex items-center gap-2 bg-red-600 text-white hover:bg-red-700">
+            <Plus className="w-4 h-4" />
+            Add Business
+          </Button>
+        </Link>
 			</div>
 
 			{/* Loading / Empty / List */}
@@ -74,6 +75,7 @@ const OwnerDashboard = () => {
 								avgRating={biz.rating}
 								imageUrl={biz.imageUrl}
 								description={biz.description}
+                reviewCount={biz.review_count}
 							/>
 						</Link>
 					))}
