@@ -48,13 +48,32 @@ export const businessSchema = z.object({
     .optional()
     .or(z.literal("")),
   
-  images: z.array(
-    z.instanceof(File).refine(
-      (file) => file.size <= 10 * 1024 * 1024,
-      "Image must be less than 10MB"
+  profileImage: z
+    .instanceof(File)
+    .refine(
+      (file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type),
+      { message: "Only JPEG and PNG images are allowed" }
     )
-  ).optional(),
-  
+    .refine((file) => file.size <= 10 * 1024 * 1024, {
+      message: "Image must be less than 10MB",
+    })
+    .optional(),
+    
+  businessImages: z
+    .array(
+      z
+        .instanceof(File)
+        .refine(
+          (file) => ["image/jpeg", "image/png", "image/jpg"].includes(file.type),
+          { message: "Only JPEG and PNG images are allowed" }
+        )
+        .refine((file) => file.size <= 10 * 1024 * 1024, {
+          message: "Each image must be less than 10MB",
+        })
+    )
+    .max(MAX_IMAGES, "Maximum 30 images allowed")
+    .optional(),
+
   cuisines: z
     .array(z.string())
     .min(1, "Please select at least one cuisine type"),

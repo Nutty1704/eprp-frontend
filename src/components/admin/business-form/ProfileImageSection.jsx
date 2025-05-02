@@ -56,9 +56,13 @@ const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteIm
           <div className="flex-1 mt-4 sm:mt-0 text-center sm:text-left">
             <h3 className="font-medium mb-1">Profile picture</h3>
             <p className="text-sm text-gray-500 mb-3">PNG, JPEG under 10MB</p>
+            { errors.profileImage && (
+              <p className="text-red-500 text-sm mb-2">{errors.profileImage.message}</p>
+            )}
             
             <div className="flex flex-wrap gap-3 justify-center sm:justify-start">
               <Button 
+                type="button"
                 variant="secondary" 
                 className="bg-red-50 text-red-600 hover:bg-red-100"
                 onClick={() => {
@@ -79,6 +83,7 @@ const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteIm
               </Button>
               
               <Button 
+                type="button"
                 variant="destructive" 
                 onClick={onDeleteImage}
                 disabled={(!imageUrl && !imagePreview) || isUploading}

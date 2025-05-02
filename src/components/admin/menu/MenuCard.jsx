@@ -4,7 +4,7 @@ import { Trash2 } from 'lucide-react';
 
 const MenuCard = ({ number, name, price, imageUrl, onEdit, onDelete }) => {
   return (
-    <Card className="overflow-hidden bg-pink-50 hover:shadow-md transition-shadow duration-300">
+    <Card className="overflow-hidden bg-pink-50 hover:shadow-md transition-shadow duration-300 max-w-48">
       <div className="relative">
         {imageUrl ? (
           <img 

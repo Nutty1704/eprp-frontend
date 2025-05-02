@@ -5,9 +5,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useParams } from "react-router-dom";
 
 import {
-  useGetMyBusiness,
+  useGetBusinessById,
   useUpdateMyBusiness,
   useCreateMyBusiness
 } from "../lib/api/MyBusinessApi";
@@ -27,11 +28,14 @@ const defaultOpeningHours = {
 };
 
 const BusinessProfilePage = () => {
+  const { businessId } = useParams();
   const {
     business: businessData,
     isLoading: isLoadingBusiness,
     refetch
-  } = useGetMyBusiness();
+  } = useGetBusinessById(businessId);
+
+  console.log("Business Data:", businessData);
   const { updateBusiness, isLoading: isUpdating } = useUpdateMyBusiness();
   const { createBusiness, isLoading: isCreating } = useCreateMyBusiness();
 
@@ -51,7 +55,8 @@ const BusinessProfilePage = () => {
       website: "",
       address: "",
       cuisines: [],
-      images: [],
+      profileImage:null,
+      businessImages: [],
       openingHours: defaultOpeningHours
     }
   });
@@ -76,7 +81,7 @@ const BusinessProfilePage = () => {
         }
       });
     }
-  }, [businessData, reset]);
+  }, [businessData, businessId, reset]);
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -85,11 +90,26 @@ const BusinessProfilePage = () => {
     for (const key in data) {
       if (key === "openingHours" || key === "cuisines") {
         formData.append(key, JSON.stringify(data[key]));
-      } else if (key === "images" && data[key].length > 0) {
-        data[key].forEach((file) => formData.append("images", file));
-      } else {
+      } else if (key !== "images" && key !== "profileImage" && key !== "galleryImages") {
         formData.append(key, data[key]);
       }
+    }
+  
+    console.log("Profile Image:", data.profileImage);
+    console.log("Is File:", data.profileImage instanceof File);
+
+    // Append single profile image
+    if (data.profileImage instanceof File) {
+      formData.append("profile_image", data.profileImage);
+    }
+  
+    // Append multiple business gallery images
+    if (Array.isArray(data.businessImages) && data.businessImages.length > 0) {
+      data.businessImages.forEach((file) => {
+        if (file instanceof File) {
+          formData.append("business_images", file);
+        }
+      });
     }
 
     try {
@@ -169,8 +189,8 @@ const BusinessProfilePage = () => {
           </div>
         </TabsContent>
 
-        <TabsContent value="menu">
-          <MenuPage businessId={businessData?._id} />
+        <TabsContent value="menu" className="mt-6">
+          <MenuPage businessId={businessId} />
         </TabsContent>
       </Tabs>
     </div>

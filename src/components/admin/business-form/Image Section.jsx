@@ -6,10 +6,10 @@ import { MAX_IMAGES } from "@/src/lib/business/schema";
 
 const ImageSection = () => {
   const { setValue, watch, formState: { errors } } = useFormContext();
-  const currentImages = watch("images") || [];
+  const currentImages = watch("businessImages") || [];
 
   const handleImagesChange = (newImages) => {
-    setValue("images", newImages, { shouldValidate: true });
+    setValue("businessImages", newImages, { shouldValidate: true });
   };
 
   return (

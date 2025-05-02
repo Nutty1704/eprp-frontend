@@ -18,6 +18,7 @@ const AppRoutes = () =>{
           <Route path="/search" element={<SearchPage/>}/>
         </Route>
         <Route path="/owner" element={<OwnerDashboard />} />
+        <Route path="/owner/business/:businessId" element={<BusinessProfilePage />} />
         <Route path="/manage-business" element={<BusinessProfilePage/>}/>
       </Routes>
     )

@@ -14,7 +14,7 @@ const BusinessForm = ({
   setImagePreview
 }) => {
   // Get methods from FormProvider context
-  const { setValue } = useFormContext();
+  const { setValue, formState: { errors } } = useFormContext();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -22,7 +22,7 @@ const BusinessForm = ({
       setSelectedImage(file);
       setImagePreview(URL.createObjectURL(file));
       // Update the form value
-      setValue("images", [file]);
+      setValue("profileImage", file, { shouldValidate: true, shouldDirty: true });
     }
   };
 
@@ -30,7 +30,7 @@ const BusinessForm = ({
     setSelectedImage(null);
     setImagePreview("");
     // Clear the form value
-    setValue("images", []);
+    setValue("profileImage", null, { shouldValidate: true, shouldDirty: true });
   };
 
   return (
@@ -41,6 +41,7 @@ const BusinessForm = ({
           imagePreview={imagePreview}
           onImageChange={handleImageChange}
           onDeleteImage={handleDeleteImage}
+          errors={errors.profileImage}
         />
       </CollapsibleSection>
 
