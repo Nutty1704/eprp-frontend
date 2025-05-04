@@ -36,7 +36,6 @@ const BusinessProfilePage = () => {
     refetch
   } = useGetBusinessById(businessId);
 
-  console.log("Business Data:", businessData);
   const { updateBusiness, isLoading: isUpdating } = useUpdateMyBusiness();
   const { createBusiness, isLoading: isCreating } = useCreateMyBusiness();
 
@@ -56,9 +55,10 @@ const BusinessProfilePage = () => {
       website: "",
       address: "",
       cuisines: [],
-      profileImage:null,
+      profileImage: null,
       businessImages: [],
-      openingHours: defaultOpeningHours
+      openingHours: defaultOpeningHours,
+      removeProfileImage: false,
     }
   });
 
@@ -75,11 +75,13 @@ const BusinessProfilePage = () => {
         website: businessData.website || "",
         address: businessData.address || "",
         cuisines: businessData.cuisines || [],
-        images: [],
+        profileImage: null,
+        businessImages: [],
         openingHours: {
           ...defaultOpeningHours,
           ...businessData.openingHours
-        }
+        },
+        removeProfileImage: false,
       });
     }
   }, [businessData, businessId, reset]);
@@ -94,6 +96,12 @@ const BusinessProfilePage = () => {
       } else if (key !== "images" && key !== "profileImage" && key !== "galleryImages") {
         formData.append(key, data[key]);
       }
+    }
+
+    console.log("Data to be submitted:", data);
+
+    if (data.removeProfileImage) {
+      formData.append("profileImageDeleted", "true");
     }
 
     // Append single profile image

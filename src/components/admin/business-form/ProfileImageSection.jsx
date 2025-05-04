@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useFormContext } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
-const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteImage }) => {
+const ProfileImageSection = ({ imageUrl, imagePreview, imageDeleted, onImageChange, onDeleteImage }) => {
   const [isUploading, setIsUploading] = useState(false);
   const { formState: { errors } } = useFormContext();
   
@@ -40,10 +40,10 @@ const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteIm
           <div className="w-32 h-32 border rounded-md flex items-center justify-center overflow-hidden bg-gray-50">
             {isUploading ? (
               <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
-            ) : (imageUrl || imagePreview) ? (
-              <img 
-                src={imagePreview || imageUrl} 
-                alt="Business Profile" 
+            ) : !imageDeleted && (imagePreview || imageUrl) ? (
+              <img
+                src={imagePreview || imageUrl}
+                alt="Business Profile"
                 className="w-full h-full object-cover"
               />
             ) : (

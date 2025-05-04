@@ -57,6 +57,7 @@ export const businessSchema = z.object({
     .refine((file) => file.size <= 10 * 1024 * 1024, {
       message: "Image must be less than 10MB",
     })
+    .or(z.literal(null)) // allow null if optional
     .optional(),
     
   businessImages: z
@@ -86,5 +87,7 @@ export const businessSchema = z.object({
     fri: daySchema,
     sat: daySchema,
     sun: daySchema
-  })
+  }),
+
+  removeProfileImage: z.boolean().optional().default(false)
 });
