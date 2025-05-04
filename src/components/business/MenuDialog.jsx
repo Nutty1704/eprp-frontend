@@ -6,6 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../../../components/ui/dialog"; 
+import { MenuCard } from "./MenuCard";
 
 const MenuDialog = ({ restaurant, trigger }) => {
   if (!restaurant || !restaurant.menuItems) {
@@ -27,27 +28,7 @@ const MenuDialog = ({ restaurant, trigger }) => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {restaurant.menuItems.map((item, index) => (
-            <div key={index} className="border rounded-md overflow-hidden ">
-              <div className="h-48 relative">
-                {
-                  // <img 
-                  //   src={item.imageUrl} 
-                  //   alt={item.name}
-                  //   className="w-full h-full object-cover"
-                  // />
-                  <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                  </div>
-                }
-              </div>
-              <div className="grid grid-cols-2 p-3 border-t">
-                <h3 className="font-medium text-base truncate">
-                  {item.name}
-                </h3>
-                <p className="text-right font-medium">
-                  ${item.price.toFixed(2)}
-                </p>
-              </div>
-            </div>
+            <MenuCard key={index} item={item} />
           ))}
         </div>
       </DialogContent>
