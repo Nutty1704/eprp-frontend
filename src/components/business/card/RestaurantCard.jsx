@@ -59,7 +59,7 @@ const RestaurantCard = ({
         {/* Rating */}
         <div className='flex items-center justify-center inter-regular text-sm gap-1'>
           <span className='flex items-center font-medium'>
-            {business.rating}
+            {business.rating.toFixed(1)}
             <Star className='h-4 w-4 fill-primary' stroke='none' />
           </span>
           <span className='text-gray-500'>({formatReviewCount(business.review_count)} reviews)</span>
