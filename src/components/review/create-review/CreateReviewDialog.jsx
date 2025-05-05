@@ -14,8 +14,10 @@ const getRandomMessage = () => {
 const CreateReviewDialog = ({ children, business }) => {
     const [open, setOpen] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [reviewData, setReviewData] = useState(null);
 
-    const handleSuccess = () => {
+    const handleSuccess = (formData) => {
+        setReviewData(formData);
         setSuccess(true);
         setTimeout(() => {
             setOpen(false);
@@ -32,7 +34,7 @@ const CreateReviewDialog = ({ children, business }) => {
             >
                 <DialogTitle className="sr-only">Write a Review</DialogTitle>
                 {success ? (
-                    <ReviewSuccess message={getRandomMessage()} waitDuration={MESSAGE_DURATION} />
+                    <ReviewSuccess message={getRandomMessage()} waitDuration={MESSAGE_DURATION} business={business} reviewData={reviewData}/>
                 ) : (
                     <ReviewForm business={business} onSuccess={handleSuccess} />
                 )}
