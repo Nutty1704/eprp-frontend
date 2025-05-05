@@ -5,7 +5,7 @@ import Logout from '@/src/components/auth/Logout';
 import { Button } from '@/components/ui/button';
 import useAuthStore from '@/src/stores/auth-store';
 
-const Header = ({ }) => {
+const Header = ({ isOwner = false }) => {
   const { isAuthenticated } = useAuthStore();
 
   return (
@@ -37,13 +37,13 @@ const Header = ({ }) => {
             )}
             
             {isAuthenticated ? (
-              <Logout>
+              <Logout redirect={isOwner && '/' }>
                 <Button className="bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 rounded">
                   Logout
                 </Button>
               </Logout>
             ) : (
-              <AuthDialog>
+              <AuthDialog isOwner={isOwner}>
                 <Button className="bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 rounded">
                   Sign In
                 </Button>

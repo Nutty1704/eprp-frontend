@@ -4,34 +4,7 @@ import ReviewCard from './ReviewCard'
 import { useReviews } from '@/src/hooks/useReviews'
 import { Skeleton } from '@/components/ui/skeleton'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-
-const SORT_OPTIONS = [
-  { 
-    label: 'Newest', 
-    value: { field: 'createdAt', direction: 'desc' },
-    icon: '↓'
-  },
-  { 
-    label: 'Oldest', 
-    value: { field: 'createdAt', direction: 'asc' },
-    icon: '↑'
-  },
-  { 
-    label: 'Highest Rating', 
-    value: { field: 'rating', direction: 'desc' },
-    icon: '↓'
-  },
-  { 
-    label: 'Lowest Rating', 
-    value: { field: 'rating', direction: 'asc' },
-    icon: '↑'
-  },
-  { 
-    label: 'Most Upvoted', 
-    value: { field: 'upvotes', direction: 'desc' },
-    icon: '↓'
-  }
-];
+import { SORT_OPTIONS } from '@/src/config/Review'
 
 const ReviewDeck = ({ customerId, businessId }) => {
     const [sortOption, setSortOption] = useState(SORT_OPTIONS[0]);

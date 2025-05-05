@@ -56,3 +56,13 @@ export const getReviews = async (options = {}) => {
         return handleApiError(error, "Failed to fetch reviews. Please try again.");
     }
 };
+
+
+export const createResponse = async (reviewId, text) => {
+    try {
+        const response = await apiClient.post(`${baseRoute}/response`, { reviewId, text });
+        return response.data;
+    } catch (error) {
+        return handleApiError(error, "Failed to create response. Please try again.");
+    }
+}

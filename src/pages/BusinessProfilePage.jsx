@@ -4,18 +4,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, Star } from "lucide-react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import {
   useGetBusinessById,
   useUpdateMyBusiness,
-  useCreateMyBusiness
+  useCreateMyBusiness,
 } from "../lib/api/MyBusinessApi";
 
 import BusinessForm from "../components/admin/business-form/BusinessForm";
 import MenuPage from "../components/admin/menu/MenuPage";
 import { businessSchema } from "../lib/business/schema";
+import ReviewStats from "../components/admin/reviews/ReviewStats";
+import CollapsibleSection from "../components/ui/CollapsibleSection";
+import AdminReviewDeck from "../components/admin/reviews/AdminReviewDeck";
 
 const defaultOpeningHours = {
   mon: { isOpen: true, timeSlots: [{ open: "10:00", close: "20:00" }] },
@@ -142,8 +145,8 @@ const BusinessProfilePage = () => {
       setSelectedImage(null);
     } catch (error) {
       toast.error(
-        error.response?.data?.message || 
-        error.message || 
+        error.response?.data?.message ||
+        error.message ||
         "An error occurred while saving your business information"
       );
     }
@@ -190,8 +193,8 @@ const BusinessProfilePage = () => {
                   {isSubmitting
                     ? "Saving..."
                     : businessData
-                    ? "Save Changes"
-                    : "Create Business"}
+                      ? "Save Changes"
+                      : "Create Business"}
                 </Button>
               </div>
             </form>
@@ -199,13 +202,25 @@ const BusinessProfilePage = () => {
         </TabsContent>
 
         {businessId && (
-          <TabsContent value="reviews">
-            <div className="p-4 text-center">
-              <h3 className="text-lg font-medium">Reviews Management</h3>
-              <p className="text-gray-500 mt-2">
-                This section will allow you to view and respond to customer reviews.
-              </p>
-            </div>
+            <TabsContent value="reviews">
+            <CollapsibleSection
+              title={(
+                <div className="flex items-center gap-2 text-xl rubik-bold">
+                  <Star className="text-primary fill-primary" size={22} />
+                  Review Statistics Dashboard
+                </div>
+              )}
+            >
+              <ReviewStats
+                businessId={businessData?._id}
+                averageRating={businessData?.rating}
+                avgFoodRating={businessData?.foodRating}
+                avgAmbienceRating={businessData?.ambienceRating}
+                avgServiceRating={businessData?.serviceRating}
+              />
+            </CollapsibleSection>
+
+            <AdminReviewDeck businessId={businessData?._id} />
           </TabsContent>
         )}
 
@@ -214,6 +229,7 @@ const BusinessProfilePage = () => {
             <MenuPage businessId={businessId} />
           </TabsContent>
         )}
+
       </Tabs>
     </div>
   );

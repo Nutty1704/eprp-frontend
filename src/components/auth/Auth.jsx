@@ -66,11 +66,13 @@ const Auth = ({ isOwner = false }) => {
                             subtitle={"Register your business, respond to customer reviews, and build your online reputation—all from your owner portal."
                             }
                             buttonText={"Register your business"}
+                            redirect="/owner"
                         />
                         : <AltOverlay
                             title="Discover & Review Amazing Restaurants"
                             subtitle="Find top-rated dining spots, share your experiences, and explore new flavors with TasteMonash."
                             buttonText="Start Exploring"
+                            redirect="/"
                         />
                     }
                 </div>
@@ -80,12 +82,12 @@ const Auth = ({ isOwner = false }) => {
 };
 
 // AltOverlay Component
-const AltOverlay = ({ title, subtitle, buttonText }) => (
+const AltOverlay = ({ title, subtitle, buttonText, redirect }) => (
     <div className="h-full w-full flex flex-col justify-center space-y-4">
         <h1 className="text-white font-bold text-4xl rubik-bold">{title}</h1>
         <p className="text-white text-lg inter-regular">{subtitle}</p>
         <a
-            href="/owner-portal"
+            href={redirect}
             className="mt-2 inline-block bg-white text-black font-semibold py-2 px-6 rounded-lg hover:bg-gray-200 transition lg:w-3/5 2xl:w-2/5"
         >
             {buttonText} →
