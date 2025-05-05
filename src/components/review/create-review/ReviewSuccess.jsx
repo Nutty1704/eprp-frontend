@@ -4,7 +4,9 @@ import { Check } from "lucide-react";
 
 const ReviewSuccess = ({
     message,
-    waitDuration = 2000
+    waitDuration = 2000,
+    business,
+    reviewData
 }) => {
     const [ isReversed, setIsReversed ] = useState(false);
 
@@ -51,6 +53,16 @@ const ReviewSuccess = ({
                 <h3 className="text-2xl inter-semibold">
                     {message}
                 </h3>
+
+                <div className="mt-4 bg-white/20 p-3 rounded-lg backdrop-blur-sm">
+                    <p className="text-white mb-3 text-sm">Share your review:</p>
+                    <SocialMediaShare 
+                        business={business}
+                        reviewText={reviewData?.reviewText}
+                        rating={reviewData?.foodRating}
+                        iconSize={36}
+                    />
+                </div>
             </div>
         </div>
     );
