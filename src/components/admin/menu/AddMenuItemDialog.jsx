@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useRef } from 'react';
 
 const AddMenuItemDialog = ({ open, onClose, onSave, editItem = null }) => {
   const [name, setName] = useState(editItem?.name || '');
@@ -17,6 +18,8 @@ const AddMenuItemDialog = ({ open, onClose, onSave, editItem = null }) => {
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(editItem?.imageUrl || '');
   const [isLoading, setIsLoading] = useState(false);
+
+  const fileInputRef = useRef(null);
 
   // Reset form when dialog opens/closes
   React.useEffect(() => {
@@ -121,6 +124,7 @@ const AddMenuItemDialog = ({ open, onClose, onSave, editItem = null }) => {
             <Label htmlFor="image">Image</Label>
             <div className="flex items-center gap-4">
               <Input
+                ref={fileInputRef}
                 id="image"
                 type="file"
                 onChange={handleImageChange}
@@ -130,7 +134,7 @@ const AddMenuItemDialog = ({ open, onClose, onSave, editItem = null }) => {
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => document.getElementById('image').click()}
+                onClick={() => fileInputRef?.current.click()}
               >
                 Select Image
               </Button>

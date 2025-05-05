@@ -25,7 +25,8 @@ const Rating = ({
     textClass = 'text-sm',
     prefixClass,
     showValue = true,
-    max = 5
+    max = 5,
+    asInt = false,
 }) => {
     const stars = useMemo(() => {
         const clampedRating = Math.max(0, Math.min(max, rating));
@@ -68,7 +69,7 @@ const Rating = ({
             </div>
             {showValue && (
                 <span className={cn("font-medium text-gray-500", textClass)}>
-                    {typeof rating === 'number' ? rating.toFixed(1) : rating}/{max}
+                    {typeof rating === 'number' ? ( asInt ? Math.round(rating) : rating.toFixed(1) ) : rating}/{max}
                 </span>
             )}
         </div>

@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import OpenBadge from '../card/OpenBadge'
 import GalleryDialog from '@/src/components/ui/GalleryDialog'
 import Rating from '@/src/components/ui/Rating'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const getGalleryTitle = (name) => {
     return name.endsWith('s') ? (
@@ -57,6 +58,38 @@ const BusinessHeader = ({ business }) => {
                         See all {business.images.length} photos
                     </Button>
                 </GalleryDialog>
+            </div>
+        </div>
+    )
+}
+
+
+BusinessHeader.Skeleton = () => {
+    return (
+        <div className='min-h-[30vh] lg:min-h-[35vh] w-full flex relative'>
+
+            <div className='grid grid-cols-3 lg:grid-cols-5 w-full brightness-50 bg-black'>
+                {[1, 2, 3, 4, 5].map((_, idx) => (
+                    <Skeleton
+                        key={idx}
+                        className={`w-full bg-center bg-cover rounded-none
+                            ${idx % 2 == 0 ? 'bg-gray-500' : 'bg-gray-400'}
+                            ${idx >= 3 && 'hidden md:block'}`}
+                    />
+                ))}
+            </div>
+
+            <div className='absolute left-3 bottom-3 flex flex-col gap-1.5 z-10'>
+                <Skeleton className='h-4 w-12 bg-gray-500' />
+                <Skeleton className='h-4 w-32 bg-gray-500' />
+                <div className='gap-2'>
+                    <OpenBadge.Skeleton />
+                </div>
+            </div>
+            <div className='absolute right-3 bottom-3 flex flex-col gap-1.5 z-10'>
+                <Button variant='translucent'>
+                    See all photos
+                </Button>
             </div>
         </div>
     )

@@ -1,21 +1,38 @@
-import React from 'react'
-import businesses from '@/test_data/businesses.json'
+import React, { useEffect, useState } from 'react'
 import BusinessHeader from '@/src/components/business/business_page/BusinessHeader';
 import { useParams } from 'react-router-dom';
 import BusinessInfoSection from '@/src/components/business/business_page/BusinessInfoSection';
 import ReviewDeck from '@/src/components/review/ReviewDeck';
+import { useGetBusinessById } from '@/src/lib/api/MyBusinessApi';
+import { toast } from 'sonner';
 
 const BusinessPage = () => {
     const { id } = useParams();
-    const business = businesses.find(b => b._id === id);
+    const { business, isLoading, error } = useGetBusinessById(id);
 
-  return (
-      <div className='flex flex-col'>
-          <BusinessHeader business={business} />
-          <BusinessInfoSection business={business} />
-          <ReviewDeck reviews={[]} />
-      </div>
-  )
+    useEffect(() => {
+        console.log(business);
+    }, [business]);
+
+    useEffect(() => {
+        if (error) toast.error(error);
+    }, [error]);
+
+    return (
+        <div className='flex flex-col'>
+            {
+                (business && !isLoading)
+                    ? (<BusinessHeader business={business} />)
+                    : (<BusinessHeader.Skeleton />)
+            }
+            {
+                (business && !isLoading)
+                ? <BusinessInfoSection business={business} />
+                : <BusinessInfoSection.Skeleton />
+            }
+            <ReviewDeck businessId={id} />
+        </div>
+    )
 }
 
 export default BusinessPage

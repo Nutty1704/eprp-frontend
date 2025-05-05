@@ -1,63 +1,42 @@
-// src/components/owner/OwnerDashboard.jsx
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import BusinessCard from "../components/admin/BusinessCard";
-import { getOwnerBusinesses } from "../lib/api/owner";
-import { toast } from "sonner";
 import AddBusinessDialog from "../components/admin/AddBusinessDialog";
-import AuthDialog from "../components/auth/AuthDialog";
+import { useGetMyBusinesses } from "../lib/api/MyBusinessApi";
+import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 const OwnerDashboard = () => {
-	const [businesses, setBusinesses] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const { businesses, isLoading, error } = useGetMyBusinesses();
 
-	//   useEffect(() => {
-	//     const fetchBusinesses = async () => {
-	//       const res = await getOwnerBusinesses();
-	//       if (res.success) {
-	//         setBusinesses(res.businesses);
-	//       } else {
-	//         toast.error(res.message);
-	//       }
-	//       setLoading(false);
-	//     };
+	// Dummy fallback
+	const fallbackBusinesses = [
+		{
+			_id: "1",
+			name: "Mock Sushi Bar",
+			location: "Clayton Campus",
+			url: "https://sushibar.monash.edu",
+			avgRating: 4.7,
+			imageUrl:
+				"https://plus.unsplash.com/premium_photo-1668146927669-f2edf6e86f6f?q=80&w=2070&auto=format&fit=crop",
+			description:
+				"A cozy sushi place near campus serving fresh rolls and bento boxes.",
+		},
+		{
+			_id: "2",
+			name: "Fake Pizza Place",
+			location: "Caulfield Campus",
+			url: "https://fakepizza.com",
+			avgRating: 4.2,
+			imageUrl:
+				"https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop",
+			description:
+				"Your go-to spot for cheesy pizza and late-night cravings.",
+		},
+	];
 
-	//     fetchBusinesses();
-	//   }, []);
-
-	useEffect(() => {
-		// Simulate loading
-		const timeout = setTimeout(() => {
-			setBusinesses([
-				{
-					_id: "1",
-					name: "Mock Sushi Bar",
-					location: "Clayton Campus",
-					url: "https://sushibar.monash.edu",
-					avgRating: 4.7,
-					imageUrl:
-						"https://plus.unsplash.com/premium_photo-1668146927669-f2edf6e86f6f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-					description:
-						"A cozy sushi place near campus serving fresh rolls and bento boxes.",
-				},
-				{
-					_id: "2",
-					name: "Fake Pizza Place",
-					location: "Caulfield Campus",
-					url: "https://fakepizza.com",
-					avgRating: 4.2,
-					imageUrl: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-					description:
-						"Your go-to spot for cheesy pizza and late-night cravings.",
-				},
-			]);
-
-			setLoading(false);
-		}, 800); // Optional delay to simulate loading
-
-		return () => clearTimeout(timeout);
-	}, []);
+	const displayBusinesses = error ? fallbackBusinesses : businesses;
 
 	return (
 		<div className="w-full max-w-4xl mx-auto px-4 py-8 min-h-screen">
@@ -66,28 +45,39 @@ const OwnerDashboard = () => {
 				<h1 className="text-3xl font-bold text-gray-900">
 					Your businesses
 				</h1>
-                <AddBusinessDialog />
+        <Link to="/owner/business/new">
+          <Button className="flex items-center gap-2 bg-red-600 text-white hover:bg-red-700">
+            <Plus className="w-4 h-4" />
+            Add Business
+          </Button>
+        </Link>
 			</div>
 
 			{/* Loading / Empty / List */}
-			{loading ? (
+			{isLoading ? (
 				<p className="text-gray-600">Loading...</p>
-			) : businesses.length === 0 ? (
+			) : displayBusinesses.length === 0 ? (
 				<p className="text-gray-500 italic">
 					You have no businesses yet.
 				</p>
 			) : (
 				<div className="space-y-4">
-					{businesses.map((biz) => (
-						<BusinessCard
+					{displayBusinesses.map((biz) => (
+						<Link
 							key={biz._id}
-							name={biz.name}
-							location={biz.location}
-							url={biz.url}
-							avgRating={biz.avgRating}
-							imageUrl={biz.imageUrl}
-							description={biz.description}
-						/>
+							to={`/owner/business/${biz._id}`}
+							className="block"
+						>
+							<BusinessCard
+								name={biz.name}
+								location={biz.address}
+								url={biz.url}
+								avgRating={biz.rating}
+								imageUrl={biz.imageUrl}
+								description={biz.description}
+                reviewCount={biz.review_count}
+							/>
+						</Link>
 					))}
 				</div>
 			)}

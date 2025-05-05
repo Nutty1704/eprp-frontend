@@ -62,36 +62,39 @@ const CuisineSelector = () => {
           </div>
         )}
         
-        <ScrollArea className={`h-64 rounded-md border p-4 ${errors.cuisines ? 'border-red-500' : ''}`}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-            {filteredCuisines.map((cuisine) => (
-              <div key={cuisine.id} className="flex items-center space-x-2">
-                <Controller
-                  name={`cuisines.${cuisine.id}`} // Using a unique path for each checkbox
-                  control={control}
-                  defaultValue={selectedCuisines.includes(cuisine.id)}
-                  render={({ field }) => (
-                    <Checkbox 
-                      id={`cuisine-${cuisine.id}`} 
-                      checked={selectedCuisines.includes(cuisine.id)}
-                      onCheckedChange={() => handleCuisineToggle(cuisine.id)}
-                    />
-                  )}
-                />
-                <Label 
-                  htmlFor={`cuisine-${cuisine.id}`}
-                  className="text-sm cursor-pointer"
-                >
-                  {cuisine.label}
-                </Label>
-              </div>
-            ))}
-            
-            {filteredCuisines.length === 0 && (
-              <div className="col-span-full text-center text-gray-500 py-4">
-                No cuisines found matching "{searchTerm}"
-              </div>
-            )}
+        <ScrollArea className={`h-64 rounded-md border ${errors.cuisines ? 'border-red-500' : ''}`}>
+          <div className="p-4 rounded-md overflow-visible">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+              {filteredCuisines.map((cuisine) => (
+                <div key={cuisine.id} className="flex items-center space-x-2">
+                  <Controller
+                    name={`cuisines.${cuisine.id}`} // Using a unique path for each checkbox
+                    control={control}
+                    defaultValue={selectedCuisines.includes(cuisine.id)}
+                    render={({ field }) => (
+                      <Checkbox 
+                        id={`cuisine-${cuisine.id}`}
+                        className="rounded-none"
+                        checked={selectedCuisines.includes(cuisine.id)}
+                        onCheckedChange={() => handleCuisineToggle(cuisine.id)}
+                      />
+                    )}
+                  />
+                  <Label 
+                    htmlFor={`cuisine-${cuisine.id}`}
+                    className="text-sm cursor-pointer"
+                  >
+                    {cuisine.label}
+                  </Label>
+                </div>
+              ))}
+              
+              {filteredCuisines.length === 0 && (
+                <div className="col-span-full text-center text-gray-500 py-4">
+                  No cuisines found matching "{searchTerm}"
+                </div>
+              )}
+            </div>
           </div>
         </ScrollArea>
         

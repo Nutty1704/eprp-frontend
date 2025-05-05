@@ -1,3 +1,4 @@
+import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import React from 'react';
 
@@ -84,5 +85,15 @@ const OpenBadge = ({ openingHours, className = '', showMessage = false, messageC
         </div>
     );
 };
+
+
+OpenBadge.Skeleton = () => {
+    return (
+        <div className='flex items-center gap-2'>
+            <Skeleton className='text-white text-xs font-semibold px-2.5 py-1 rounded bg-green-600' />
+            <Skeleton className='text-xs text-gray-700' />
+        </div>
+    );
+}
 
 export default OpenBadge;

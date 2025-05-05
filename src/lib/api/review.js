@@ -28,8 +28,10 @@ export const createReview = async (reviewData, businessId) => {
     }
 }
 
-export const getReviews = async (customerId, businessId, filters = {}) => {
+export const getReviews = async (options = {}) => {
     try {
+        const { customerId, businessId, ...filters } = options;
+
         if (!customerId && !businessId) {
             throw new Error("Either customerId or businessId is required.");
         }
@@ -46,7 +48,8 @@ export const getReviews = async (customerId, businessId, filters = {}) => {
             }
         });
 
-        const response = await apiClient.get(`${baseRoute}/?${params.toString()}`);
+        console.log("Path: ", `${baseRoute}?${params.toString()}`);
+        const response = await apiClient.get(`${baseRoute}?${params.toString()}`);
         
         return response.data;
     } catch (error) {
