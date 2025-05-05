@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import BusinessCard from "../components/admin/BusinessCard";
 import AddBusinessDialog from "../components/admin/AddBusinessDialog";
-import { useGetMyBusinesses } from "../lib/api/MyBusinessApi"; 
+import { useGetMyBusinesses } from "../lib/api/MyBusinessApi";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 
@@ -45,7 +45,12 @@ const OwnerDashboard = () => {
 				<h1 className="text-3xl font-bold text-gray-900">
 					Your businesses
 				</h1>
-				<AddBusinessDialog />
+        <Link to="/owner/business/new">
+          <Button className="flex items-center gap-2 bg-red-600 text-white hover:bg-red-700">
+            <Plus className="w-4 h-4" />
+            Add Business
+          </Button>
+        </Link>
 			</div>
 
 			{/* Loading / Empty / List */}
@@ -70,6 +75,7 @@ const OwnerDashboard = () => {
 								avgRating={biz.rating}
 								imageUrl={biz.imageUrl}
 								description={biz.description}
+                reviewCount={biz.review_count}
 							/>
 						</Link>
 					))}

@@ -4,7 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, ChevronDown, ChevronUp } from 'lucide-react';
-import { cuisineOptions } from "../../config/Cuisine";
+import { cuisineOptions } from "@/src/config/Cuisine";
 
 const CuisineFilter = ({ selectedCuisines, onChange }) => {
   const [expanded, setExpanded] = useState(false);

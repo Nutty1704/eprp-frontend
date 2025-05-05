@@ -5,9 +5,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Loader2, Star } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
 
 import {
-  useGetMyBusiness,
+  useGetBusinessById,
   useUpdateMyBusiness,
   useCreateMyBusiness,
 } from "../lib/api/MyBusinessApi";
@@ -30,11 +31,14 @@ const defaultOpeningHours = {
 };
 
 const BusinessProfilePage = () => {
+  const navigate = useNavigate();
+  const { businessId } = useParams();
   const {
     business: businessData,
     isLoading: isLoadingBusiness,
     refetch
-  } = useGetMyBusiness();
+  } = useGetBusinessById(businessId);
+
   const { updateBusiness, isLoading: isUpdating } = useUpdateMyBusiness();
   const { createBusiness, isLoading: isCreating } = useCreateMyBusiness();
 
@@ -54,8 +58,12 @@ const BusinessProfilePage = () => {
       website: "",
       address: "",
       cuisines: [],
-      images: [],
-      openingHours: defaultOpeningHours
+      profileImage: null,
+      businessImages: [],
+      openingHours: defaultOpeningHours,
+      removeProfileImage: false,
+      existingImageUrls: [],
+      removedImageUrls: [],
     }
   });
 
@@ -72,14 +80,18 @@ const BusinessProfilePage = () => {
         website: businessData.website || "",
         address: businessData.address || "",
         cuisines: businessData.cuisines || [],
-        images: [],
+        profileImage: null,
+        businessImages: [],
         openingHours: {
           ...defaultOpeningHours,
           ...businessData.openingHours
-        }
+        },
+        removeProfileImage: false,
+        existingImageUrls: businessData.images || [],
+        removedImageUrls: [],
       });
     }
-  }, [businessData, reset]);
+  }, [businessData, businessId, reset]);
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -88,11 +100,33 @@ const BusinessProfilePage = () => {
     for (const key in data) {
       if (key === "openingHours" || key === "cuisines") {
         formData.append(key, JSON.stringify(data[key]));
-      } else if (key === "images" && data[key].length > 0) {
-        data[key].forEach((file) => formData.append("images", file));
-      } else {
+      } else if (key !== "images" && key !== "profileImage" && key !== "businessImages" && key !== "removeProfileImage" && key !== "removedImageUrls") {
         formData.append(key, data[key]);
       }
+    }
+
+    console.log("Data to be submitted:", data);
+
+    if (data.removeProfileImage) {
+      formData.append("profileImageDeleted", "true");
+    }
+
+    // Append single profile image
+    if (data.profileImage instanceof File) {
+      formData.append("profile_image", data.profileImage);
+    }
+  
+    // Append multiple business gallery images
+    if (Array.isArray(data.businessImages) && data.businessImages.length > 0) {
+      data.businessImages.forEach((file) => {
+        if (file instanceof File) {
+          formData.append("business_images", file);
+        }
+      });
+    }
+
+    if (data.removedImageUrls && data.removedImageUrls.length > 0) {
+      formData.append("removedImageUrls", JSON.stringify(data.removedImageUrls));
     }
 
     try {
@@ -102,6 +136,7 @@ const BusinessProfilePage = () => {
       } else {
         await createBusiness(formData);
         toast.success("Business created successfully");
+        navigate("/owner");
       }
 
       refetch();
@@ -129,12 +164,13 @@ const BusinessProfilePage = () => {
   return (
     <div className="container mx-auto px-4 sm:px-6 py-6">
       <Tabs value={activeTab} onValueChange={setActiveTab}>
+      {businessId && (
         <TabsList className="w-full border-b flex-nowrap justify-start sm:justify-center">
           <TabsTrigger value="business-info" className="flex-1">Business Information</TabsTrigger>
           <TabsTrigger value="reviews" className="flex-1">Reviews</TabsTrigger>
           <TabsTrigger value="menu" className="flex-1">Menu</TabsTrigger>
         </TabsList>
-
+      )}
         <TabsContent value="business-info" className="mt-6">
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -165,30 +201,35 @@ const BusinessProfilePage = () => {
           </FormProvider>
         </TabsContent>
 
-        <TabsContent value="reviews">
-          <CollapsibleSection
-            title={(
-              <div className="flex items-center gap-2 text-xl rubik-bold">
-                <Star className="text-primary fill-primary" size={22} />
-                Review Statistics Dashboard
-              </div>
-            )}
-          >
-            <ReviewStats
-              businessId={businessData?._id}
-              averageRating={businessData?.rating}
-              avgFoodRating={businessData?.foodRating}
-              avgAmbienceRating={businessData?.ambienceRating}
-              avgServiceRating={businessData?.serviceRating}
-            />
-          </CollapsibleSection>
+        {businessId && (
+            <TabsContent value="reviews">
+            <CollapsibleSection
+              title={(
+                <div className="flex items-center gap-2 text-xl rubik-bold">
+                  <Star className="text-primary fill-primary" size={22} />
+                  Review Statistics Dashboard
+                </div>
+              )}
+            >
+              <ReviewStats
+                businessId={businessData?._id}
+                averageRating={businessData?.rating}
+                avgFoodRating={businessData?.foodRating}
+                avgAmbienceRating={businessData?.ambienceRating}
+                avgServiceRating={businessData?.serviceRating}
+              />
+            </CollapsibleSection>
 
-          <AdminReviewDeck businessId={businessData?._id} />
-        </TabsContent>
+            <AdminReviewDeck businessId={businessData?._id} />
+          </TabsContent>
+        )}
 
-        <TabsContent value="menu">
-          <MenuPage businessId={businessData?._id} />
-        </TabsContent>
+        {businessId && (
+          <TabsContent value="menu" className="mt-6">
+            <MenuPage businessId={businessId} />
+          </TabsContent>
+        )}
+
       </Tabs>
     </div>
   );

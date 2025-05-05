@@ -4,7 +4,9 @@ import { Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import InfoHeader from './InfoHeader';
 import OpenBadge from './OpenBadge';
-
+import Rating from '@/src/components/ui/Rating';
+import ToolTip from '@/src/components/ui/Tooltip';
+import { reviewIcons } from '@/src/config/Icons'
 
 const formatReviewCount = (count) => {
   if (count >= 500) {
@@ -57,13 +59,48 @@ const RestaurantCard = ({
         </div>
 
         {/* Rating */}
-        <div className='flex items-center justify-center inter-regular text-sm gap-1'>
-          <span className='flex items-center font-medium'>
-            {business.rating}
-            <Star className='h-4 w-4 fill-primary' stroke='none' />
-          </span>
-          <span className='text-gray-500'>({formatReviewCount(business.review_count)} reviews)</span>
-        </div>
+        <ToolTip
+          side="top"
+          align="center"
+          text={
+            <div className="px-3 py-1 w-full space-y-2">
+              <Rating
+                rating={business.rating}
+                prefix="Overall"
+                textClass="text-sm text-gray-700"
+                prefixClass="font-medium text-black min-w-24"
+              />
+              <Rating
+                rating={business.foodRating}
+                prefix={`Food ${reviewIcons.food}`}
+                textClass="text-sm text-gray-700"
+                prefixClass="font-medium text-black min-w-24"
+              />
+              <Rating
+                rating={business.serviceRating}
+                prefix={`Service ${reviewIcons.service}`}
+                textClass="text-sm text-gray-700"
+                prefixClass="font-medium text-black min-w-24"
+              />
+              <Rating
+                rating={business.ambienceRating}
+                prefix={`Ambience ${reviewIcons.ambience}`}
+                textClass="text-sm text-gray-700"
+                prefixClass="font-medium text-black min-w-24"
+              />
+            </div>
+          }
+        >
+          <div className="flex items-center justify-center inter-regular text-sm gap-1">
+            <span className="flex items-center font-medium">
+              {business.rating}
+              <Star className="h-4 w-4 fill-primary" stroke="none" />
+            </span>
+            <span className="text-gray-500">
+              ({formatReviewCount(business.review_count)} reviews)
+            </span>
+          </div>
+        </ToolTip>
       </div>      
     </div>
   );

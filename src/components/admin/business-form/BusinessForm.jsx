@@ -5,6 +5,7 @@ import CuisineSelector from "./CuisineSelector";
 import CollapsibleSection from "@/src/components/ui/CollapsibleSection";
 import { useFormContext } from "react-hook-form";
 import ImageSection from "./Image Section";
+import { useState, useEffect, useRef } from "react";
 
 const BusinessForm = ({
   business = {},
@@ -14,23 +15,43 @@ const BusinessForm = ({
   setImagePreview
 }) => {
   // Get methods from FormProvider context
-  const { setValue } = useFormContext();
+  const { setValue, formState: { errors } } = useFormContext();
+  const [imageDeleted, setImageDeleted] = useState(false);
+
+  const lastPreviewUrlRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (lastPreviewUrlRef.current) {
+        URL.revokeObjectURL(lastPreviewUrlRef.current);
+      }
+    };
+  }, []);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+
+      if (lastPreviewUrlRef.current) {
+        URL.revokeObjectURL(lastPreviewUrlRef.current);
+      }
+
+      const newUrl = URL.createObjectURL(file);
+      lastPreviewUrlRef.current = newUrl;
+
       setSelectedImage(file);
-      setImagePreview(URL.createObjectURL(file));
-      // Update the form value
-      setValue("images", [file]);
+      setImagePreview(newUrl);
+      setValue("profileImage", file, { shouldValidate: true, shouldDirty: true });
+      setValue("removeProfileImage", false);
     }
   };
 
   const handleDeleteImage = () => {
     setSelectedImage(null);
     setImagePreview("");
-    // Clear the form value
-    setValue("images", []);
+    setValue("profileImage", null, { shouldValidate: true, shouldDirty: true });
+    setValue("removeProfileImage", true);
+    setImageDeleted(true);
   };
 
   return (
@@ -39,8 +60,10 @@ const BusinessForm = ({
         <ProfileImageSection
           imageUrl={business?.imageUrl}
           imagePreview={imagePreview}
+          imageDeleted={imageDeleted}
           onImageChange={handleImageChange}
           onDeleteImage={handleDeleteImage}
+          errors={errors.profileImage}
         />
       </CollapsibleSection>
 
@@ -63,7 +86,7 @@ const BusinessForm = ({
       </CollapsibleSection>
 
       <CollapsibleSection title="Business Photos">
-        <ImageSection />
+        <ImageSection defaultImages={business?.images || []}/>
       </CollapsibleSection>
     </div>
   );

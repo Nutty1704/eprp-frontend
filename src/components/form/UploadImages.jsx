@@ -1,7 +1,8 @@
 import { Info, X } from "lucide-react";
 import React, { useRef, useState } from "react";
+import { useEffect } from "react";
 
-const UploadImages = ({ maxImages = 3, onChange = (images) => { }, disabled = false }) => {
+const UploadImages = ({ maxImages = 3, onChange = (images) => { }, disabled = false, displayImages = [] }) => {
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
     const imgInputRef = useRef(null);
@@ -24,6 +25,10 @@ const UploadImages = ({ maxImages = 3, onChange = (images) => { }, disabled = fa
         onChange(newImages);
     };
 
+    useEffect(() => {
+        setImages(displayImages);
+    }, [displayImages]);
+
     return (
         <div>
             {/* Display uploaded images */}
@@ -31,11 +36,12 @@ const UploadImages = ({ maxImages = 3, onChange = (images) => { }, disabled = fa
                 {images.map((image, index) => (
                     <div key={index} className="relative">
                         <img
-                            src={URL.createObjectURL(image)}
+                            src={image instanceof File ? URL.createObjectURL(image) : image}
                             alt={`uploaded-${index}`}
                             className="w-24 h-24 object-cover rounded-md"
                         />
                         <button
+                            type="button"
                             onClick={() => handleRemoveImage(index)}
                             className="absolute -top-2 -right-2 bg-gray-300 text-gray-800 p-1 rounded-full w-4.5 h-4.5 flex justify-center items-center hover:bg-gray-400"
                         >

@@ -16,7 +16,7 @@ const ToolTip = ({
             </TooltipTrigger>
             
             <TooltipContent side={side} align={align} className='inter-regular bg-gray-100 text-foreground shadow-lg' {...props}>
-                <p className={textClassName}>{text}</p>
+                <div className={textClassName}>{text}</div>
             </TooltipContent>
         </Tooltip>
     </TooltipProvider>
