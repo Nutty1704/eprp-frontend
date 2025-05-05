@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from "motion/react";
 import { Check } from "lucide-react";
+import SocialMediaShare from '../../business/SocialMediaShare';
 
 const ReviewSuccess = ({
     message,
@@ -56,7 +57,7 @@ const ReviewSuccess = ({
 
                 <div className="mt-4 bg-white/20 p-3 rounded-lg backdrop-blur-sm">
                     <p className="text-white mb-3 text-sm">Share your review:</p>
-                    <SocialMediaShare 
+                    <SocialMediaShare
                         business={business}
                         reviewText={reviewData?.reviewText}
                         rating={reviewData?.foodRating}
