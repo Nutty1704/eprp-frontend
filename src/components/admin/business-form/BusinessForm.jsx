@@ -5,7 +5,7 @@ import CuisineSelector from "./CuisineSelector";
 import CollapsibleSection from "@/src/components/ui/CollapsibleSection";
 import { useFormContext } from "react-hook-form";
 import ImageSection from "./Image Section";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const BusinessForm = ({
   business = {},
@@ -18,11 +18,29 @@ const BusinessForm = ({
   const { setValue, formState: { errors } } = useFormContext();
   const [imageDeleted, setImageDeleted] = useState(false);
 
+  const lastPreviewUrlRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (lastPreviewUrlRef.current) {
+        URL.revokeObjectURL(lastPreviewUrlRef.current);
+      }
+    };
+  }, []);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+
+      if (lastPreviewUrlRef.current) {
+        URL.revokeObjectURL(lastPreviewUrlRef.current);
+      }
+
+      const newUrl = URL.createObjectURL(file);
+      lastPreviewUrlRef.current = newUrl;
+
       setSelectedImage(file);
-      setImagePreview(URL.createObjectURL(file));
+      setImagePreview(newUrl);
       setValue("profileImage", file, { shouldValidate: true, shouldDirty: true });
       setValue("removeProfileImage", false);
     }

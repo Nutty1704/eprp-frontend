@@ -6,7 +6,13 @@ import { Loader2 } from "lucide-react";
 const ProfileImageSection = ({ imageUrl, imagePreview, imageDeleted, onImageChange, onDeleteImage }) => {
   const [isUploading, setIsUploading] = useState(false);
   const { formState: { errors } } = useFormContext();
-  
+
+  const previewToShow = imagePreview && imagePreview !== ""
+    ? imagePreview
+    : !imageDeleted && imageUrl
+      ? imageUrl
+      : null;
+      
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -38,11 +44,11 @@ const ProfileImageSection = ({ imageUrl, imagePreview, imageDeleted, onImageChan
       <div className="pt-6">
         <div className="flex flex-col sm:flex-row items-center gap-6">
           <div className="w-32 h-32 border rounded-md flex items-center justify-center overflow-hidden bg-gray-50">
-            {isUploading ? (
+          {isUploading ? (
               <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
-            ) : !imageDeleted && (imagePreview || imageUrl) ? (
+            ) : previewToShow ? (
               <img
-                src={imagePreview || imageUrl}
+                src={previewToShow}
                 alt="Business Profile"
                 className="w-full h-full object-cover"
               />
