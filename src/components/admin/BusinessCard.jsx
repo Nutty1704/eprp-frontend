@@ -27,7 +27,7 @@ const BusinessCard = ({ name, location, url, avgRating, imageUrl, description, r
             {url}
           </p>
           <p className="text-sm mt-1">
-            <span className="text-yellow-600">⭐ {avgRating} / 5</span>
+            <span className="text-yellow-600">⭐ {avgRating.toFixed(1)} / 5</span>
             <span className="text-gray-500 ml-1">({reviewCount || 0} reviews)</span>
           </p>
         </div>
