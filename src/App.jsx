@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     const verifyAuth = async () => {
       try {
-        await checkAuthStatus();
+        await checkAuthStatus('customer');
         if (!isAuthenticated) {
           await checkAuthStatus('owner');
 
