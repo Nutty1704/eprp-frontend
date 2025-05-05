@@ -3,10 +3,16 @@ import { Button } from "@/components/ui/button";
 import { useFormContext } from "react-hook-form";
 import { Loader2 } from "lucide-react";
 
-const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteImage }) => {
+const ProfileImageSection = ({ imageUrl, imagePreview, imageDeleted, onImageChange, onDeleteImage }) => {
   const [isUploading, setIsUploading] = useState(false);
   const { formState: { errors } } = useFormContext();
-  
+
+  const previewToShow = imagePreview && imagePreview !== ""
+    ? imagePreview
+    : !imageDeleted && imageUrl
+      ? imageUrl
+      : null;
+      
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -38,12 +44,12 @@ const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteIm
       <div className="pt-6">
         <div className="flex flex-col sm:flex-row items-center gap-6">
           <div className="w-32 h-32 border rounded-md flex items-center justify-center overflow-hidden bg-gray-50">
-            {isUploading ? (
+          {isUploading ? (
               <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
-            ) : (imageUrl || imagePreview) ? (
-              <img 
-                src={imagePreview || imageUrl} 
-                alt="Business Profile" 
+            ) : previewToShow ? (
+              <img
+                src={previewToShow}
+                alt="Business Profile"
                 className="w-full h-full object-cover"
               />
             ) : (
@@ -56,9 +62,13 @@ const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteIm
           <div className="flex-1 mt-4 sm:mt-0 text-center sm:text-left">
             <h3 className="font-medium mb-1">Profile picture</h3>
             <p className="text-sm text-gray-500 mb-3">PNG, JPEG under 10MB</p>
+            { errors.profileImage && (
+              <p className="text-red-500 text-sm mb-2">{errors.profileImage.message}</p>
+            )}
             
             <div className="flex flex-wrap gap-3 justify-center sm:justify-start">
               <Button 
+                type="button"
                 variant="secondary" 
                 className="bg-red-50 text-red-600 hover:bg-red-100"
                 onClick={() => {
@@ -79,6 +89,7 @@ const ProfileImageSection = ({ imageUrl, imagePreview, onImageChange, onDeleteIm
               </Button>
               
               <Button 
+                type="button"
                 variant="destructive" 
                 onClick={onDeleteImage}
                 disabled={(!imageUrl && !imagePreview) || isUploading}

@@ -11,7 +11,8 @@ import {
   DialogDescription,
   DialogClose,
 } from "@/components/ui/dialog";
-import MenuCard from './MenuCard';
+// import MenuCard from './MenuCard';
+import { MenuCard } from '../../business/MenuCard';
 import AddMenuItemDialog from './AddMenuItemDialog';
 import { useGetBusinessById, useGetMyBusiness, useUpdateMyBusiness } from '@/src/lib/api/MyBusinessApi';
 import { Card } from '@/components/ui/card';
@@ -147,38 +148,28 @@ const MenuPage = ({ businessId }) => {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 py-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6">
+    <div className="w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6">
         {menuItems.map((item, index) => (
           <MenuCard
-            key={item._id}
-            number={index + 1}
-            name={item.name}
-            price={item.price}
-            imageUrl={item.imageUrl}
-            onEdit={() => handleOpenDialog(item)}
+            key={index}
+            item={item}
+            isOwner={true}
             onDelete={() => handleDeleteClick(item)}
           />
         ))}
         
         {/* Add New Item Card */}
         <Card 
-          className="flex items-center justify-center bg-pink-100 border-dashed border-2 border-pink-300 cursor-pointer hover:bg-pink-200 transition-colors duration-300"
+          className="flex items-center justify-center hover:bg-gray-100 border-dashed border-2 border-primary cursor-pointer transition-colors duration-300 min-w-48"
           onClick={() => handleOpenDialog()}
         >
-          <div className="text-center">
-            <Plus className="mx-auto h-12 w-12 text-pink-500" />
+          <div className="text-center text-primary min-h-56 flex flex-col items-center justify-center">
+            <Plus className="mx-auto h-12 w-12" />
             <p className="mt-2 text-pink-700 font-medium">Add Menu Item</p>
           </div>
         </Card>
       </div>
-
-      <AddMenuItemDialog
-        open={dialogOpen}
-        onClose={handleCloseDialog}
-        onSave={handleSaveMenuItem}
-        editItem={editingItem}
-      />
 
       <AddMenuItemDialog
         open={dialogOpen}
