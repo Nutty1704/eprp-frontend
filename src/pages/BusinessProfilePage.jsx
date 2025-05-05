@@ -59,6 +59,8 @@ const BusinessProfilePage = () => {
       businessImages: [],
       openingHours: defaultOpeningHours,
       removeProfileImage: false,
+      existingImageUrls: [],
+      removedImageUrls: [],
     }
   });
 
@@ -82,6 +84,8 @@ const BusinessProfilePage = () => {
           ...businessData.openingHours
         },
         removeProfileImage: false,
+        existingImageUrls: businessData.images || [],
+        removedImageUrls: [],
       });
     }
   }, [businessData, businessId, reset]);
@@ -93,7 +97,7 @@ const BusinessProfilePage = () => {
     for (const key in data) {
       if (key === "openingHours" || key === "cuisines") {
         formData.append(key, JSON.stringify(data[key]));
-      } else if (key !== "images" && key !== "profileImage" && key !== "galleryImages") {
+      } else if (key !== "images" && key !== "profileImage" && key !== "businessImages" && key !== "removeProfileImage" && key !== "removedImageUrls") {
         formData.append(key, data[key]);
       }
     }
@@ -116,6 +120,10 @@ const BusinessProfilePage = () => {
           formData.append("business_images", file);
         }
       });
+    }
+
+    if (data.removedImageUrls && data.removedImageUrls.length > 0) {
+      formData.append("removedImageUrls", JSON.stringify(data.removedImageUrls));
     }
 
     try {

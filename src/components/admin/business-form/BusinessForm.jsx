@@ -68,7 +68,7 @@ const BusinessForm = ({
       </CollapsibleSection>
 
       <CollapsibleSection title="Business Photos">
-        <ImageSection />
+        <ImageSection defaultImages={business?.images || []}/>
       </CollapsibleSection>
     </div>
   );

@@ -89,5 +89,7 @@ export const businessSchema = z.object({
     sun: daySchema
   }),
 
-  removeProfileImage: z.boolean().optional().default(false)
+  removeProfileImage: z.boolean().optional().default(false),
+  existingImageUrls: z.array(z.string().url()).optional(),
+  removedImageUrls: z.array(z.string().url()).optional()
 });

@@ -3,13 +3,39 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import UploadImages from "@/src/components/form/UploadImages";
 import { Info } from "lucide-react";
 import { MAX_IMAGES } from "@/src/lib/business/schema";
+import { useEffect, useState } from "react";
 
-const ImageSection = () => {
-  const { setValue, watch, formState: { errors } } = useFormContext();
-  const currentImages = watch("businessImages") || [];
+const ImageSection = ({ defaultImages = [] }) => {
+  const { setValue, watch, getValues, formState: { errors } } = useFormContext();
 
-  const handleImagesChange = (newImages) => {
-    setValue("businessImages", newImages, { shouldValidate: true });
+  const newImages = watch("businessImages") || [];
+  const existingImageUrls = watch("existingImageUrls") || [];
+
+  const [displayImages, setDisplayImages] = useState([]);
+
+  useEffect(() => {
+    if (!existingImageUrls && defaultImages.length > 0) {
+      setValue("existingImageUrls", defaultImages);
+    }
+  }, [existingImageUrls, defaultImages, setValue]);
+
+  useEffect(() => {
+    const existing = existingImageUrls ?? defaultImages;
+    setDisplayImages([...existing, ...newImages]);
+  }, [existingImageUrls, newImages, defaultImages]);
+
+  const handleImagesChange = (updatedList) => {
+    const currentExisting = getValues("existingImageUrls") || [];
+  
+    // Partition the updatedList into URLs and Files
+    const updatedUrls = updatedList.filter((img) => typeof img === "string");
+    const updatedFiles = updatedList.filter((img) => img instanceof File);
+    const removedUrls = currentExisting.filter(url => !updatedUrls.includes(url));
+  
+    // Save updated values
+    setValue("existingImageUrls", updatedUrls);
+    setValue("businessImages", updatedFiles);
+    setValue("removedImageUrls", removedUrls); 
   };
 
   return (
@@ -29,6 +55,7 @@ const ImageSection = () => {
           maxImages={MAX_IMAGES}
           onChange={handleImagesChange}
           disabled={false}
+          displayImages={displayImages}
         />
         
         {errors.images && (
