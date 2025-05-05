@@ -66,7 +66,7 @@ const RestaurantCard = ({
             <div className="px-3 py-1 w-full space-y-2">
               <Rating
                 rating={business.rating}
-                prefix="Overall:"
+                prefix="Overall"
                 textClass="text-sm text-gray-700"
                 prefixClass="font-medium text-black min-w-24"
               />
