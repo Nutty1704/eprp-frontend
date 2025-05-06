@@ -8,7 +8,6 @@ import LightboxGallery from '../ui/LightboxGallery';
 
 const ReviewCard = ({
   review,
-  restaurantName = "ABC",
 }) => {
   const hasImages = review.images && Array.isArray(review.images) && review.images.length > 0;
 
@@ -35,7 +34,7 @@ const ReviewCard = ({
       <div className="p-4 pb-0">
         <div className="flex justify-between items-center mb-2 w-full">
           <div className='flex items-center min-w-1/2 justify-between gap-3'>
-            <h3 className="text-xl font-semibold rubik-bold">{restaurantName}</h3>
+            <h3 className="text-xl font-semibold rubik-bold">{review.title}</h3>
             <div className="flex items-center">
               <Star className="h-4 w-4 text-primary fill-primary mr-1" />
               <span className="text-primary text-sm font-medium">{review.rating?.toFixed(2)}/5</span>

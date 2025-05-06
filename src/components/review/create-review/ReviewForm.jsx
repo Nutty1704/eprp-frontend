@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
-import { reviewSchema, MAX_IMAGES, MAX_CHARACTERS } from '@/src/lib/review/schema';
+import { reviewSchema, MAX_IMAGES, MAX_CHARACTERS_TEXT, MIN_CHARACTERS_TEXT } from '@/src/lib/review/schema';
 import StarForm from '@/src/components/form/StarForm';
 import UploadImages from '@/src/components/form/UploadImages';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,8 @@ import { ChevronDown, DollarSign, Text, Upload } from 'lucide-react';
 import { reviewIcons } from '@/src/config/Icons.jsx';
 import { createReview } from '@/src/lib/api/review';
 import { toast } from 'sonner';
+import { Input } from '@/components/ui/input';
+import TextProgressBadge from '../../ui/TextProgressBadge';
 
 const labelIconStyle = {
     class: 'h-4 w-4 text-primary',
@@ -32,6 +34,7 @@ const ReviewForm = ({ business, onSuccess }) => {
             foodRating: 0,
             ambienceRating: 0,
             serviceRating: 0,
+            reviewTitle: '',
             reviewText: '',
             priceRange: '',
             images: [],
@@ -113,15 +116,35 @@ const ReviewForm = ({ business, onSuccess }) => {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
+
+            {/* Review Title */}
+            <div className="w-full flex flex-col gap-1.5">
+                <label className="inter-medium flex items-center gap-2">
+                    <Text className={labelIconStyle.class} strokeWidth={labelIconStyle.strokeWidth} />
+                    Review Title
+                    {errors.reviewTitle && (
+                        <span className="text-destructive text-xs">{errors.reviewTitle.message}</span>
+                    )}
+                </label>
+                <Input
+                    {...register('reviewTitle')}
+                    placeholder="Enter review title"
+                    disabled={isSubmitting}
+                />
+            </div>
+
+            {/* Review Text */}
             <div className="w-full">
                 <label className="inter-medium flex items-center justify-between mb-1">
                     <div className='flex items-center gap-2'>
                         <Text className={labelIconStyle.class} strokeWidth={labelIconStyle.strokeWidth} />
                         Review
                     </div>
-                    <span className={`text-gray-400 text-xs ${reviewText.length > MAX_CHARACTERS ? '!text-destructive' : ''}`}>
-                        {reviewText.length} / {MAX_CHARACTERS}
-                    </span>
+                    <TextProgressBadge
+                        currentLength={reviewText.length}
+                        maxLength={MAX_CHARACTERS_TEXT}
+                        minLength={MIN_CHARACTERS_TEXT}
+                    />
                 </label>
                 <textarea
                     {...register('reviewText')}

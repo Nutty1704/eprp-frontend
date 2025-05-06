@@ -7,6 +7,7 @@ export const createReview = async (reviewData, businessId) => {
         const formData = new FormData();
         
         formData.append("businessId", businessId);
+        formData.append("title", reviewData.reviewTitle);
         formData.append("text", reviewData.reviewText);
         formData.append("foodRating", reviewData.foodRating);
         formData.append("ambienceRating", reviewData.ambienceRating);
