@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Heart, Star, User } from 'lucide-react';
 import { format } from 'date-fns'
 import Rating from '../ui/Rating';
-import { reviewIcons } from '@/src/config/Icons';
+import { reviewIcons } from '@/src/config/Icons.jsx';
+import LightboxGallery from '../ui/LightboxGallery';
 
 const ReviewCard = ({
   review,
   restaurantName = "ABC",
 }) => {
-  const [isReplying, setIsReplying] = useState(false);
-  const [replyText, setReplyText] = useState('');
+  const hasImages = review.images && Array.isArray(review.images) && review.images.length > 0;
 
-  const handleReply = () => {
-    setIsReplying(true);
-  };
-
-  const handleSubmit = () => {
-    onReplySubmit(replyText);
-    setIsReplying(false);
-    setReplyText('');
-  };
-
-  if (review.response) console.log(review.response);
+  const renderReviewImages = ({ images, handleImageClick }) => (
+    <div className="flex items-center gap-2">
+      {images.slice(0, 3).map((imageUrl, imageIndex) => (
+        <div
+          key={imageIndex}
+          className="aspect-square overflow-hidden rounded-md cursor-pointer transition-transform hover:scale-105"
+          onClick={() => handleImageClick(imageIndex)}
+        >
+          <img
+            src={imageUrl}
+            alt={`Review image ${imageIndex + 1}`}
+            className="w-16 h-16 object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <div className="bg-slate-100 rounded-lg shadow-md mb-4 max-w-6xl w-full inter-regular overflow-hidden">
@@ -42,11 +48,21 @@ const ReviewCard = ({
 
         <p className="text-gray-700 my-3">{review.text}</p>
 
+        {/* Review Images */}
+        {hasImages && (
+          <div className="my-4">
+            <LightboxGallery
+              images={review.images}
+              renderImages={renderReviewImages}
+            />
+          </div>
+        )}
+
         <div className="space-y-1.5">
           <Rating
             asInt={true}
             rating={review.foodRating}
-            prefix={`Food ${reviewIcons.food}`}
+            prefix={<span>{reviewIcons.food} Food</span>}
             textClass="text-sm"
             prefixClass="font-medium min-w-24"
             iconClass="h-4 w-4"
@@ -54,7 +70,7 @@ const ReviewCard = ({
           <Rating
             asInt={true}
             rating={review.serviceRating}
-            prefix={`Service ${reviewIcons.service}`}
+            prefix={<span>{reviewIcons.service} Service</span>}
             textClass="text-sm"
             prefixClass="font-medium min-w-24"
             iconClass="h-4 w-4"
@@ -62,7 +78,7 @@ const ReviewCard = ({
           <Rating
             asInt={true}
             rating={review.ambienceRating}
-            prefix={`Ambience ${reviewIcons.ambience}`}
+            prefix={<span>{reviewIcons.ambience} Ambience</span>}
             textClass="text-sm"
             prefixClass="font-medium min-w-24"
             iconClass="h-4 w-4"
@@ -100,6 +116,7 @@ const ReviewCard = ({
 
 ReviewCard.propTypes = {
   review: PropTypes.object.isRequired,
+  restaurantName: PropTypes.string,
 };
 
 export default ReviewCard;

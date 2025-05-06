@@ -6,6 +6,7 @@ import Rating from '@/src/components/ui/Rating';
 import { reviewIcons } from '@/src/config/Icons.jsx';
 import { createResponse } from '@/src/lib/api/review';
 import { toast } from 'sonner';
+import LightboxGallery from '../../ui/LightboxGallery';
 
 const OwnerReviewCard = ({
   review,
@@ -84,8 +85,25 @@ const OwnerReviewCard = ({
     }
   };
 
-  // Check if the review has images and they're in an array
   const hasImages = review.images && Array.isArray(review.images) && review.images.length > 0;
+
+  const renderReviewImages = ({ images, handleImageClick }) => (
+    <div className="flex items-center gap-2">
+      {images.slice(0, 3).map((imageUrl, imageIndex) => (
+        <div
+          key={imageIndex}
+          className="aspect-square overflow-hidden rounded-md cursor-pointer transition-transform hover:scale-105"
+          onClick={() => handleImageClick(imageIndex)}
+        >
+          <img
+            src={imageUrl}
+            alt={`Review image ${imageIndex + 1}`}
+            className="w-16 h-16 object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <div className="bg-slate-100 rounded-lg shadow-md mb-4 max-w-6xl w-full inter-regular overflow-hidden">
@@ -108,17 +126,10 @@ const OwnerReviewCard = ({
         {/* Review Images */}
         {hasImages && (
           <div className="my-4">
-            <div className={`grid ${review.images.length === 1 ? 'grid-cols-1' : review.images.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-2`}>
-              {review.images.slice(0, 3).map((image, index) => (
-                <div key={index} className="aspect-square overflow-hidden rounded-md">
-                  <img 
-                    src={image.url || image} 
-                    alt={`Review image ${index + 1}`} 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
+            <LightboxGallery
+              images={review.images}
+              renderImages={renderReviewImages}
+            />
           </div>
         )}
 
