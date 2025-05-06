@@ -1,3 +1,4 @@
+import useAuthStore from '@/src/stores/auth-store';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
@@ -14,6 +15,7 @@ export const useGetMyBusinesses = () => {
   const [businesses, setBusinesses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { isAuthenticated } = useAuthStore();
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -31,7 +33,7 @@ export const useGetMyBusinesses = () => {
     };
 
     fetchBusinesses();
-  }, []);
+  }, [isAuthenticated]);
 
   const refetch = async () => {
     try {

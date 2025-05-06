@@ -83,7 +83,7 @@ const ReviewDeck = ({ customerId, businessId }) => {
 
                 {/* Reviews */}
                 {!isLoading && !error && (
-                    <div className='grid grid-col-1 lg:grid-cols-2 gap-y-4 gap-8 mt-8 w-full'>
+                    <div className='flex flex-col items-center gap-y-4 gap-8 mt-8 w-full'>
                         {reviews.length === 0 ? (
                             <div className='col-span-full text-center py-12 text-slate-500'>
                                 No reviews found.<br />Be the <span className='text-primary'>first</span> to leave one!

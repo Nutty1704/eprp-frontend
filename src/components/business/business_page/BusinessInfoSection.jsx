@@ -8,7 +8,7 @@ import AuthDialog from '@/src/components/auth/AuthDialog'
 import Rating from '@/src/components/ui/Rating'
 import Location from '../Location'
 import BusinessAbout from './BusinessAbout'
-import { reviewIcons } from '@/src/config/Icons'
+import { reviewIcons } from '@/src/config/Icons.jsx'
 import { Skeleton } from '@/components/ui/skeleton'
 
 const ReviewButton = React.forwardRef((props, ref) => (
@@ -62,27 +62,31 @@ const BusinessInfoSection = ({ business }) => {
                         <div className='px-3 py-1 w-full space-y-2'>
                             <Rating
                                 rating={business.rating}
-                                prefix="Overall:"
+                                prefix={<span className='font-medium'>{reviewIcons.overall} Overall</span>}
                                 textClass="text-sm text-gray-700"
                                 prefixClass="font-medium text-black min-w-24"
+                                spread={true}
                             />
                             <Rating
                                 rating={business.foodRating}
-                                prefix={`Food ${reviewIcons.food}`}
+                                prefix={<span className='font-medium'>{reviewIcons.food} Food</span>}
                                 textClass="text-sm text-gray-700"
                                 prefixClass="font-medium text-black min-w-24"
+                                spread={true}
                             />
                             <Rating
                                 rating={business.serviceRating}
-                                prefix={`Service ${reviewIcons.service}`}
+                                prefix={<span className='font-medium'>{reviewIcons.service} Service</span>}
                                 textClass="text-sm text-gray-700"
                                 prefixClass="font-medium text-black min-w-24"
+                                spread={true}
                             />
                             <Rating
                                 rating={business.ambienceRating}
-                                prefix={`Ambience ${reviewIcons.ambience}`}
+                                prefix={<span className='font-medium'>{reviewIcons.ambience} Ambience</span>}
                                 textClass="text-sm text-gray-700"
                                 prefixClass="font-medium text-black min-w-24"
+                                spread={true}
                             />
                         </div>
                     </div>

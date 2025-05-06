@@ -1,11 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useBusinessStats } from '@/src/lib/api/MyBusinessApi';
-import { Star, Utensils, Users, Building, BadgeCheck } from 'lucide-react';
+import { Star, Users } from 'lucide-react';
 import React, { useEffect } from 'react'
 import { toast } from 'sonner';
 import Rating from '../../ui/Rating';
 import MetricCard from './stats/MetricCard';
+import { reviewIcons } from '@/src/config/Icons';
 
 
 const ReviewStats = ({
@@ -84,7 +85,7 @@ const ReviewStats = ({
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <MetricCard
-                        icon={<Utensils size={16} />}
+                        icon={reviewIcons.food}
                         label="Food Rating"
                         value={avgFoodRating.toFixed(1)}
                     >
@@ -92,14 +93,14 @@ const ReviewStats = ({
                     </MetricCard>
 
                     <MetricCard
-                        icon={<Building size={16} />}
+                        icon={reviewIcons.ambience}
                         label="Ambience Rating"
                         value={avgAmbienceRating.toFixed(1)}
                     >
                         <Rating rating={avgAmbienceRating} showValue={false} />
                     </MetricCard>
                     <MetricCard
-                        icon={<BadgeCheck size={16} />}
+                        icon={reviewIcons.service}
                         label="Service Rating"
                         value={avgServiceRating.toFixed(1)}
                     >
@@ -120,12 +121,12 @@ const ReviewStats = ({
                             </div>
                             <div className="flex-1 relative h-6 bg-gray-100 rounded-full overflow-hidden">
                                 <div
-                                    className="absolute inset-y-0 left-0 bg-yellow-500 rounded-full"
+                                    className="absolute inset-y-0 left-0 bg-primary rounded-full"
                                     style={{ width: `${starPercentages[star]}%` }}
                                 ></div>
                             </div>
                             <div className="w-16 text-sm font-medium">
-                                {starCounts[star]} ({starPercentages[star].toFixed(0)}%)
+                                {starCounts[star]}
                             </div>
                         </div>
                     ))}

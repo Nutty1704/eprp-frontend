@@ -7,7 +7,7 @@ import UploadImages from '@/src/components/form/UploadImages';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ChevronDown, DollarSign, Text, Upload } from 'lucide-react';
-import { reviewIcons } from '@/src/config/Icons';
+import { reviewIcons } from '@/src/config/Icons.jsx';
 import { createReview } from '@/src/lib/api/review';
 import { toast } from 'sonner';
 
@@ -63,7 +63,7 @@ const ReviewForm = ({ business, onSuccess }) => {
                     {['food', 'ambience', 'service'].map((field) => (
                         <div key={field} className="mb-4 space-y-1.5">
                             <label className="font-medium capitalize flex items-center">
-                                <span className="text-xl mr-1">{reviewIcons[field]}</span> {field} Rating
+                                <span className="mr-1">{reviewIcons[field]}</span> {field} Rating
                             </label>
                             <StarForm
                                 size={22}

@@ -6,7 +6,7 @@ import InfoHeader from './InfoHeader';
 import OpenBadge from './OpenBadge';
 import Rating from '@/src/components/ui/Rating';
 import ToolTip from '@/src/components/ui/Tooltip';
-import { reviewIcons } from '@/src/config/Icons'
+import { reviewIcons } from '@/src/config/Icons.jsx'
 
 const formatReviewCount = (count) => {
   if (count >= 500) {
@@ -66,25 +66,25 @@ const RestaurantCard = ({
             <div className="px-3 py-1 w-full space-y-2">
               <Rating
                 rating={business.rating}
-                prefix="Overall"
+                prefix={<span>{reviewIcons.overall} Overall</span>}
                 textClass="text-sm text-gray-700"
                 prefixClass="font-medium text-black min-w-24"
               />
               <Rating
                 rating={business.foodRating}
-                prefix={`Food ${reviewIcons.food}`}
+                prefix={<span>{reviewIcons.food} Food</span>}
                 textClass="text-sm text-gray-700"
                 prefixClass="font-medium text-black min-w-24"
               />
               <Rating
                 rating={business.serviceRating}
-                prefix={`Service ${reviewIcons.service}`}
+                prefix={<span>{reviewIcons.service} Service</span>}
                 textClass="text-sm text-gray-700"
                 prefixClass="font-medium text-black min-w-24"
               />
               <Rating
                 rating={business.ambienceRating}
-                prefix={`Ambience ${reviewIcons.ambience}`}
+                prefix={<span>{reviewIcons.ambience} Ambience</span>}
                 textClass="text-sm text-gray-700"
                 prefixClass="font-medium text-black min-w-24"
               />

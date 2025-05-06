@@ -3,64 +3,89 @@ import PropTypes from 'prop-types';
 import { Heart, Star, User, Send, Edit, Check, X } from 'lucide-react';
 import { format } from 'date-fns';
 import Rating from '@/src/components/ui/Rating';
-import { reviewIcons } from '@/src/config/Icons';
+import { reviewIcons } from '@/src/config/Icons.jsx';
 import { createResponse } from '@/src/lib/api/review';
 import { toast } from 'sonner';
 
 const OwnerReviewCard = ({
   review,
   restaurantName = "ABC",
-  onReplySubmit,
-  onEditReply
 }) => {
   const [isReplying, setIsReplying] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [replyText, setReplyText] = useState('');
   const [editText, setEditText] = useState(review.response?.text || '');
+  const [inputError, setInputError] = useState('');
+
 
   const handleReply = () => {
     setIsReplying(true);
+    setInputError('');
   };
 
   const handleCancelReply = () => {
     setIsReplying(false);
     setReplyText('');
-  };
-
-  const handleSubmitReply = () => {
-    if (!replyText.trim()) return;
-    onReplySubmit(review.id, replyText);
-    setIsReplying(false);
-    setReplyText('');
+    setInputError('');
   };
 
   const handleEdit = () => {
     setIsEditing(true);
     setEditText(review.response?.text || '');
+    setInputError('');
   };
 
   const handleCancelEdit = () => {
     setIsEditing(false);
+    setInputError('');
   };
 
-  const handleSubmitEdit = () => {
-    if (!editText.trim()) return;
-    onEditReply(review.id, review.response.id, editText);
-    setIsEditing(false);
+  const validateInput = (text) => {
+    if (!text.trim()) {
+      setInputError('Response cannot be empty');
+      return false;
+    }
+    setInputError('');
+    return true;
   };
 
   const handleSubmit = async () => {
-    const { success, error, data, message } = await createResponse(review._id, editText);
-
-    if (error || !success) {
-        if (!message) toast.error('Failed to reply', { position: 'top-center' });
-        else toast.error(message, { position: 'top-center' });
+    const text = isEditing ? editText : replyText;
+    
+    if (!validateInput(text)) {
+      return;
     }
+    
+    try {
+      // Always use createResponse - backend handles updates
+      const result = await createResponse(review._id, text);
+      const { success, error, data, message } = result;
 
-    if (success) {
+      if (error || !success) {
+        toast.error(message || 'Failed to submit response', { position: 'top-center' });
+        return;
+      }
+
+      if (success) {
         review.response = data;
+        
+        if (isEditing) {
+          setIsEditing(false);
+          toast.success('Response updated successfully', { position: 'top-center' });
+        } else {
+          setIsReplying(false);
+          setReplyText('');
+          toast.success('Response submitted successfully', { position: 'top-center' });
+        }
+      }
+    } catch (err) {
+      console.error('Error submitting response:', err);
+      toast.error('An unexpected error occurred', { position: 'top-center' });
     }
-  }
+  };
+
+  // Check if the review has images and they're in an array
+  const hasImages = review.images && Array.isArray(review.images) && review.images.length > 0;
 
   return (
     <div className="bg-slate-100 rounded-lg shadow-md mb-4 max-w-6xl w-full inter-regular overflow-hidden">
@@ -79,12 +104,29 @@ const OwnerReviewCard = ({
         </div>
 
         <p className="text-gray-700 my-3">{review.text}</p>
+        
+        {/* Review Images */}
+        {hasImages && (
+          <div className="my-4">
+            <div className={`grid ${review.images.length === 1 ? 'grid-cols-1' : review.images.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-2`}>
+              {review.images.slice(0, 3).map((image, index) => (
+                <div key={index} className="aspect-square overflow-hidden rounded-md">
+                  <img 
+                    src={image.url || image} 
+                    alt={`Review image ${index + 1}`} 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="space-y-1.5">
           <Rating
             asInt={true}
             rating={review.foodRating}
-            prefix={`Food ${reviewIcons.food}`}
+            prefix={<span>{reviewIcons.food} Food</span>}
             textClass="text-sm"
             prefixClass="font-medium min-w-24"
             iconClass="h-4 w-4"
@@ -92,7 +134,7 @@ const OwnerReviewCard = ({
           <Rating
             asInt={true}
             rating={review.serviceRating}
-            prefix={`Service ${reviewIcons.service}`}
+            prefix={<span>{reviewIcons.service} Service</span>}
             textClass="text-sm"
             prefixClass="font-medium min-w-24"
             iconClass="h-4 w-4"
@@ -100,7 +142,7 @@ const OwnerReviewCard = ({
           <Rating
             asInt={true}
             rating={review.ambienceRating}
-            prefix={`Ambience ${reviewIcons.ambience}`}
+            prefix={<span>{reviewIcons.ambience} Ambience</span>}
             textClass="text-sm"
             prefixClass="font-medium min-w-24"
             iconClass="h-4 w-4"
@@ -162,10 +204,14 @@ const OwnerReviewCard = ({
           </div>
           <textarea
             value={replyText}
-            onChange={(e) => setReplyText(e.target.value)}
+            onChange={(e) => {
+              setReplyText(e.target.value);
+              if (e.target.value.trim()) setInputError('');
+            }}
             placeholder="Write your response to this review..."
-            className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary min-h-24 text-sm"
+            className={`w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary min-h-24 text-sm ${inputError ? 'border-red-500' : ''}`}
           />
+          {inputError && <p className="text-red-500 text-xs mt-1">{inputError}</p>}
           <div className="flex justify-end gap-2 mt-2">
             <button 
               onClick={handleCancelReply}
@@ -175,9 +221,7 @@ const OwnerReviewCard = ({
             </button>
             <button 
               onClick={handleSubmit}
-              disabled={!replyText.trim()}
-              className={`px-3 py-1.5 rounded-md text-sm bg-primary text-white hover:bg-primary/90 flex items-center gap-1.5
-                ${!replyText.trim() ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className="px-3 py-1.5 rounded-md text-sm bg-primary text-white hover:bg-primary/90 flex items-center gap-1.5"
             >
               <Send className="h-3.5 w-3.5" />
               Submit Response
@@ -195,9 +239,13 @@ const OwnerReviewCard = ({
           </div>
           <textarea
             value={editText}
-            onChange={(e) => setEditText(e.target.value)}
-            className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary min-h-24 text-sm"
+            onChange={(e) => {
+              setEditText(e.target.value);
+              if (e.target.value.trim()) setInputError('');
+            }}
+            className={`w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary min-h-24 text-sm ${inputError ? 'border-red-500' : ''}`}
           />
+          {inputError && <p className="text-red-500 text-xs mt-1">{inputError}</p>}
           <div className="flex justify-end gap-2 mt-2">
             <button 
               onClick={handleCancelEdit}
@@ -207,9 +255,7 @@ const OwnerReviewCard = ({
             </button>
             <button 
               onClick={handleSubmit}
-              disabled={!editText.trim()}
-              className={`px-3 py-1.5 rounded-md text-sm bg-primary text-white hover:bg-primary/90 flex items-center gap-1.5
-                ${!editText.trim() ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className="px-3 py-1.5 rounded-md text-sm bg-primary text-white hover:bg-primary/90 flex items-center gap-1.5"
             >
               <Check className="h-3.5 w-3.5" />
               Save Changes

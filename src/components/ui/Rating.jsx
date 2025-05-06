@@ -27,6 +27,7 @@ const Rating = ({
     showValue = true,
     max = 5,
     asInt = false,
+    spread = false
 }) => {
     const stars = useMemo(() => {
         const clampedRating = Math.max(0, Math.min(max, rating));
@@ -47,31 +48,32 @@ const Rating = ({
     }, [rating, max]);
 
     return (
-        <div className="flex items-center gap-2">
-            {prefix && <span className={cn("font-medium", textClass, prefixClass)}>{prefix}</span>}
-            <div className="flex">
-                {stars.map((star, index) => (
-                    <div key={index} className="relative inline-block">
-                        {/* Background (empty) star */}
-                        <IconComponent className={cn("text-gray-300", iconClass)} />
-
-                        {/* Filled star overlay */}
-                        {star.value > 0 && (
-                            <div
-                                className="absolute inset-0 overflow-hidden"
-                                style={{ width: getAdjustedWidth(star.value) }}
-                            >
-                                <IconComponent className={cn("fill-primary text-primary", iconClass)} />
-                            </div>
-                        )}
-                    </div>
-                ))}
+        <div className={spread ? "grid grid-cols-2 gap-2 lg:w-1/2" : "flex items-center gap-2"}>
+            {prefix}
+            <div className='flex gap-2'>
+                <div className="flex">
+                    {stars.map((star, index) => (
+                        <div key={index} className="relative inline-block">
+                            {/* Background (empty) star */}
+                            <IconComponent className={cn("text-gray-300", iconClass)} />
+                            {/* Filled star overlay */}
+                            {star.value > 0 && (
+                                <div
+                                    className="absolute inset-0 overflow-hidden"
+                                    style={{ width: getAdjustedWidth(star.value) }}
+                                >
+                                    <IconComponent className={cn("fill-primary text-primary", iconClass)} />
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+                {showValue && (
+                    <span className={cn("font-medium text-gray-500", textClass)}>
+                        {typeof rating === 'number' ? ( asInt ? Math.round(rating) : rating.toFixed(1) ) : rating}/{max}
+                    </span>
+                )}
             </div>
-            {showValue && (
-                <span className={cn("font-medium text-gray-500", textClass)}>
-                    {typeof rating === 'number' ? ( asInt ? Math.round(rating) : rating.toFixed(1) ) : rating}/{max}
-                </span>
-            )}
         </div>
     );
 };
