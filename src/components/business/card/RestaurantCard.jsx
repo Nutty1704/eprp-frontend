@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Star } from 'lucide-react';
+import { Info, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import InfoHeader from './InfoHeader';
 import OpenBadge from './OpenBadge';
@@ -99,6 +99,7 @@ const RestaurantCard = ({
             <span className="text-gray-500">
               ({formatReviewCount(business.review_count)} reviews)
             </span>
+            <Info className='w-4 h-4 text-gray-500' />
           </div>
         </ToolTip>
       </div>      
