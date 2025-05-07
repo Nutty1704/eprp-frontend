@@ -11,10 +11,6 @@ const BusinessPage = () => {
     const { business, isLoading, error } = useGetBusinessById(id);
 
     useEffect(() => {
-        console.log(business);
-    }, [business]);
-
-    useEffect(() => {
         if (error) toast.error(error);
     }, [error]);
 
