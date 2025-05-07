@@ -5,9 +5,12 @@ import { format } from 'date-fns'
 import Rating from '../ui/Rating';
 import { reviewIcons } from '@/src/config/Icons.jsx';
 import LightboxGallery from '../ui/LightboxGallery';
+import { voteReview } from '@/src/lib/api/review';
+import { toast } from 'sonner';
 
 const ReviewCard = ({
   review,
+  onLikeChange = () => {},
 }) => {
   const hasImages = review.images && Array.isArray(review.images) && review.images.length > 0;
 
@@ -28,6 +31,20 @@ const ReviewCard = ({
       ))}
     </div>
   );
+
+  const onLikeClick = async () => {
+    const action = review.isLiked ? 'downvote' : 'upvote';
+    const { success, error, message } = await voteReview(review._id, action);
+
+    if (error) {
+      toast.error(message);
+      return;
+    }
+    
+    if (success) {
+      onLikeChange(review._id, !review.isLiked);
+    }
+  }
 
   return (
     <div className="bg-slate-100 rounded-lg shadow-md mb-4 max-w-6xl w-full inter-regular overflow-hidden">
@@ -85,8 +102,11 @@ const ReviewCard = ({
         </div>
 
         <div className="flex items-center justify-end mt-4 mb-4">
-          <button className="flex items-center inter-medium gap-1.5">
-            <Heart className='h-5 w-5 fill-primary text-primary' />
+          <button
+            onClick={onLikeClick}
+            className="flex items-center inter-medium gap-1.5"
+          >
+            <Heart className={`h-5 w-5 text-primary ${review.isLiked && 'fill-primary'}`} />
             <span>{review.upvotes}</span>
           </button>
         </div>

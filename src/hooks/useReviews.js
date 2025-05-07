@@ -1,5 +1,5 @@
-import { useQuery } from 'react-query';
-import { getReviews } from '@/src/lib/api/review'; // Your existing API utility
+import { useQuery, useQueryClient } from 'react-query';
+import { getReviews } from '@/src/lib/api/review';
 
 /**
  * Hook for fetching reviews with automatic refetching when parameters change
@@ -24,6 +24,9 @@ export const useReviews = ({
     throw new Error("Either customerId or businessId is required");
   }
   
+  // Get access to the query client
+  const queryClient = useQueryClient();
+  
   // Consolidate all query parameters
   const queryParams = {
     ...(customerId && { customerId }),
@@ -34,7 +37,7 @@ export const useReviews = ({
     page,
     limit
   };
-  
+
   // Create a query key that will change whenever any parameter changes
   const queryKey = ['reviews', queryParams];
   
@@ -48,6 +51,24 @@ export const useReviews = ({
     }
   );
 
+  // Function to update a review in the local cache
+  const updateReview = (reviewId, updatedReviewData) => {
+    queryClient.setQueryData(queryKey, (oldData) => {
+      if (!oldData || !oldData.data) return oldData;
+      
+      // Create a new array with the updated review
+      const updatedReviews = oldData.data.map(review => 
+        review._id === reviewId ? { ...review, ...updatedReviewData } : review
+      );
+      
+      // Return the updated data with the same structure
+      return {
+        ...oldData,
+        data: updatedReviews
+      };
+    });
+  };
+
   return {
     reviews: query.data?.data || [],
     metadata: query.data?.metadata || { total: 0, pages: 0 },
@@ -55,6 +76,7 @@ export const useReviews = ({
     isFetching: query.isFetching,
     isError: query.isError,
     error: query.error,
-    refetch: query.refetch
+    refetch: query.refetch,
+    updateReview
   };
 };

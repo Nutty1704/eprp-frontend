@@ -1,5 +1,5 @@
 import { ArrowDownUp, MessageSquareText } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ReviewCard from './ReviewCard'
 import { useReviews } from '@/src/hooks/useReviews'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -13,12 +13,21 @@ const ReviewDeck = ({ customerId, businessId }) => {
         reviews,
         isLoading, 
         isFetching,
+        updateReview,
         error
     } = useReviews({
         customerId,
         businessId,
         sort: sortOption.value
     });
+
+    const onLikeChange = (reviewId, isLiked) => {
+        const review = reviews.find(review => review._id === reviewId);
+        updateReview(reviewId, {
+            isLiked,
+            upvotes: isLiked ? review.upvotes + 1 : review.upvotes - 1
+        });
+    }
 
     return (
         <div className='bg-primary min-h-[50vh] w-full relative mt-40 flex items-start justify-center pt-10'>
@@ -90,7 +99,11 @@ const ReviewDeck = ({ customerId, businessId }) => {
                             </div>
                         ) : (
                             reviews.map((review) => (
-                                <ReviewCard key={review.id} review={review} />
+                                <ReviewCard
+                                    key={review.id}
+                                    review={review}
+                                    onLikeChange={onLikeChange}
+                                />
                             ))
                         )}
                     </div>

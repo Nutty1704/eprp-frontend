@@ -67,3 +67,13 @@ export const createResponse = async (reviewId, text) => {
         return handleApiError(error, "Failed to create response. Please try again.");
     }
 }
+
+
+export const voteReview = async (reviewId, action) => {
+    try {
+        const response = await apiClient.post(`${baseRoute}/vote`, { reviewId, action });
+        return response.data;
+    } catch (error) {
+        return handleApiError(error, "Failed to vote review. Please try again.");
+    }
+}
