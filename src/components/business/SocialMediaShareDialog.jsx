@@ -50,19 +50,18 @@ const SocialMediaShareDialog = ({ business, children }) => {
                     <div className="mt-6">
                         <p className="font-weight-400 mb-2">Or copy link:</p>
                         <div className="relative">
-                            <div className="flex border rounded-md shadow-sm overflow-hidden">
+                            <div className="flex border border-primary rounded-md shadow-sm overflow-hidden">
                                 <span className="px-3 py-2 text-gray-600  truncate flex-1 text-sm">
                                     {shareUrl}
                                 </span>
                                 <Button
                                     variant="ghost"
-                                    className="px-3 hover:bg-gray-200"
                                     onClick={handleCopyLink}
                                 >
                                     {copied ? (
                                         <Check className="h-4 w-4 text-green-500" />
                                     ) : (
-                                        <Copy className="h-4 w-4" />
+                                        <Copy className="h-4 w-4 text-primary" />
                                     )}
                                 </Button>
                             </div>
