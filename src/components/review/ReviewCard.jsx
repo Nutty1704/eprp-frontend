@@ -7,12 +7,14 @@ import { reviewIcons } from '@/src/config/Icons.jsx';
 import LightboxGallery from '../ui/LightboxGallery';
 import { voteReview } from '@/src/lib/api/review';
 import { toast } from 'sonner';
+import useAuthStore from '@/src/stores/auth-store';
 
 const ReviewCard = ({
   review,
   onLikeChange = () => {},
 }) => {
   const hasImages = review.images && Array.isArray(review.images) && review.images.length > 0;
+  const { isAuthenticated } = useAuthStore();
 
   const renderReviewImages = ({ images, handleImageClick }) => (
     <div className="flex items-center gap-2">
@@ -33,6 +35,11 @@ const ReviewCard = ({
   );
 
   const onLikeClick = async () => {
+    if (!isAuthenticated) {
+      toast.error('You must be logged in to like a review');
+      return;
+    }
+
     const action = review.isLiked ? 'downvote' : 'upvote';
     const { success, error, message } = await voteReview(review._id, action);
 
