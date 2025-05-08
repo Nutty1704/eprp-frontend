@@ -1,27 +1,34 @@
 import { ArrowDownUp } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
 import { useReviews } from '@/src/hooks/useReviews'
 import { Skeleton } from '@/components/ui/skeleton'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { SORT_OPTIONS } from '@/src/config/Review.js'
 import AdminReviewCard from './AdminReviewCard'
+import PaginationControls from '../../ui/PaginationControls'
 
 /**
- * A simplified Review Deck component for business owners/admins
- * Focuses on functionality and clean layout for easy management
+ * A paginated Review Deck component for business owners/admins
+ * Uses the separate Pagination component for page navigation
  */
-const AdminReviewDeck = ({ businessId }) => {
-    const [sortOption, setSortOption] = React.useState(SORT_OPTIONS[0]);
+const AdminReviewDeck = ({ businessId, reviewsPerPage = 5 }) => {
+    const [sortOption, setSortOption] = useState(SORT_OPTIONS[0]);
     
     const {
         reviews,
         isLoading, 
         isFetching,
-        error
+        error,
+        currentPage,
+        setPage,
+        totalPages,
+        metadata
     } = useReviews({
         businessId,
-        sort: sortOption.value
+        sort: sortOption.value,
+        limit: reviewsPerPage,
+        infiniteScroll: false // Explicitly set to false for pagination
     });
 
     return (
@@ -57,7 +64,7 @@ const AdminReviewDeck = ({ businessId }) => {
                 {/* Loading state */}
                 {isLoading && (
                     <div className="space-y-4">
-                        {[...Array(3)].map((_, index) => (
+                        {[...Array(reviewsPerPage)].map((_, index) => (
                             <Skeleton
                                 key={index}
                                 className="h-32 w-full"
@@ -84,7 +91,7 @@ const AdminReviewDeck = ({ businessId }) => {
                 {!isLoading && !error && reviews.length > 0 && (
                     <div className="flex flex-col gap-4 items-center">
                         {reviews.map((review) => (
-                            <AdminReviewCard key={review.id} review={review} />
+                            <AdminReviewCard key={review._id || review.id} review={review} />
                         ))}
                     </div>
                 )}
@@ -96,6 +103,23 @@ const AdminReviewDeck = ({ businessId }) => {
                     </div>
                 )}
             </CardContent>
+            
+            {/* Pagination controls */}
+            <CardFooter className="flex flex-col gap-2 py-4 bg-gray-50 border-t">
+                <PaginationControls
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setPage}
+                    isLoading={isLoading || isFetching}
+                />
+                
+                {/* Page info */}
+                {!isLoading && !error && reviews.length > 0 && (
+                    <div className="text-xs text-gray-500 text-center">
+                        Showing {reviews.length} of {metadata.total || 0} reviews
+                    </div>
+                )}
+            </CardFooter>
         </Card>
     )
 }

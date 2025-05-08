@@ -49,7 +49,6 @@ export const getReviews = async (options = {}) => {
             }
         });
 
-        console.log("Path: ", `${baseRoute}?${params.toString()}`);
         const response = await apiClient.get(`${baseRoute}?${params.toString()}`);
         
         return response.data;
@@ -58,12 +57,20 @@ export const getReviews = async (options = {}) => {
     }
 };
 
-
 export const createResponse = async (reviewId, text) => {
     try {
         const response = await apiClient.post(`${baseRoute}/response`, { reviewId, text });
         return response.data;
     } catch (error) {
         return handleApiError(error, "Failed to create response. Please try again.");
+    }
+}
+
+export const voteReview = async (reviewId, action) => {
+    try {
+        const response = await apiClient.post(`${baseRoute}/vote`, { reviewId, action });
+        return response.data;
+    } catch (error) {
+        return handleApiError(error, "Failed to vote review. Please try again.");
     }
 }
