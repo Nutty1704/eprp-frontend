@@ -52,8 +52,6 @@ const ReviewForm = ({ business, onSuccess }) => {
             return;
         }
 
-        console.log("Successfully created review:", data);
-
         reset();
         onSuccess(formData); // call the onSuccess callback
     };

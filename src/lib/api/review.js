@@ -49,7 +49,6 @@ export const getReviews = async (options = {}) => {
             }
         });
 
-        console.log("Path: ", `${baseRoute}?${params.toString()}`);
         const response = await apiClient.get(`${baseRoute}?${params.toString()}`);
         
         return response.data;
@@ -57,7 +56,6 @@ export const getReviews = async (options = {}) => {
         return handleApiError(error, "Failed to fetch reviews. Please try again.");
     }
 };
-
 
 export const createResponse = async (reviewId, text) => {
     try {
@@ -67,7 +65,6 @@ export const createResponse = async (reviewId, text) => {
         return handleApiError(error, "Failed to create response. Please try again.");
     }
 }
-
 
 export const voteReview = async (reviewId, action) => {
     try {
