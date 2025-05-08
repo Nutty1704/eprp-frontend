@@ -7,14 +7,14 @@ const SocialMediaShare = ({
   rating = 0,
   iconSize = 32,
 }) => {
-  const url = `https://www.google.com/search?q=${business.name}`;
+  const url = `http://localhost:5173/business/${business?.id || ''}`;
   const hashtags = ['foodreview', 'dining'];
   
   const getShareText = () => {
     if (reviewText) {
       return `${reviewText}. I'd give ${rating}/5 stars for ${business?.name}!`;
     }
-    return `Check out ${business?.name} on our food review platform!`;
+    return `Check out ${business?.name} on Taste Monash food review platform!`;
   };
   
   return (

@@ -10,6 +10,7 @@ import Location from '../Location'
 import BusinessAbout from './BusinessAbout'
 import { reviewIcons } from '@/src/config/Icons'
 import { Skeleton } from '@/components/ui/skeleton'
+import SocialMediaShareDialog from '../SocialMediaShareDialog'
 
 const ReviewButton = React.forwardRef((props, ref) => (
     <Button
@@ -41,10 +42,13 @@ const BusinessInfoSection = ({ business }) => {
                             </AuthDialog>
                         )
                     }
-                    <Button variant='outline'>
-                        <Share className='w-4 h-4' />
-                        Share
-                    </Button>
+                    <SocialMediaShareDialog business={business}>
+                        <Button variant='outline' className='flex items-center gap-2'>
+                            <Share className='w-4 h-4' />
+                            Share
+                        </Button>
+                    </SocialMediaShareDialog>
+
 
                     <Button variant='outline'>
                         View Menu
