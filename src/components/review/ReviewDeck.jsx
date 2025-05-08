@@ -1,28 +1,69 @@
 import { ArrowDownUp, MessageSquareText } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useRef, useEffect, useState, useCallback } from 'react'
 import ReviewCard from './ReviewCard'
 import { useReviews } from '@/src/hooks/useReviews'
 import { Skeleton } from '@/components/ui/skeleton'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { SORT_OPTIONS } from '@/src/config/Review'
 
-const ReviewDeck = ({ customerId, businessId }) => {
+const ReviewDeck = ({ businessId }) => {
     const [sortOption, setSortOption] = useState(SORT_OPTIONS[0]);
+    const loadMoreRef = useRef(null);
+    const observerRef = useRef(null);
     
     const {
         reviews,
         isLoading, 
         isFetching,
         updateReview,
-        error
+        error,
+        loadMore,
+        hasMore
     } = useReviews({
-        customerId,
         businessId,
-        sort: sortOption.value
+        sort: sortOption.value,
+        infiniteScroll: true
     });
+    
+    // Setup the intersection observer
+    useEffect(() => {
+        // Cleanup previous observer if it exists
+        if (observerRef.current) {
+            observerRef.current.disconnect();
+        }
+        
+        // Only create a new observer if we have more reviews to load
+        if (!hasMore) return;
+        
+        // Create and store the observer
+        observerRef.current = new IntersectionObserver(
+            (entries) => {
+                const [entry] = entries;
+                // Only trigger loadMore if element is intersecting and we have more to load
+                if (entry.isIntersecting && hasMore && !isFetching) {
+                    loadMore();
+                }
+            },
+            { threshold: 0.1 }
+        );
+        
+        // Start observing if we have the element
+        if (loadMoreRef.current) {
+            observerRef.current.observe(loadMoreRef.current);
+        }
+        
+        // Cleanup on unmount or when dependencies change
+        return () => {
+            if (observerRef.current) {
+                observerRef.current.disconnect();
+            }
+        };
+    }, [hasMore, isFetching, loadMore]);
 
     const onLikeChange = (reviewId, isLiked) => {
         const review = reviews.find(review => review._id === reviewId);
+        if (!review) return;
+        
         updateReview(reviewId, {
             isLiked,
             upvotes: isLiked ? review.upvotes + 1 : review.upvotes - 1
@@ -39,7 +80,6 @@ const ReviewDeck = ({ customerId, businessId }) => {
             />
 
             <div className='shadow-[0_-8px_30px_rgba(0,0,0,0.1)] w-[90%] max-w-[1400px] bg-white rounded-t-[5rem] flex flex-col items-center px-10 py-12 z-10'>
-
                 {/* Header */}
                 <div className='flex flex-col gap-8 w-full px-10'>
                     <div className='rubik-bold text-2xl lg:text-4xl flex items-center justify-center py-3 gap-8 lg:gap-32'>
@@ -60,7 +100,7 @@ const ReviewDeck = ({ customerId, businessId }) => {
                                     <DropdownMenuItem 
                                         key={option.label}
                                         onClick={() => setSortOption(option)}
-                                        className={`${sortOption.label === option.label ? 'bg-slate-100 font-medium' : ''}`}
+                                        className={sortOption.label === option.label ? 'bg-slate-100 font-medium' : ''}
                                     >
                                         <span className="mr-2">{option.icon}</span>
                                         {option.label}
@@ -72,7 +112,7 @@ const ReviewDeck = ({ customerId, businessId }) => {
                 </div>
 
                 {/* Loading state */}
-                {isLoading && (
+                {isLoading && reviews.length === 0 && (
                     <div className='grid grid-col-1 lg:grid-cols-2 gap-y-4 gap-8 mt-8 w-full'>
                         {[...Array(6)].map((_, index) => (
                             <Skeleton
@@ -100,7 +140,7 @@ const ReviewDeck = ({ customerId, businessId }) => {
                         ) : (
                             reviews.map((review) => (
                                 <ReviewCard
-                                    key={review.id}
+                                    key={review._id}
                                     review={review}
                                     onLikeChange={onLikeChange}
                                 />
@@ -109,10 +149,26 @@ const ReviewDeck = ({ customerId, businessId }) => {
                     </div>
                 )}
 
-                {/* Refreshing indicator */}
-                {!isLoading && isFetching && (
-                    <div className='text-sm text-slate-400 mt-4 text-center'>
-                        Updating...
+                {/* Loading indicator */}
+                {isFetching && reviews.length > 0 && (
+                    <div className='text-sm text-slate-400 mt-6 py-4 text-center'>
+                        Loading more reviews...
+                    </div>
+                )}
+                
+                {/* Observer target - only render when hasMore is true */}
+                {hasMore && reviews.length > 0 && (
+                    <div 
+                        ref={loadMoreRef} 
+                        className="h-10 w-full mt-4"
+                        aria-hidden="true"
+                    />
+                )}
+                
+                {/* End of results message */}
+                {!hasMore && reviews.length > 0 && (
+                    <div className='text-sm text-slate-400 mt-6 py-4 text-center'>
+                        You've reached the end of the reviews.
                     </div>
                 )}
             </div>
