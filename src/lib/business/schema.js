@@ -44,7 +44,7 @@ export const businessSchema = z.object({
   
   website: z
     .string()
-    .url("Not a valid website")
+    .regex(/^(https?:\/\/|www\.)[^\s]+$/, "Enter a valid website starting with http or www")
     .optional()
     .or(z.literal("")),
   

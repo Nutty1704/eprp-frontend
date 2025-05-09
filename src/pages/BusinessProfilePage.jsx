@@ -96,6 +96,11 @@ const BusinessProfilePage = () => {
   const onSubmit = async (data) => {
     const formData = new FormData();
 
+    // Prepend https:// to website if not already present
+    if (data.website && !data.website.startsWith("http://") && !data.website.startsWith("https://")) {
+      data.website = `https://${data.website}`;
+    }
+
     // Prepare form data
     for (const key in data) {
       if (key === "openingHours" || key === "cuisines") {
