@@ -4,6 +4,7 @@ import AuthDialog from '@/src/components/auth/AuthDialog';
 import Logout from '@/src/components/auth/Logout';
 import { Button } from '@/components/ui/button';
 import useAuthStore from '@/src/stores/auth-store';
+import Logo from './Logo';
 
 const Header = ({ }) => {
   const { isAuthenticated } = useAuthStore();
@@ -14,9 +15,7 @@ const Header = ({ }) => {
         <div className="flex justify-between h-16 items-center">
           <div>
             <Link to="/" className="flex items-center">
-                <div className="border border-black w-40 h-10 flex items-center justify-center m-6">
-                    <span className="font-serif">T M</span>
-                </div>
+              <Logo className="h-16 w-auto" theme='light' />
             </Link>
           </div>
           
@@ -31,9 +30,7 @@ const Header = ({ }) => {
                 Profile
               </Link>
             ) : (
-              <Link to="/profile" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium">
-                Profile
-              </Link>
+              <></>
             )}
             
             {isAuthenticated ? (
