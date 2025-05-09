@@ -16,7 +16,6 @@ import CuisineFilter from '../components/search/CuisineFilter';
 import RatingsFilter from '../components/search/RatingsFilter'; 
 import SortOptions from '../components/search/SortOptions';   
 import BusinessCard from '../components/search/BusinessCard';  
-import WavyBackground from '../components/ui/WavyBackground'; 
 
 import {
   Pagination,
@@ -162,10 +161,7 @@ const SearchPage = () => {
     <>
       {/* Full Width Wave Section */}
       <div className="relative mb-6 md:mb-10 b-lg md:b-xl overflow-hidden shadow-inner bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        <WavyBackground
-            className="absolute inset-0 z-0 opacity-70 md:opacity-70"
-            animationDuration={30}
-        />
+        <div className='absolute inset-0 z-0 bg-primary' />
         <div className="relative z-10 py-8 sm:py-10 md:py-10">
            <div className="container mx-auto pt-5 flex justify-center">
              <SearchBar className=" max-w-4xl w-full mx-auto" placeholder="Search by Business Name or Cuisine" />

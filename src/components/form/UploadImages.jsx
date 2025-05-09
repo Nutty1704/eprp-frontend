@@ -26,7 +26,9 @@ const UploadImages = ({ maxImages = 3, onChange = (images) => { }, disabled = fa
     };
 
     useEffect(() => {
+      if(displayImages.length > 0) {
         setImages(displayImages);
+      }
     }, [displayImages]);
 
     return (
