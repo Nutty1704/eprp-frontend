@@ -64,30 +64,22 @@ const RestaurantCard = ({
           align="center"
           text={
             <div className="px-3 py-1 w-full space-y-2">
-              <Rating
-                rating={business.rating}
-                prefix={<span>{reviewIcons.overall} Overall</span>}
-                textClass="text-sm text-gray-700"
-                prefixClass="font-medium text-black min-w-24"
-              />
-              <Rating
-                rating={business.foodRating}
-                prefix={<span>{reviewIcons.food} Food</span>}
-                textClass="text-sm text-gray-700"
-                prefixClass="font-medium text-black min-w-24"
-              />
-              <Rating
-                rating={business.serviceRating}
-                prefix={<span>{reviewIcons.service} Service</span>}
-                textClass="text-sm text-gray-700"
-                prefixClass="font-medium text-black min-w-24"
-              />
-              <Rating
-                rating={business.ambienceRating}
-                prefix={<span>{reviewIcons.ambience} Ambience</span>}
-                textClass="text-sm text-gray-700"
-                prefixClass="font-medium text-black min-w-24"
-              />
+              {[
+                { rating: business.rating, label: "Overall", icon: reviewIcons.overall },
+                { rating: business.foodRating, label: "Food", icon: reviewIcons.food },
+                { rating: business.serviceRating, label: "Service", icon: reviewIcons.service },
+                { rating: business.ambienceRating, label: "Ambience", icon: reviewIcons.ambience },
+              ].map((item, index) => (
+                <div key={index} className="flex gap-2 items-center">
+                  <span className="min-w-28 font-medium text-black text-sm flex-shrink-0">
+                    {item.icon} {item.label}
+                  </span>
+                  <Rating
+                    rating={item.rating}
+                    textClass="text-sm text-gray-700"
+                  />
+                </div>
+              ))}
             </div>
           }
         >
