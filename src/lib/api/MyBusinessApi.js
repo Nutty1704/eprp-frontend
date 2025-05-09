@@ -1,7 +1,7 @@
 import useAuthStore from '@/src/stores/auth-store';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 
 const API_URL = 'http://localhost:5000/api';
 
@@ -293,4 +293,52 @@ export const useBusinessStats = (businessId) => {
     isLoading,
     error: error ? error.response?.data?.message || 'Failed to fetch business stats' : null
   };
+};
+
+export const useGetMyDeals = () => {
+  const [deals, setDeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchDeals = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axios.get(`${API_URL}/deals/my`);
+      setDeals(res.data);
+    } catch (err) {
+      console.error("Error fetching deals:", err);
+      setError("Failed to fetch deals");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => { fetchDeals(); }, []);
+  const refetch = () => fetchDeals();
+
+  return { deals, isLoading, error, refetch };
+};
+
+export const useCreateDeal = () => {
+  const createDeal = async (dealData) => {
+    const res = await axios.post(`${API_URL}/deals`, dealData);
+    return res.data;
+  };
+  return { createDeal };
+};
+
+export const useUpdateDeal = () => {
+  const updateDeal = async (dealId, updatedData) => {
+    const res = await axios.put(`${API_URL}/deals/${dealId}`, updatedData);
+    return res.data;
+  };
+  return { updateDeal };
+};
+
+export const useDeleteDeal = () => {
+  const deleteDeal = async (dealId) => {
+    const res = await axios.delete(`${API_URL}/deals/${dealId}`);
+    return res.data;
+  };
+  return { deleteDeal };
 };

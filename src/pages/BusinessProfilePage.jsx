@@ -18,6 +18,7 @@ import { businessSchema } from "../lib/business/schema";
 import ReviewStats from "../components/admin/reviews/ReviewStats";
 import CollapsibleSection from "../components/ui/CollapsibleSection";
 import AdminReviewDeck from "../components/admin/reviews/AdminReviewDeck";
+import DealsPage from "../components/admin/deals/DealsPage";
 
 const defaultOpeningHours = {
   mon: { isOpen: true, timeSlots: [{ open: "10:00", close: "20:00" }] },
@@ -235,9 +236,7 @@ const BusinessProfilePage = () => {
         )}
 
         {activeSection === "deals" && (
-          <div className="flex items-center justify-center h-64">
-            <span className="text-gray-500">Deals section is under construction.</span>
-          </div>
+          <DealsPage businessId={businessData?._id} />
         )}
 
       </div>
