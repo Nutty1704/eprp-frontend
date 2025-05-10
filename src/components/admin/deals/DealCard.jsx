@@ -23,7 +23,7 @@ const DealCard = ({ deal, onEdit, onDelete }) => {
     <div className="border border-gray-200 rounded-lg bg-white shadow-sm w-full p-6">
       {/* Title + Action Icons */}
       <div className="flex justify-between items-start">
-        <h3 className="text-xl font-semibold text-red-800">{title}</h3>
+        <h3 className="text-xl font-semibold text-primary">{title}</h3>
         <div className="flex gap-3">
           <Pencil
             className="h-5 w-5 text-blue-500 cursor-pointer"

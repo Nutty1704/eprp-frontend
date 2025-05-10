@@ -62,14 +62,21 @@ const DealsPage = ({ businessId }) => {
       </div>
 
       <div className="flex flex-col gap-4">
-        {deals?.map((deal) => (
-          <DealCard
-            key={deal._id}
-            deal={deal}
-            onEdit={() => openDialog(deal)}
-            onDelete={() => handleDelete(deal._id)}
-          />
-        ))}
+        {deals && deals.length > 0 ? (
+          deals.map((deal) => (
+            <DealCard
+              key={deal._id}
+              deal={deal}
+              onEdit={() => openDialog(deal)}
+              onDelete={() => handleDelete(deal._id)}
+            />
+          ))
+        ) : (
+          <div className="bg-white rounded-lg shadow p-8 text-center">
+            <h3 className="font-medium text-lg mb-2">No Deals Available</h3>
+            <p className="text-gray-500 mb-4">You haven't created any promotional deals yet.</p>
+          </div>
+        )}
       </div>
 
       <AddDealDialog open={dialogOpen} onClose={closeDialog} onSave={handleSave} editDeal={editingDeal} />
