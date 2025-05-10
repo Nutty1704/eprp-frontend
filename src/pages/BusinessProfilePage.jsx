@@ -164,7 +164,7 @@ const BusinessProfilePage = () => {
   return (
     <div className="flex gap-6 px-4 sm:px-6 py-6 container mx-auto">
       {/* Sidebar */}
-      <aside className="w-40 shrink-0 space-y-2">
+      <aside className="w-40 shrink-0 space-y-2 sticky top-[88px] self-start">
         <button className={`flex items-center gap-2 text-left w-full px-3 py-2 rounded-md hover:bg-gray-100 ${activeSection === 'info' ? 'bg-gray-100 font-semibold' : ''}`} onClick={() => setActiveSection("info")}>
           <FileText size={18} />
           Info
