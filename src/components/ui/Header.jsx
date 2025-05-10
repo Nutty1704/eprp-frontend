@@ -21,21 +21,23 @@ const Header = ({ isOwner = false }) => {
           </div>
           
           <div className="flex items-center space-x-4">
-            <Link to="/" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium">
-              Home
-            </Link>
-            
+            {!isOwner && (
+              <>
+                <Link to="/" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium">
+                  Home
+                </Link>
 
-            {isAuthenticated ? (
-              <Link to="/profile" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium">
-                Profile
-              </Link>
-            ) : (
-              <Link to="/profile" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium">
-                Profile
-              </Link>
-            )}
-            
+                {isAuthenticated ? (
+                  <Link to="/profile" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium">
+                    Profile
+                  </Link>
+                ) : (
+                  <Link to="/profile" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium">
+                    Profile
+                  </Link>
+                )}
+              </>
+            )} 
             {isAuthenticated ? (
               <Logout redirect={isOwner && '/' }>
                 <Button className="bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 rounded">

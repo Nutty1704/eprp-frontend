@@ -6,6 +6,7 @@ import CollapsibleSection from "@/src/components/ui/CollapsibleSection";
 import { useFormContext } from "react-hook-form";
 import ImageSection from "./Image Section";
 import { useState, useEffect, useRef } from "react";
+import { Image, Building2, Clock, Utensils, GalleryHorizontal } from "lucide-react";
 
 const BusinessForm = ({
   business = {},
@@ -56,7 +57,7 @@ const BusinessForm = ({
 
   return (
     <div className="space-y-6">
-      <CollapsibleSection title="Profile Image" defaultOpen={true}>
+      <CollapsibleSection title="Profile Image" defaultOpen={true} icon={Image}>
         <ProfileImageSection
           imageUrl={business?.imageUrl}
           imagePreview={imagePreview}
@@ -67,25 +68,25 @@ const BusinessForm = ({
         />
       </CollapsibleSection>
 
-      <CollapsibleSection title="Basic Business Details" defaultOpen={true}>
+      <CollapsibleSection title="Basic Business Details" defaultOpen={true} icon={Building2}>
         <BusinessDetailsForm
           business={business}
         />
       </CollapsibleSection>
 
-      <CollapsibleSection title="Opening Hours">
+      <CollapsibleSection title="Opening Hours" icon={Clock}>
         <OpeningHoursSection
           openingHours={business?.openingHours}
         />
       </CollapsibleSection>
 
-      <CollapsibleSection title="Cuisines">
+      <CollapsibleSection title="Cuisines" icon={Utensils}>
         <CuisineSelector
           selectedCuisines={business?.cuisines || []}
         />
       </CollapsibleSection>
 
-      <CollapsibleSection title="Business Photos">
+      <CollapsibleSection title="Business Photos" icon={GalleryHorizontal}>
         <ImageSection defaultImages={business?.images || []}/>
       </CollapsibleSection>
     </div>
