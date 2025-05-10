@@ -7,7 +7,7 @@ const SocialMediaShare = ({
   rating = 0,
   iconSize = 32,
 }) => {
-  const url = `http://localhost:5173/business/${business?.id || ''}`;
+  const url = `http://localhost:5173/business/${business?._id}`;
   const hashtags = ['foodreview', 'dining'];
   
   const getShareText = () => {
