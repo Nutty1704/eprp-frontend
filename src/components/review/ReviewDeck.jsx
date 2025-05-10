@@ -5,11 +5,13 @@ import { useReviews } from '@/src/hooks/useReviews'
 import { Skeleton } from '@/components/ui/skeleton'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { SORT_OPTIONS } from '@/src/config/Review'
+import useAuthStore from '@/src/stores/auth-store'
 
 const ReviewDeck = ({ businessId }) => {
     const [sortOption, setSortOption] = useState(SORT_OPTIONS[0]);
     const loadMoreRef = useRef(null);
     const observerRef = useRef(null);
+    const { user } = useAuthStore();
     
     const {
         reviews,
@@ -21,10 +23,15 @@ const ReviewDeck = ({ businessId }) => {
         hasMore
     } = useReviews({
         businessId,
+        customerId: !businessId && user ? user._id : undefined, 
         sort: sortOption.value,
         infiniteScroll: true
     });
     
+
+    console.log("Reviews:", reviews);
+
+
     // Setup the intersection observer
     useEffect(() => {
         // Cleanup previous observer if it exists
@@ -70,6 +77,13 @@ const ReviewDeck = ({ businessId }) => {
         });
     }
 
+    const getDisplayTitle = () => {
+        if (businessId) return "Reviews";
+        return "My Reviews";
+    };
+
+
+
     return (
         <div className='bg-primary min-h-[50vh] w-full relative mt-40 flex items-start justify-center pt-10'>
             <div
@@ -85,7 +99,7 @@ const ReviewDeck = ({ businessId }) => {
                     <div className='rubik-bold text-2xl lg:text-4xl flex items-center justify-center py-3 gap-8 lg:gap-32'>
                         <div className='flex items-center gap-3'>
                             <MessageSquareText className='text-primary w-5 h-5 lg:w-9 lg:h-9' />
-                            Reviews
+                            {getDisplayTitle()}
                         </div>
                     </div>
 
@@ -135,7 +149,11 @@ const ReviewDeck = ({ businessId }) => {
                     <div className='flex flex-col items-center gap-y-4 gap-8 mt-8 w-full'>
                         {reviews.length === 0 ? (
                             <div className='col-span-full text-center py-12 text-slate-500'>
-                                No reviews found.<br />Be the <span className='text-primary'>first</span> to leave one!
+                                {businessId ? (
+                                    <>No reviews found.<br />Be the <span className='text-primary'>first</span> to leave one!</>
+                                ) : (
+                                    <>You haven't written any reviews yet.<br />Visit businesses to share your <span className='text-primary'>experience</span>!</>
+                                )}
                             </div>
                         ) : (
                             reviews.map((review) => (
