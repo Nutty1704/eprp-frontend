@@ -5,7 +5,6 @@ import { getCustomer } from '../lib/api/user';
 import useAuthStore from '../stores/auth-store';
 import EditProfileDialog from '../components/profile/EditProfileDialog';
 import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
 
 const UserProfile = () => {
   const { user } = useAuthStore();
@@ -43,6 +42,11 @@ const UserProfile = () => {
     return <div>No user data available.</div>;
   }
 
+  const handleProfileUpdate = (updatedUserData) => {
+    setUserData(updatedUserData);
+  };
+
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       {/* Profile section */}
@@ -56,7 +60,7 @@ const UserProfile = () => {
             />
           </div>
           
-          <EditProfileDialog userData={userData}>
+          <EditProfileDialog userData={userData} onProfileUpdate={handleProfileUpdate}>
             <Button
               className="absolute bottom-4 right-0 rounded-full bg-primary hover:brightness-90 p-0 h-11 w-11 shadow-md flex items-center justify-center"
               size="sm"
