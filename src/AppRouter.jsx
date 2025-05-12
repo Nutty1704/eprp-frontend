@@ -8,7 +8,6 @@ import BusinessPage from "./pages/business/BusinessPage"
 import SearchPage from "./pages/SearchPage"
 import BusinessProfilePage from "./pages/BusinessProfilePage"
 import OwnerLayout from "./layouts/OwnerLayout"
-import BusinessForm from "./components/admin/business-form/BusinessForm"
 
 
 const AppRoutes = () =>{
