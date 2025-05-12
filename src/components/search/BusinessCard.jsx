@@ -10,7 +10,7 @@ const BusinessCard = ({ business, onClick }) => {
       <div className="w-1/4 overflow-hidden bg-gray-100">
         {/* Using local temp image as placeholder */}
         <img 
-          src="/public/assets/temp-image.jpg"
+          src={business.imageUrl}
           alt={business.name}
           className="w-full h-full object-cover"
         />

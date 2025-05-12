@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 
 export const useReviews = ({
   businessId,
+  customerId, // added for future use
   filters = {},
   sort = { field: 'createdAt', direction: 'desc' },
   page: initialPage = 1,
@@ -26,6 +27,7 @@ export const useReviews = ({
   const baseQueryKey = [
     'reviews', 
     businessId, 
+    customerId,
     JSON.stringify(sort), 
     JSON.stringify(filters), 
     limit,
@@ -37,6 +39,7 @@ export const useReviews = ({
   // Build query parameters once
   const getQueryParams = useCallback((page) => ({
     ...(businessId && { businessId }),
+    ...(customerId && { customerId }),
     ...filters,
     sortBy: sort.field,
     order: sort.direction,
@@ -51,6 +54,7 @@ export const useReviews = ({
     {
       keepPreviousData: true,
       staleTime: 60000,
+      enabled: Boolean(businessId||customerId),
       onSuccess: (data) => {
         if (infiniteScroll) {
           // Initialize the accumulated reviews on first load or sort/filter change
@@ -77,7 +81,7 @@ export const useReviews = ({
     } else {
       setPaginatedPage(1);
     }
-  }, [businessId, JSON.stringify(sort), JSON.stringify(filters), infiniteScroll]);
+  }, [businessId, customerId, JSON.stringify(sort), JSON.stringify(filters), infiniteScroll]);
   
   // Optimized load more function (for infinite scroll)
   const loadMore = useCallback(async () => {

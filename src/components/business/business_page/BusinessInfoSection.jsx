@@ -50,13 +50,11 @@ const BusinessInfoSection = ({ business }) => {
                         </Button>
                     </SocialMediaShareDialog>
 
-                    <MenuDialog restaurant={business} trigger={
+                    <MenuDialog restaurant={business}>
                         <Button variant='outline' className='flex items-center gap-2'>
                             <Share className='w-4 h-4' />
                             View Menu
-                        </Button> 
-                    }>
-
+                        </Button>
                     </MenuDialog>
 
                 </div>
