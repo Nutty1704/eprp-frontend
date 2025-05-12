@@ -125,10 +125,10 @@ const BusinessInfoSection = ({ business }) => {
                                 <Globe className='w-4 h-4 text-primary' />
                                 <a
                                     target='_blank'
-                                    href='https://www.example.com/'
+                                    href={business.website}
                                     className='hover:underline decoration-primary'
                                 >
-                                    {'https://www.example.com/'}
+                                    {business.website}
                                 </a>
                             </div>
                             <div className='flex items-center gap-2.5'>

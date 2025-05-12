@@ -44,7 +44,7 @@ const OwnerDashboard = () => {
 							<BusinessCard
 								name={biz.name}
 								location={biz.address}
-								url={biz.url}
+								url={biz.website}
 								avgRating={biz.rating}
 								imageUrl={biz.imageUrl}
 								description={biz.description}

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { Loader2, Star } from "lucide-react";
+import { Loader2, Star, List, FileText, MessageCircle, Tag } from "lucide-react";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 import {
   useGetBusinessById,
@@ -19,6 +18,7 @@ import { businessSchema } from "../lib/business/schema";
 import ReviewStats from "../components/admin/reviews/ReviewStats";
 import CollapsibleSection from "../components/ui/CollapsibleSection";
 import AdminReviewDeck from "../components/admin/reviews/AdminReviewDeck";
+import DealsPage from "../components/admin/deals/DealsPage";
 
 const defaultOpeningHours = {
   mon: { isOpen: true, timeSlots: [{ open: "10:00", close: "20:00" }] },
@@ -44,7 +44,7 @@ const BusinessProfilePage = () => {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
-  const [activeTab, setActiveTab] = useState("business-info");
+  const [activeSection, setActiveSection] = useState("info");
 
   const isSubmitting = isUpdating || isCreating;
 
@@ -69,7 +69,6 @@ const BusinessProfilePage = () => {
 
   const { handleSubmit, reset, setValue } = methods;
 
-  // Only reset form when business data changes and not during component initialization
   useEffect(() => {
     if (businessData) {
       reset({
@@ -96,7 +95,12 @@ const BusinessProfilePage = () => {
   const onSubmit = async (data) => {
     const formData = new FormData();
 
-    // Prepare form data
+    console.log("Form Data:", data);
+
+    if (data.website && !data.website.startsWith("http://") && !data.website.startsWith("https://")) {
+      data.website = `https://${data.website}`;
+    }
+
     for (const key in data) {
       if (key === "openingHours" || key === "cuisines") {
         formData.append(key, JSON.stringify(data[key]));
@@ -105,19 +109,15 @@ const BusinessProfilePage = () => {
       }
     }
 
-    console.log("Data to be submitted:", data);
-
     if (data.removeProfileImage) {
       formData.append("profileImageDeleted", "true");
     }
 
-    // Append single profile image
     if (data.profileImage instanceof File) {
       formData.append("profile_image", data.profileImage);
     }
-  
-    // Append multiple business gallery images
-    if (Array.isArray(data.businessImages) && data.businessImages.length > 0) {
+
+    if (Array.isArray(data.businessImages)) {
       data.businessImages.forEach((file) => {
         if (file instanceof File) {
           formData.append("business_images", file);
@@ -125,7 +125,7 @@ const BusinessProfilePage = () => {
       });
     }
 
-    if (data.removedImageUrls && data.removedImageUrls.length > 0) {
+    if (data.removedImageUrls?.length) {
       formData.append("removedImageUrls", JSON.stringify(data.removedImageUrls));
     }
 
@@ -162,18 +162,32 @@ const BusinessProfilePage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 py-6">
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-      {businessId && (
-        <TabsList className="w-full border-b flex-nowrap justify-start sm:justify-center">
-          <TabsTrigger value="business-info" className="flex-1">Business Information</TabsTrigger>
-          <TabsTrigger value="reviews" className="flex-1">Reviews</TabsTrigger>
-          <TabsTrigger value="menu" className="flex-1">Menu</TabsTrigger>
-        </TabsList>
-      )}
-        <TabsContent value="business-info" className="mt-6">
+    <div className="flex gap-6 px-4 sm:px-6 py-6 container mx-auto">
+      {/* Sidebar */}
+      <aside className="w-40 shrink-0 space-y-2 sticky top-[88px] self-start">
+        <button className={`flex items-center gap-2 text-left w-full px-3 py-2 rounded-md hover:bg-gray-100 ${activeSection === 'info' ? 'bg-gray-100 font-semibold' : ''}`} onClick={() => setActiveSection("info")}>
+          <FileText size={18} />
+          Info
+        </button>
+        <button className={`flex items-center gap-2 text-left w-full px-3 py-2 rounded-md hover:bg-gray-100 ${activeSection === 'reviews' ? 'bg-gray-100 font-semibold' : ''}`} onClick={() => setActiveSection("reviews")}>
+          <MessageCircle size={18} />
+          Reviews
+        </button>
+        <button className={`flex items-center gap-2 text-left w-full px-3 py-2 rounded-md hover:bg-gray-100 ${activeSection === 'menu' ? 'bg-gray-100 font-semibold' : ''}`} onClick={() => setActiveSection("menu")}>
+          <List size={18} />
+          Menu
+        </button>
+          <button className={`flex items-center gap-2 text-left w-full px-3 py-2 rounded-md hover:bg-gray-100 ${activeSection === 'deals' ? 'bg-gray-100 font-semibold' : ''}`} onClick={() => setActiveSection("deals")}>
+          <Tag size={18} />
+          Deals
+        </button>
+      </aside>
+
+      {/* Content */}
+      <div className="flex-1">
+        {activeSection === "info" && (
           <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <BusinessForm
                 business={businessData}
                 selectedImage={selectedImage}
@@ -187,22 +201,16 @@ const BusinessProfilePage = () => {
                   className="bg-red-600 hover:bg-red-700 w-full sm:w-auto"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting && (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  )}
-                  {isSubmitting
-                    ? "Saving..."
-                    : businessData
-                      ? "Save Changes"
-                      : "Create Business"}
+                  {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {isSubmitting ? "Saving..." : businessData ? "Save Changes" : "Create Business"}
                 </Button>
               </div>
             </form>
           </FormProvider>
-        </TabsContent>
+        )}
 
-        {businessId && (
-            <TabsContent value="reviews">
+        {activeSection === "reviews" && (
+          <>
             <CollapsibleSection
               title={(
                 <div className="flex items-center gap-2 text-xl rubik-bold">
@@ -219,18 +227,19 @@ const BusinessProfilePage = () => {
                 avgServiceRating={businessData?.serviceRating}
               />
             </CollapsibleSection>
-
             <AdminReviewDeck businessId={businessData?._id} />
-          </TabsContent>
+          </>
         )}
 
-        {businessId && (
-          <TabsContent value="menu" className="mt-6">
-            <MenuPage businessId={businessId} />
-          </TabsContent>
+        {activeSection === "menu" && (
+          <MenuPage businessId={businessData?._id} />
         )}
 
-      </Tabs>
+        {activeSection === "deals" && (
+          <DealsPage businessId={businessData?._id} />
+        )}
+
+      </div>
     </div>
   );
 };

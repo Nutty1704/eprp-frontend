@@ -1,6 +1,6 @@
 import z from "zod";
 
-
+export const MIN_IMAGES = 5;
 export const MAX_IMAGES = 30;
 
 const validateTimeOrder = (timeSlot) => {
@@ -44,7 +44,7 @@ export const businessSchema = z.object({
   
   website: z
     .string()
-    .url("Not a valid website")
+    .regex(/^(https?:\/\/|www\.)[^\s]+$/, "Enter a valid website starting with http or www")
     .optional()
     .or(z.literal("")),
   
@@ -92,4 +92,14 @@ export const businessSchema = z.object({
   removeProfileImage: z.boolean().optional().default(false),
   existingImageUrls: z.array(z.string().url()).optional(),
   removedImageUrls: z.array(z.string().url()).optional()
+
+}).refine((data) => {
+  const existing = data.existingImageUrls?.length || 0;
+  const added = data.businessImages?.length || 0;
+  // const removed = data.removedImageUrls?.length || 0;
+
+  return existing + added >= MIN_IMAGES;
+}, {
+  message: `You must have at least ${MIN_IMAGES} business images after updates.`,
+  path: ["businessImages"],
 });

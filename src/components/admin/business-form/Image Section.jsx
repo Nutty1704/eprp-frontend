@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import UploadImages from "@/src/components/form/UploadImages";
 import { Info } from "lucide-react";
-import { MAX_IMAGES } from "@/src/lib/business/schema";
+import { MIN_IMAGES, MAX_IMAGES } from "@/src/lib/business/schema";
 import { useEffect, useState } from "react";
 
 const ImageSection = ({ defaultImages = [] }) => {
@@ -51,7 +51,7 @@ const ImageSection = ({ defaultImages = [] }) => {
     <div className="space-y-4">
       <Alert className="mb-4 bg-blue-50 border-blue-200">
         <AlertDescription>
-          Upload up to {MAX_IMAGES} high-quality images that showcase your business. Images should be less than 10MB each.
+          Upload at least {MIN_IMAGES} and up to {MAX_IMAGES} high-quality images that showcase your business. Images should be less than 10MB each.
         </AlertDescription>
       </Alert>
       
@@ -60,18 +60,19 @@ const ImageSection = ({ defaultImages = [] }) => {
           These images will be displayed to customers browsing your business profile.
         </p>
         
-        <UploadImages 
+        <UploadImages
+          minImages={MIN_IMAGES} 
           maxImages={MAX_IMAGES}
           onChange={handleImagesChange}
           disabled={false}
           displayImages={displayImages}
         />
         
-        {errors.images && (
+        {errors.businessImages && (
           <div className="flex items-center mt-2 gap-2 text-red-500">
             <Info className="h-4 w-4" />
             <span className="text-xs font-medium">
-              {errors.images.message || "Please upload valid images"}
+              {errors.businessImages.message || "Please upload valid images" }
             </span>
           </div>
         )}
