@@ -2,6 +2,7 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/
 import React, { useState, useEffect } from 'react'
 import Auth from './Auth'
 import useAuthStore from '@/src/stores/auth-store';
+import { DialogDescription } from '@radix-ui/react-dialog';
 
 const AuthDialog = ({ children, allowClose = true, requiredRole, ...props }) => {
   const [open, setOpen] = useState(false);
@@ -52,6 +53,9 @@ const AuthDialog = ({ children, allowClose = true, requiredRole, ...props }) => 
         className="max-w-[90vw] fixed lg:max-w-4xl md:min-w-[70vw] max-h-[80vh] lg:max-h-[95vh] my-auto bg-white shadow-lg rounded-2xl overflow-hidden flex p-0"
         closeIconClass={`lg:text-white ${!allowClose && !isAuthenticated ? 'hidden' : ''}`}
       >
+        <DialogDescription className="sr-only">
+          {allowClose ? 'Click outside to close' : 'You must be logged in to access this page'}
+        </DialogDescription>
         <DialogTitle className="sr-only">Authentication form</DialogTitle>
         <Auth 
           {...props} 
