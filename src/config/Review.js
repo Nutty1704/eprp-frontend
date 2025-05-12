@@ -13,3 +13,32 @@ export const createSuccessMessages = [
     "Your experience matters! Thanks for sharing it with us.",
     "Your review is live! Others will surely find it helpful.",
 ];
+
+
+export const SORT_OPTIONS = [
+  { 
+    label: 'Newest', 
+    value: { field: 'createdAt', direction: 'desc' },
+    icon: '↓'
+  },
+  { 
+    label: 'Oldest', 
+    value: { field: 'createdAt', direction: 'asc' },
+    icon: '↑'
+  },
+  { 
+    label: 'Highest Rating', 
+    value: { field: 'rating', direction: 'desc' },
+    icon: '↓'
+  },
+  { 
+    label: 'Lowest Rating', 
+    value: { field: 'rating', direction: 'asc' },
+    icon: '↑'
+  },
+  { 
+    label: 'Most Upvoted', 
+    value: { field: 'upvotes', direction: 'desc' },
+    icon: '↓'
+  }
+];

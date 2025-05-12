@@ -2,7 +2,7 @@ import { Info, X } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { useEffect } from "react";
 
-const UploadImages = ({ maxImages = 3, onChange = (images) => { }, disabled = false, displayImages = [] }) => {
+const UploadImages = ({ minImages = 0, maxImages = 3, onChange = (images) => { }, disabled = false, displayImages = [] }) => {
     const [images, setImages] = useState([]);
     const [error, setError] = useState(null);
     const imgInputRef = useRef(null);
@@ -20,13 +20,21 @@ const UploadImages = ({ maxImages = 3, onChange = (images) => { }, disabled = fa
     };
 
     const handleRemoveImage = (index) => {
-        const newImages = images.filter((_, i) => i !== index);
-        setImages(newImages);
-        onChange(newImages);
+      if (images.length <= minImages) {
+        setError(`You must keep at least ${minImages} image${minImages > 1 ? "s" : ""}.`);
+        setTimeout(() => setError(null), 3000);
+        return;
+  }
+
+  const newImages = images.filter((_, i) => i !== index);
+  setImages(newImages);
+  onChange(newImages);
     };
 
     useEffect(() => {
+      if(displayImages.length > 0) {
         setImages(displayImages);
+      }
     }, [displayImages]);
 
     return (
@@ -41,9 +49,12 @@ const UploadImages = ({ maxImages = 3, onChange = (images) => { }, disabled = fa
                             className="w-24 h-24 object-cover rounded-md"
                         />
                         <button
-                            type="button"
-                            onClick={() => handleRemoveImage(index)}
-                            className="absolute -top-2 -right-2 bg-gray-300 text-gray-800 p-1 rounded-full w-4.5 h-4.5 flex justify-center items-center hover:bg-gray-400"
+                          type="button"
+                          onClick={() => handleRemoveImage(index)}
+                          className={`absolute -top-2 -right-2 bg-gray-300 text-gray-800 p-1 rounded-full w-4.5 h-4.5 flex justify-center items-center hover:bg-gray-400 ${
+                            images.length <= minImages ? "opacity-50 cursor-not-allowed" : ""
+                          }`}
+                          disabled={images.length <= minImages}
                         >
                             <X className="h-3 w-3" />
                         </button>

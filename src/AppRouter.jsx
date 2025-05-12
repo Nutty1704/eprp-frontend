@@ -7,7 +7,7 @@ import UserProfile from "./pages/UserProfilePage"
 import BusinessPage from "./pages/business/BusinessPage"
 import SearchPage from "./pages/SearchPage"
 import BusinessProfilePage from "./pages/BusinessProfilePage"
-import BusinessForm from "./components/admin/business-form/BusinessForm"
+import OwnerLayout from "./layouts/OwnerLayout"
 
 
 const AppRoutes = () =>{
@@ -20,9 +20,12 @@ const AppRoutes = () =>{
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/search" element={<SearchPage/>}/>
         </Route>
-        <Route path="/owner" element={<OwnerDashboard />} />
-        <Route path="/owner/business/:businessId" element={<BusinessProfilePage />} />
-        <Route path="/owner/business/new" element={<BusinessProfilePage />} />
+
+        <Route path='/owner'element={<OwnerLayout />}>
+          <Route path="/owner" element={<OwnerDashboard />} />
+          <Route path="/owner/business/:businessId" element={<BusinessProfilePage />} />
+          <Route path="/owner/business/new" element={<BusinessProfilePage />} />
+        </Route>
       </Routes>
     )
 }

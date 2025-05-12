@@ -8,8 +8,10 @@ import AuthDialog from '@/src/components/auth/AuthDialog'
 import Rating from '@/src/components/ui/Rating'
 import Location from '../Location'
 import BusinessAbout from './BusinessAbout'
-import { reviewIcons } from '@/src/config/Icons'
+import { reviewIcons } from '@/src/config/Icons.jsx'
 import { Skeleton } from '@/components/ui/skeleton'
+import SocialMediaShareDialog from '../SocialMediaShareDialog'
+import { MenuDialog } from '../MenuDialog'
 
 const ReviewButton = React.forwardRef((props, ref) => (
     <Button
@@ -41,14 +43,22 @@ const BusinessInfoSection = ({ business }) => {
                             </AuthDialog>
                         )
                     }
-                    <Button variant='outline'>
-                        <Share className='w-4 h-4' />
-                        Share
-                    </Button>
+                    <SocialMediaShareDialog business={business}>
+                        <Button variant='outline' className='flex items-center gap-2'>
+                            <Share className='w-4 h-4' />
+                            Share
+                        </Button>
+                    </SocialMediaShareDialog>
 
-                    <Button variant='outline'>
-                        View Menu
-                    </Button>
+                    <MenuDialog restaurant={business} trigger={
+                        <Button variant='outline' className='flex items-center gap-2'>
+                            <Share className='w-4 h-4' />
+                            View Menu
+                        </Button> 
+                    }>
+
+                    </MenuDialog>
+
                 </div>
 
                 <Separator className='w-1/2' />
@@ -62,27 +72,31 @@ const BusinessInfoSection = ({ business }) => {
                         <div className='px-3 py-1 w-full space-y-2'>
                             <Rating
                                 rating={business.rating}
-                                prefix="Overall:"
+                                prefix={<span className='font-medium'>{reviewIcons.overall} Overall</span>}
                                 textClass="text-sm text-gray-700"
                                 prefixClass="font-medium text-black min-w-24"
+                                spread={true}
                             />
                             <Rating
                                 rating={business.foodRating}
-                                prefix={`Food ${reviewIcons.food}`}
+                                prefix={<span className='font-medium'>{reviewIcons.food} Food</span>}
                                 textClass="text-sm text-gray-700"
                                 prefixClass="font-medium text-black min-w-24"
+                                spread={true}
                             />
                             <Rating
                                 rating={business.serviceRating}
-                                prefix={`Service ${reviewIcons.service}`}
+                                prefix={<span className='font-medium'>{reviewIcons.service} Service</span>}
                                 textClass="text-sm text-gray-700"
                                 prefixClass="font-medium text-black min-w-24"
+                                spread={true}
                             />
                             <Rating
                                 rating={business.ambienceRating}
-                                prefix={`Ambience ${reviewIcons.ambience}`}
+                                prefix={<span className='font-medium'>{reviewIcons.ambience} Ambience</span>}
                                 textClass="text-sm text-gray-700"
                                 prefixClass="font-medium text-black min-w-24"
+                                spread={true}
                             />
                         </div>
                     </div>
@@ -113,10 +127,10 @@ const BusinessInfoSection = ({ business }) => {
                                 <Globe className='w-4 h-4 text-primary' />
                                 <a
                                     target='_blank'
-                                    href='https://www.example.com/'
+                                    href={business.website}
                                     className='hover:underline decoration-primary'
                                 >
-                                    {'https://www.example.com/'}
+                                    {business.website}
                                 </a>
                             </div>
                             <div className='flex items-center gap-2.5'>

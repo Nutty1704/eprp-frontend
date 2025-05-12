@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Star } from 'lucide-react';
+import { Info, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import InfoHeader from './InfoHeader';
 import OpenBadge from './OpenBadge';
 import Rating from '@/src/components/ui/Rating';
 import ToolTip from '@/src/components/ui/Tooltip';
-import { reviewIcons } from '@/src/config/Icons'
+import { reviewIcons } from '@/src/config/Icons.jsx'
 
 const formatReviewCount = (count) => {
   if (count >= 500) {
@@ -25,6 +25,10 @@ const RestaurantCard = ({
     navigate(`/business/${business._id}`);
   }
 
+  const formatRating = (rating) => {
+    return Number(rating).toFixed(2);
+  };
+  
   const subtitleClass = 'text-xs text-gray-500 inter-regular';
 
   return (
@@ -43,19 +47,22 @@ const RestaurantCard = ({
       <div className="px-4 flex flex-col items-start pt-1 mb-2 gap-2">
 
         {/* Cuisines */}
-        <div className='-mb-2.5 w-full'>
+        <div className='w-full'>
           <InfoHeader cuisines={business.cuisines} className={subtitleClass} />
         </div>
 
         {/* Name, address, and view */}
-        <div className='grid grid-cols-6 w-full'>
-          <div className='col-span-5'>
+        {/* <div className='grid grid-cols-6 w-full h-[4.5rem]'> */}
+        <div className='w-full h-[3rem]'>
+          <div className='col-span-5 flex flex-col justify-between'>
             <div className='flex flex-col'>
-              <h3 className='inter-semibold text-xl'>{business.name}</h3>
-              <span className={subtitleClass}>{business.address}</span>
+              <h3 className='inter-semibold text-xl truncate' title={business.name}>{business.name}</h3>
+              <span className={`${subtitleClass} truncate`} title={business.address}>{business.address}</span>
             </div>
           </div>
-          <Button size='sm'>View</Button>
+          {/* <div className="flex items-start justify-end">
+            <Button size='sm'>View</Button>
+          </div> */}
         </div>
 
         {/* Rating */}
@@ -64,41 +71,34 @@ const RestaurantCard = ({
           align="center"
           text={
             <div className="px-3 py-1 w-full space-y-2">
-              <Rating
-                rating={business.rating}
-                prefix="Overall"
-                textClass="text-sm text-gray-700"
-                prefixClass="font-medium text-black min-w-24"
-              />
-              <Rating
-                rating={business.foodRating}
-                prefix={`Food ${reviewIcons.food}`}
-                textClass="text-sm text-gray-700"
-                prefixClass="font-medium text-black min-w-24"
-              />
-              <Rating
-                rating={business.serviceRating}
-                prefix={`Service ${reviewIcons.service}`}
-                textClass="text-sm text-gray-700"
-                prefixClass="font-medium text-black min-w-24"
-              />
-              <Rating
-                rating={business.ambienceRating}
-                prefix={`Ambience ${reviewIcons.ambience}`}
-                textClass="text-sm text-gray-700"
-                prefixClass="font-medium text-black min-w-24"
-              />
+              {[
+                { rating: business.rating, label: "Overall", icon: reviewIcons.overall },
+                { rating: business.foodRating, label: "Food", icon: reviewIcons.food },
+                { rating: business.serviceRating, label: "Service", icon: reviewIcons.service },
+                { rating: business.ambienceRating, label: "Ambience", icon: reviewIcons.ambience },
+              ].map((item, index) => (
+                <div key={index} className="flex gap-2 items-center">
+                  <span className="min-w-28 font-medium text-black text-sm flex-shrink-0">
+                    {item.icon} {item.label}
+                  </span>
+                  <Rating
+                    rating={item.rating}
+                    textClass="text-sm text-gray-700"
+                  />
+                </div>
+              ))}
             </div>
           }
         >
           <div className="flex items-center justify-center inter-regular text-sm gap-1">
             <span className="flex items-center font-medium">
-              {business.rating}
+              {formatRating(business.rating)}
               <Star className="h-4 w-4 fill-primary" stroke="none" />
             </span>
             <span className="text-gray-500">
               ({formatReviewCount(business.review_count)} reviews)
             </span>
+            <Info className='w-4 h-4 text-gray-500' />
           </div>
         </ToolTip>
       </div>      

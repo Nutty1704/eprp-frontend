@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Icon } from 'lucide-react';
 
 export default function CollapsibleSection({
   title,
   children,
   defaultOpen = true,
+  icon: Icon,
 }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
@@ -41,7 +42,11 @@ export default function CollapsibleSection({
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center justify-between w-full px-4 py-3 hover:bg-gray-100 transition-colors"
       >
-        <span className="text-base font-medium text-gray-800">{title}</span>
+        <div className='flex items-center gap-2'>
+          {Icon && <Icon className="w-5 h-5 text-gray-500" />}
+          <span className="text-base font-medium text-gray-800">{title}</span>
+        </div>
+
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}

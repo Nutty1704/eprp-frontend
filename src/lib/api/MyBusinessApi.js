@@ -1,5 +1,7 @@
+import useAuthStore from '@/src/stores/auth-store';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { useQuery, useMutation } from 'react-query';
 
 const API_URL = 'http://localhost:5000/api';
 
@@ -13,6 +15,7 @@ export const useGetMyBusinesses = () => {
   const [businesses, setBusinesses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { isAuthenticated } = useAuthStore();
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -30,7 +33,7 @@ export const useGetMyBusinesses = () => {
     };
 
     fetchBusinesses();
-  }, []);
+  }, [isAuthenticated]);
 
   const refetch = async () => {
     try {
@@ -104,11 +107,11 @@ export const useGetBusinessById = (businessId) => {
  */
 export const useGetMyBusiness = () => {
   const { businesses, isLoading, error, refetch } = useGetMyBusinesses();
-  
+
   // Return the first business for single business use cases
-  return { 
-    business: businesses && businesses.length > 0 ? businesses[0] : null, 
-    isLoading, 
+  return {
+    business: businesses && businesses.length > 0 ? businesses[0] : null,
+    isLoading,
     error,
     refetch
   };
@@ -126,7 +129,7 @@ export const useCreateMyBusiness = () => {
     try {
       setIsLoading(true);
       setSuccess(false);
-      
+
       // Use FormData for file uploads
       let formData;
       if (!(businessData instanceof FormData)) {
@@ -142,13 +145,13 @@ export const useCreateMyBusiness = () => {
       } else {
         formData = businessData;
       }
-      
+
       const response = await axios.post(`${API_URL}/business`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
-      
+
       setSuccess(true);
       setError(null);
       return response.data;
@@ -176,14 +179,14 @@ export const useUpdateMyBusiness = (businessId) => {
     try {
       setIsLoading(true);
       setSuccess(false);
-      
+
       // Use the provided ID or the prop ID
       const targetId = id || businessId;
-      
+
       if (!targetId) {
         throw new Error('Business ID is required');
       }
-      
+
       // Use FormData for file uploads
       let formData;
       if (!(businessData instanceof FormData)) {
@@ -199,13 +202,13 @@ export const useUpdateMyBusiness = (businessId) => {
       } else {
         formData = businessData;
       }
-      
+
       const response = await axios.put(`${API_URL}/business/${targetId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
-      
+
       setSuccess(true);
       setError(null);
       return response.data;
@@ -233,13 +236,13 @@ export const useDeleteBusiness = () => {
     try {
       setIsLoading(true);
       setSuccess(false);
-      
+
       if (!businessId) {
         throw new Error('Business ID is required');
       }
-      
+
       const response = await axios.delete(`${API_URL}/business/${businessId}`);
-      
+
       setSuccess(true);
       setError(null);
       return response.data;
@@ -253,4 +256,89 @@ export const useDeleteBusiness = () => {
   };
 
   return { deleteBusiness, isLoading, error, success };
+};
+
+
+export const useBusinessStats = (businessId) => {
+  // Define the fetch function
+  const fetchBusinessStats = async () => {
+    if (!businessId) {
+      return null;
+    }
+
+    const response = await axios.get(`${API_URL}/business/${businessId}/stats`);
+    return response.data?.data;
+  };
+
+  // Use React Query's useQuery hook
+  const {
+    data: stats,
+    isLoading,
+    error
+  } = useQuery({
+    queryKey: ['businessStats', businessId],
+    queryFn: fetchBusinessStats,
+    refetchInterval: 10 * 60 * 1000, // 10 minutes
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
+    // Only fetch if businessId exists
+    enabled: !!businessId,
+    onError: (error) => {
+      console.error('Error fetching business stats:', error);
+    }
+  });
+
+  return {
+    stats,
+    isLoading,
+    error: error ? error.response?.data?.message || 'Failed to fetch business stats' : null
+  };
+};
+
+export const useGetMyDeals = () => {
+  const [deals, setDeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchDeals = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axios.get(`${API_URL}/deals/my`);
+      setDeals(res.data);
+    } catch (err) {
+      console.error("Error fetching deals:", err);
+      setError("Failed to fetch deals");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => { fetchDeals(); }, []);
+  const refetch = () => fetchDeals();
+
+  return { deals, isLoading, error, refetch };
+};
+
+export const useCreateDeal = () => {
+  const createDeal = async (dealData) => {
+    const res = await axios.post(`${API_URL}/deals`, dealData);
+    return res.data;
+  };
+  return { createDeal };
+};
+
+export const useUpdateDeal = () => {
+  const updateDeal = async (dealId, updatedData) => {
+    const res = await axios.put(`${API_URL}/deals/${dealId}`, updatedData);
+    return res.data;
+  };
+  return { updateDeal };
+};
+
+export const useDeleteDeal = () => {
+  const deleteDeal = async (dealId) => {
+    const res = await axios.delete(`${API_URL}/deals/${dealId}`);
+    return res.data;
+  };
+  return { deleteDeal };
 };

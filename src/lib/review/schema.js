@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
 export const MAX_IMAGES = 3;
-export const MAX_CHARACTERS = 500;
+export const MAX_CHARACTERS_TITLE = 50;
+export const MAX_CHARACTERS_TEXT = 500;
+export const MIN_CHARACTERS_TEXT = 50;
 
 export const reviewSchema = z.object({
     foodRating: z.number()
@@ -13,9 +15,12 @@ export const reviewSchema = z.object({
     serviceRating: z.number()
         .min(1, { message: "Service rating is required" })
         .max(5, { message: "Service rating cannot exceed 5 stars" }),
+    reviewTitle: z.string()
+        .min(3, { message: "Review title must be at least 3 characters" })
+        .max(MAX_CHARACTERS_TITLE, { message: "Review title cannot exceed 50 characters" }),
     reviewText: z.string()
-        .min(1, { message: "Review cannot be empty" })
-        .max(MAX_CHARACTERS, { message: `Review cannot exceed ${MAX_CHARACTERS} characters` }),
+        .min(MIN_CHARACTERS_TEXT, { message: `Review must be at least ${MIN_CHARACTERS_TEXT} characters` })
+        .max(MAX_CHARACTERS_TEXT, { message: `Review cannot exceed ${MAX_CHARACTERS_TEXT} characters` }),
     priceRange: z.string()
         .min(1, { message: "Please select a price range" })
         .max(50, { message: "Price range cannot exceed 50 characters" }),
