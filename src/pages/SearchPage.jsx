@@ -160,7 +160,7 @@ const SearchPage = () => {
   return (
     <>
       {/* Full Width Wave Section */}
-      <div className="relative mb-6 md:mb-10 b-lg md:b-xl overflow-hidden shadow-inner bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="relative mb-6 md:mb-10 b-lg md:b-xl shadow-inner bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <div className='absolute inset-0 z-0 bg-primary' />
         <div className="relative z-10 py-8 sm:py-10 md:py-10">
            <div className="container mx-auto pt-5 flex justify-center">
