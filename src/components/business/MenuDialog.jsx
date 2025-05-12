@@ -8,17 +8,24 @@ import {
 } from "../../../components/ui/dialog"; 
 import { MenuCard } from "./MenuCard";
 
-const MenuDialog = ({ restaurant, trigger }) => {
+const MenuDialog = ({ restaurant, children }) => {
   if (!restaurant || !restaurant.menuItems) {
     return null;
   }
 
   return (
     <Dialog>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto no-scrollbar">
+      <DialogTrigger asChild>
+        {children || (
+          <Button variant="outline" className="flex items-center gap-2">
+            <Menu className="w-4 h-4" />
+            View Menu
+          </Button>
+        )}
+      </DialogTrigger>
+      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto no-scrollbar" onOpenAutoFocus={(e) => e.preventDefault()}>
         <DialogHeader>
-          <DialogTitle className="text-center">
+          <DialogTitle className="text-xl font-bold">
             <h2 className="text-3xl font-bold text-center mt-7 mb-2 rubik-bold">
                 {<>FOOD <span className='!text-primary'>MENU</span></>}
             </h2>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthDialog from '@/src/components/auth/AuthDialog';
 import Logout from '@/src/components/auth/Logout';
@@ -7,23 +6,6 @@ import { Button } from '@/components/ui/button';
 import useAuthStore from '@/src/stores/auth-store';
 import Logo from './Logo';
 
-// Placeholder for an icon library (e.g., Heroicons, react-icons)
-// You would typically import these like: import { MenuIcon, XIcon } from '@heroicons/react/outline';
-const MenuIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-  </svg>
-);
-
-const XIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-  </svg>
-);
-
-
-const Header = ({ isOwner = false }) => {
-import Logo from './Logo';
 
 // Placeholder for an icon library (e.g., Heroicons, react-icons)
 // You would typically import these like: import { MenuIcon, XIcon } from '@heroicons/react/outline';
@@ -52,15 +34,7 @@ const Header = ({ isOwner = false }) => {
   const linkStyles = "text-gray-900 hover:text-red-600 px-3 py-2 font-medium";
   const mobileLinkStyles = "block text-gray-900 hover:text-red-600 px-3 py-2 font-medium text-base";
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  // Common link styles
-  const linkStyles = "text-gray-900 hover:text-red-600 px-3 py-2 font-medium";
-  const mobileLinkStyles = "block text-gray-900 hover:text-red-600 px-3 py-2 font-medium text-base";
 
 
   return (
@@ -74,17 +48,18 @@ const Header = ({ isOwner = false }) => {
           </div>
           
           <div className="flex items-center space-x-4">
-            {!isOwner && (
-              <>
-                <Link to="/" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium text-base xl:text-xl">
-                  Home
-                </Link>
-                {isAuthenticated && (
-                  <Link to="/profile" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium text-base xl:text-xl">
-                    Profile
-                  </Link>
-                )}
-              </>
+            <Link to="/" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium text-base xl:text-xl">
+              Home
+            </Link>
+            
+
+            {isAuthenticated ? (
+              <Link to="/profile" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium text-base xl:text-xl">
+                Profile
+              </Link>
+            ) : (
+              <></>
+
             )}
             {isAuthenticated ? (
               <Logout redirect={isOwner ? '/owner' : '/'}>

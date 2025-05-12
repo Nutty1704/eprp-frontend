@@ -12,11 +12,11 @@ const Logout = ({ children, className, redirect }) => {
 
         error && toast.error(message, { position: 'top-center' });
 
+
         if (success) {
             localLogout();
             toast.success(message, { position: 'top-center' });
-
-            if (redirect) navigate(redirect);
+            navigate(redirect || '/');
         }
     }
 
