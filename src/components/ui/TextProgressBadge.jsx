@@ -57,13 +57,19 @@ const TextProgressBadge = ({
           
           {currentLength < minLength && (
             <motion.div 
-              className="relative h-5 w-5 flex items-center justify-center"
+              className="relative flex items-center justify-center"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 500, damping: 30 }}
             >
-              {/* Background circle */}
-              <svg className="w-5 h-5">
+              {/* SVG with proper viewBox */}
+              <svg 
+                width={size} 
+                height={size} 
+                viewBox={`0 0 ${size} ${size}`} 
+                className="overflow-visible"
+              >
+                {/* Background circle */}
                 <circle 
                   cx={size/2} 
                   cy={size/2} 

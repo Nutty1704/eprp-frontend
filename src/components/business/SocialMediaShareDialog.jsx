@@ -9,10 +9,11 @@ import {
 import { Button } from '@/components/ui/button'
 import { Copy, Share, Check } from 'lucide-react'
 import SocialMediaShare from './SocialMediaShare'
+import { DialogDescription } from '@radix-ui/react-dialog'
 
 const SocialMediaShareDialog = ({ business, children }) => {
     const [copied, setCopied] = useState(false);
-    const shareUrl = `http://localhost:5173/business/${business?.id || ''}`;
+    const shareUrl = `http://localhost:5173/business/${business?._id}`;
     
     const handleCopyLink = () => {
         navigator.clipboard.writeText(shareUrl);
@@ -32,14 +33,20 @@ const SocialMediaShareDialog = ({ business, children }) => {
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                    <DialogTitle className="text-xl font-bold">Share {business?.name}</DialogTitle>
+                    <DialogTitle className="text-xl font-bold">
+                        <h4 className="text-3xl font-bold mt-7 mb-1 rubik-bold">
+                            Share {business?.name}
+                        </h4>
+                    </DialogTitle>
+                    <DialogDescription>
+                        <p className="text-gray-600 inter-regular">
+                            Share this business with your friends on social media or copy the link to share it directly!
+                        </p>
+                    </DialogDescription>
                 </DialogHeader>
                 
                 <div className="py-4">
-                    <p className="text-muted-foreground font-weight-400 mb-6">
-                        Share this business with your friends on social media!
-                    </p>
-                    
+                  
                     <div className="mb-8">
                         <SocialMediaShare
                             business={business}
@@ -51,7 +58,7 @@ const SocialMediaShareDialog = ({ business, children }) => {
                         <p className="font-weight-400 mb-2">Or copy link:</p>
                         <div className="relative">
                             <div className="flex border border-primary rounded-md shadow-sm overflow-hidden">
-                                <span className="px-3 py-2 text-gray-600  truncate flex-1 text-sm">
+                                <span className="px-3 py-2 text-gray-600 w-16 truncate flex-1 text-sm">
                                     {shareUrl}
                                 </span>
                                 <Button
