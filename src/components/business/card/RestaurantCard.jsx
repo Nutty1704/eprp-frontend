@@ -11,6 +11,8 @@ import { reviewIcons } from '@/src/config/Icons.jsx'
 const formatReviewCount = (count) => {
   if (count >= 500) {
     return '500+';
+  } else if (count < 10) {
+    return count
   } else {
     return `${Math.floor(count / 10) * 10}+`
   }
