@@ -34,7 +34,7 @@ const Header = ({ isOwner = false }) => {
             )}
             
             {isAuthenticated ? (
-              <Logout redirect={isOwner && '/' }>
+              <Logout redirect={isOwner ? '/owner' : '/'}>
                 <Button className="bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 xl:px-5 xl:py-6 rounded text-base xl:text-xl">
                   Logout
                 </Button>

@@ -53,11 +53,17 @@ const UserProfile = () => {
       <div className="flex flex-col items-center pt-16 py-8">
         <div className="relative">
           <div className="bg-white rounded-full overflow-hidden h-40 w-40 shadow-md mb-4">
-            <img
-              src={userData.profile_image}
-              alt="Profile"
-              className="h-full w-full object-cover"
-            />
+            { userData.profile_image ? (
+              <img
+                src={userData.profile_image}
+                alt="Profile"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="h-full w-full bg-gray-200 flex items-center justify-center">
+                <span className="text-gray-400">No Image</span>
+              </div>
+            )}
           </div>
           
           <EditProfileDialog userData={userData} onProfileUpdate={handleProfileUpdate}>
