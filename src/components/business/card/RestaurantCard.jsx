@@ -25,6 +25,10 @@ const RestaurantCard = ({
     navigate(`/business/${business._id}`);
   }
 
+  const formatRating = (rating) => {
+    return Number(rating).toFixed(2);
+  };
+  
   const subtitleClass = 'text-xs text-gray-500 inter-regular';
 
   return (
@@ -43,19 +47,22 @@ const RestaurantCard = ({
       <div className="px-4 flex flex-col items-start pt-1 mb-2 gap-2">
 
         {/* Cuisines */}
-        <div className='-mb-2.5 w-full'>
+        <div className='w-full'>
           <InfoHeader cuisines={business.cuisines} className={subtitleClass} />
         </div>
 
         {/* Name, address, and view */}
-        <div className='grid grid-cols-6 w-full'>
-          <div className='col-span-5'>
+        {/* <div className='grid grid-cols-6 w-full h-[4.5rem]'> */}
+        <div className='w-full h-[3rem]'>
+          <div className='col-span-5 flex flex-col justify-between'>
             <div className='flex flex-col'>
-              <h3 className='inter-semibold text-xl'>{business.name}</h3>
-              <span className={subtitleClass}>{business.address}</span>
+              <h3 className='inter-semibold text-xl truncate' title={business.name}>{business.name}</h3>
+              <span className={`${subtitleClass} truncate`} title={business.address}>{business.address}</span>
             </div>
           </div>
-          <Button size='sm'>View</Button>
+          {/* <div className="flex items-start justify-end">
+            <Button size='sm'>View</Button>
+          </div> */}
         </div>
 
         {/* Rating */}
@@ -85,7 +92,7 @@ const RestaurantCard = ({
         >
           <div className="flex items-center justify-center inter-regular text-sm gap-1">
             <span className="flex items-center font-medium">
-              {business.rating.toFixed(1)}
+              {formatRating(business.rating)}
               <Star className="h-4 w-4 fill-primary" stroke="none" />
             </span>
             <span className="text-gray-500">

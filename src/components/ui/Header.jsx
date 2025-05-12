@@ -4,6 +4,7 @@ import AuthDialog from '@/src/components/auth/AuthDialog';
 import Logout from '@/src/components/auth/Logout';
 import { Button } from '@/components/ui/button';
 import useAuthStore from '@/src/stores/auth-store';
+import Logo from './Logo';
 
 // Placeholder for an icon library (e.g., Heroicons, react-icons)
 // You would typically import these like: import { MenuIcon, XIcon } from '@heroicons/react/outline';
@@ -40,25 +41,17 @@ const Header = ({ isOwner = false }) => {
           {/* Logo */}
           <div>
             <Link to="/" className="flex items-center">
-              <div className="border border-black w-40 h-10 flex items-center justify-center m-6">
-                <span className="font-serif">T M</span>
-              </div>
+              <Logo className="h-16 w-auto" theme='light' />
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
-            {!isOwner && (
-              <>
-                <Link to="/" className={linkStyles}>
-                  Home
-                </Link>
-                {/* Note: Your original Profile link logic was duplicated. Simplified here. */}
-                {/* Adjust as needed if /profile should always be visible or only if authenticated */}
-                <Link to="/profile" className={linkStyles}>
-                  Profile
-                </Link>
-              </>
+            {isAuthenticated ? (
+              <Link to="/profile" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium">
+                Profile
+              </Link>
+            ) : (
+              <></>
+
             )}
             {isAuthenticated ? (
               <Logout redirect={isOwner ? '/' : undefined}>
