@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthDialog from '@/src/components/auth/AuthDialog';
 import Logout from '@/src/components/auth/Logout';
@@ -22,7 +23,35 @@ const XIcon = () => (
 
 
 const Header = ({ isOwner = false }) => {
+import Logo from './Logo';
+
+// Placeholder for an icon library (e.g., Heroicons, react-icons)
+// You would typically import these like: import { MenuIcon, XIcon } from '@heroicons/react/outline';
+const MenuIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+  </svg>
+);
+
+const XIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+);
+
+
+const Header = ({ isOwner = false }) => {
   const { isAuthenticated } = useAuthStore();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Common link styles
+  const linkStyles = "text-gray-900 hover:text-red-600 px-3 py-2 font-medium";
+  const mobileLinkStyles = "block text-gray-900 hover:text-red-600 px-3 py-2 font-medium text-base";
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -86,6 +115,20 @@ const Header = ({ isOwner = false }) => {
               {isMobileMenuOpen ? <XIcon /> : <MenuIcon />}
             </button>
           </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={toggleMobileMenu}
+              type="button"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500"
+              aria-controls="mobile-menu"
+              aria-expanded={isMobileMenuOpen}
+            >
+              <span className="sr-only">Open main menu</span>
+              {isMobileMenuOpen ? <XIcon /> : <MenuIcon />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -98,9 +141,11 @@ const Header = ({ isOwner = false }) => {
                 <Link to="/" className={mobileLinkStyles} onClick={() => setIsMobileMenuOpen(false)}>
                   Home
                 </Link>
-                <Link to="/profile" className={mobileLinkStyles} onClick={() => setIsMobileMenuOpen(false)}>
-                  Profile
-                </Link>
+                {isAuthenticated && (
+                  <Link to="/profile" className={mobileLinkStyles} onClick={() => setIsMobileMenuOpen(false)}>
+                    Profile
+                  </Link>
+                )}
               </>
             )}
           </div>
@@ -114,8 +159,6 @@ const Header = ({ isOwner = false }) => {
                 </Logout>
               ) : (
                 <AuthDialog isOwner={isOwner}>
-                   {/* We need a way to close the mobile menu when the dialog opens or after action */}
-                   {/* For simplicity, the button itself will be full width */}
                   <Button className="w-full bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 rounded" onClick={() => setIsMobileMenuOpen(false)}>
                     Sign In
                   </Button>
