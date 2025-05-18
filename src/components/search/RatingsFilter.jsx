@@ -32,7 +32,7 @@ const RatingsFilter = ({ minRating, onChange }) => {
       <RadioGroup
         value={String(currentRating)}
         onValueChange={handleRatingChange}
-        className="space-y-2"
+        className="space-y-3"
       >
         <div className="flex items-center space-x-2">
           <RadioGroupItem id="rating-all" value="0" />
@@ -45,7 +45,7 @@ const RatingsFilter = ({ minRating, onChange }) => {
           <RadioGroupItem id="rating-4" value="4" />
           <Label htmlFor="rating-4" className="text-sm flex items-center cursor-pointer">
             <div className="flex mr-1">{renderStars(4)}</div>
-            <span>& up</span>
+            <span className="ml-1">& up</span>
           </Label>
         </div>
         
@@ -53,7 +53,7 @@ const RatingsFilter = ({ minRating, onChange }) => {
           <RadioGroupItem id="rating-3" value="3" />
           <Label htmlFor="rating-3" className="text-sm flex items-center cursor-pointer">
             <div className="flex mr-1">{renderStars(3)}</div>
-            <span>& up</span>
+            <span className="ml-1">& up</span>
           </Label>
         </div>
         
@@ -61,7 +61,7 @@ const RatingsFilter = ({ minRating, onChange }) => {
           <RadioGroupItem id="rating-2" value="2" />
           <Label htmlFor="rating-2" className="text-sm flex items-center cursor-pointer">
             <div className="flex mr-1">{renderStars(2)}</div>
-            <span>& up</span>
+            <span className="ml-1">& up</span>
           </Label>
         </div>
         
@@ -69,7 +69,7 @@ const RatingsFilter = ({ minRating, onChange }) => {
           <RadioGroupItem id="rating-1" value="1" />
           <Label htmlFor="rating-1" className="text-sm flex items-center cursor-pointer">
             <div className="flex mr-1">{renderStars(1)}</div>
-            <span>& up</span>
+            <span className="ml-1">& up</span>
           </Label>
         </div>
       </RadioGroup>

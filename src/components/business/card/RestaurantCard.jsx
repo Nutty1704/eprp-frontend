@@ -49,14 +49,14 @@ const RestaurantCard = ({
       <div className="px-4 flex flex-col items-start pt-1 mb-2 gap-2">
 
         {/* Cuisines */}
-        {business.cuisines?.length > 0 &&
-          <div className='w-full'>
+        <div className="w-full" style={{ minHeight: '1.5rem'}}>
+          {business.cuisines?.length > 0 ? (
             <InfoHeader cuisines={business.cuisines} className={subtitleClass} />
-          </div>
-        }
+          ) : (
+            <span className={subtitleClass}>No cuisines</span>
+          )}
+        </div>
 
-        {/* Name, address, and view */}
-        {/* <div className='grid grid-cols-6 w-full h-[4.5rem]'> */}
         <div className='w-full h-[3rem]'>
           <div className='col-span-5 flex flex-col justify-between'>
             <div className='flex flex-col'>

@@ -51,8 +51,8 @@ const CuisineFilter = ({ selectedCuisines, onChange }) => {
   
   return (
     <div>
-      <div className="flex justify-between items-center mb-3">
-        {selectedCuisinesList.length > 0 && (
+      {selectedCuisinesList.length > 0 && (
+        <div className="flex justify-end mb-3">
           <Button 
             variant="link" 
             className="text-xs p-0 h-auto text-red-500"
@@ -60,10 +60,10 @@ const CuisineFilter = ({ selectedCuisines, onChange }) => {
           >
             Clear all
           </Button>
-        )}
-      </div>
+        </div>
+      )}
       
-      <div className="relative mb-3">
+      <div className="relative mb-4">
         <Input
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -73,7 +73,7 @@ const CuisineFilter = ({ selectedCuisines, onChange }) => {
         <Search className="absolute right-2.5 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
       </div>
       
-      <div className="space-y-2">
+      <div className="space-y-3">
         {displayCuisines.map((cuisine) => (
           <div key={cuisine.id} className="flex items-center space-x-2">
             <Checkbox 
@@ -94,7 +94,7 @@ const CuisineFilter = ({ selectedCuisines, onChange }) => {
           <Button
             variant="ghost"
             size="sm"
-            className="w-full text-xs mt-1 flex items-center justify-center"
+            className="w-full text-xs mt-2 flex items-center justify-center border rounded-md p-2"
             onClick={() => setExpanded(!expanded)}
           >
             {expanded ? (
@@ -110,7 +110,7 @@ const CuisineFilter = ({ selectedCuisines, onChange }) => {
         )}
         
         {filteredCuisines.length === 0 && (
-          <p className="text-sm text-gray-500 py-1">No cuisines found</p>
+          <p className="text-sm text-gray-500 py-2">No cuisines found</p>
         )}
       </div>
     </div>

@@ -45,6 +45,12 @@ const SearchPage = () => {
     page: 1,
     pages: 1
   });
+  
+  // Added state for accordion management
+  const [openFilters, setOpenFilters] = useState(["cuisines", "ratings", "sort"]);
+  const filterSections = ["cuisines", "ratings", "sort"];
+  // Track if all filters are expanded
+  const allExpanded = openFilters.length === filterSections.length;
 
   // Ensure useSearchBusinesses hook provides stable searchBusinesses function if included in deps
   const { searchBusinesses, isLoading } = useSearchBusinesses();
@@ -149,72 +155,116 @@ const SearchPage = () => {
     navigate(`/business/${businessId}`);
   };
 
+  // Added function to toggle expand/collapse all filters
+  const toggleAllFilters = () => {
+    if (allExpanded) {
+      setOpenFilters([]);
+    } else {
+      setOpenFilters([...filterSections]);
+    }
+  };
+
   // Client-side filtering for rating
   const filteredBusinesses = businesses.filter(
     business => business.rating >= searchParams.minRating
   );
 
-  const defaultOpenFilters = ["cuisines", "ratings", "sort"];
   const searchAttempted = searchParams.searchQuery || searchParams.selectedCuisines;
+
+  const headerBackgroundUrl = "https://res.cloudinary.com/dazd4lwcs/image/upload/v1747551578/wave_4_espyzp.svg";
 
   return (
     <>
       {/* Full Width Wave Section */}
-      <div className="relative mb-6 md:mb-10 b-lg md:b-xl shadow-inner bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        <div className='absolute inset-0 z-0 bg-primary' />
-        <div className="relative z-10 py-8 sm:py-10 md:py-10">
-           <div className="container mx-auto pt-5 flex justify-center">
-             <SearchBar className=" max-w-4xl w-full mx-auto" placeholder="Search by Business Name or Cuisine" />
-           </div>
+        <div className="relative mb-6 md:mb-10 b-lg md:b-xl ">
+          <img
+            src={headerBackgroundUrl}
+            alt="Wave background"
+            className="absolute inset-0 z-0 w-full h-300px object-cover"
+            style={{ pointerEvents: "none" }}
+          />
+          <div className="relative z-10 py-8 sm:py-10 md:py-10">
+             <div className="container mx-auto pt-5 flex justify-center">
+                <SearchBar className=" max-w-4xl w-full mx-auto" placeholder="Search by Business Name or Cuisine" />
+             </div>
+          </div>
         </div>
-      </div>
 
-      {/* Main Centered Content */}
+        {/* Main Centered Content */}
       <div className="container mx-auto px-4 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Filters sidebar */}
           <div className="md:col-span-1">
-            <Card>
-               <CardContent className="p-3 md:p-4">
-                  <Label className="text-base font-medium mb-3 block px-1">Filters</Label>
-                  <Accordion type="multiple" defaultValue={defaultOpenFilters} className="w-full space-y-1">
-                    {/* Cuisine Filter Item */}
-                    <AccordionItem value="cuisines">
-                       <AccordionTrigger className="text-sm md:text-base font-semibold hover:no-underline py-2 px-1">Cuisines</AccordionTrigger>
-                       <AccordionContent className="pt-3 pb-2">
-                          {/* Pass the current state value and the handler */}
-                         <CuisineFilter
-                            selectedCuisines={searchParams.selectedCuisines} // Reflects state (incl. from URL)
-                            onChange={handleCuisineChange}
-                         />
-                       </AccordionContent>
-                    </AccordionItem>
-                    {/* Rating Filter Item */}
-                    <AccordionItem value="ratings">
-                       <AccordionTrigger className="text-sm md:text-base font-semibold hover:no-underline py-2 px-1">Minimum Rating</AccordionTrigger>
-                       <AccordionContent className="pt-3 pb-2">
-                         <RatingsFilter
-                           minRating={searchParams.minRating} // Reflects state (incl. from URL)
-                           onChange={handleRatingChange}
-                         />
-                       </AccordionContent>
-                    </AccordionItem>
-                    {/* Sort Options Item */}
-                    <AccordionItem value="sort">
-                       <AccordionTrigger className="text-sm md:text-base font-semibold hover:no-underline py-2 px-1">Sort By</AccordionTrigger>
-                       <AccordionContent className="pt-3 pb-2">
-                         <SortOptions
-                            sortOption={searchParams.sortOption} // Reflects state (incl. from URL)
-                            onChange={handleSortChange}
-                         />
-                       </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-               </CardContent>
+            <div className="mb-4">
+              <p className="text-gray-600">
+                {/* This is just a placeholder div to match your results text height */}
+                &nbsp;
+              </p>
+            </div>
+            <Card className="overflow-hidden">
+              <CardContent className="p-0">
+                {/* Filter Header */}
+                <div className="p-4 border-b flex justify-between items-center">
+                  <Label className="text-base font-medium">Filters</Label>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={toggleAllFilters}
+                    className="text-xs h-8 border-border"
+                  >
+                    {allExpanded ? "Collapse All" : "Expand All"}
+                  </Button>
+                </div>
+                
+                <Accordion 
+                  type="multiple" 
+                  value={openFilters}
+                  onValueChange={setOpenFilters}
+                  className="w-full"
+                >
+                  {/* Cuisine Filter Item */}
+                  <AccordionItem value="cuisines" className="border-b px-4">
+                    <AccordionTrigger className="text-sm md:text-base font-semibold hover:no-underline py-3">
+                      Cuisines
+                    </AccordionTrigger>
+                    <AccordionContent className="pt-2 pb-4">
+                      <CuisineFilter
+                        selectedCuisines={searchParams.selectedCuisines}
+                        onChange={handleCuisineChange}
+                      />
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  {/* Rating Filter Item */}
+                  <AccordionItem value="ratings" className="border-b px-4">
+                    <AccordionTrigger className="text-sm md:text-base font-semibold hover:no-underline py-3">
+                      Rating
+                    </AccordionTrigger>
+                    <AccordionContent className="pt-2 pb-4">
+                      <RatingsFilter
+                        minRating={searchParams.minRating}
+                        onChange={handleRatingChange}
+                      />
+                    </AccordionContent>
+                  </AccordionItem>
+                  
+                  {/* Sort Options Item */}
+                  <AccordionItem value="sort" className="border-b px-4">
+                    <AccordionTrigger className="text-sm md:text-base font-semibold hover:no-underline py-3">
+                      Sort By
+                    </AccordionTrigger>
+                    <AccordionContent className="pt-2 pb-4">
+                      <SortOptions
+                        sortOption={searchParams.sortOption}
+                        onChange={handleSortChange}
+                      />
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </CardContent>
             </Card>
-          </div>
-
-         
+          </div>         
+          
            <div className="md:col-span-3">
              {isLoading ? (
                <div className="flex justify-center py-12"><div className="animate-spin h-8 w-8 border-4 border-red-500 rounded-full border-t-transparent"></div></div>
@@ -242,7 +292,21 @@ const SearchPage = () => {
                   )}
                 </>
              ) : searchAttempted ? (
-                  <Card className="w-full"><CardContent className="flex flex-col items-center justify-center py-12"><p className="text-xl text-gray-600 mb-4">No results found</p><p className="text-gray-500 mb-6 text-center">Try adjusting your search query or filters.</p><Button variant="outline" onClick={() => { setSearchParams({ searchQuery: '', selectedCuisines: '', minRating: 0, page: 1, pageSize: 8, sortOption: 'createdAt' }); }}>Clear Search & Filters</Button></CardContent></Card>
+                <>
+                  <div className="mb-4">
+                    <p className="text-gray-600">
+                      {/* This is just a placeholder div to match your results text height */}
+                      &nbsp;
+                    </p>
+                  </div>
+                  <Card className="w-full">
+                    <CardContent className="flex flex-col items-center justify-center py-12">
+                      <p className="text-xl text-gray-600 mb-4">No results found</p>
+                      <p className="text-gray-500 mb-6 text-center">Try adjusting your search query or filters.</p>
+                      <Button variant="outline" onClick={() => { setSearchParams({ searchQuery: '', selectedCuisines: '', minRating: 0, page: 1, pageSize: 8, sortOption: 'createdAt' }); }}>Clear Search & Filters</Button>
+                    </CardContent>
+                  </Card>
+                </>
              ) : (
                <div className="text-center py-12 text-gray-500">Enter a search or select filters to begin.</div>
             )}

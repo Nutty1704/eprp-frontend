@@ -16,7 +16,7 @@ const SortOptions = ({ sortOption, onChange }) => {
       <RadioGroup
         value={sortOption}
         onValueChange={onChange}
-        className="space-y-2"
+        className="space-y-3"
       >
         {options.map((option) => (
           <div key={option.value} className="flex items-center space-x-2">
