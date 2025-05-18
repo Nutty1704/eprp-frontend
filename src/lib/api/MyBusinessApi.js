@@ -1,7 +1,7 @@
 import useAuthStore from '@/src/stores/auth-store';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useQuery, useMutation } from 'react-query';
+import { useQuery } from 'react-query';
 
 const API_URL = 'http://localhost:5000/api';
 
@@ -341,4 +341,33 @@ export const useDeleteDeal = () => {
     return res.data;
   };
   return { deleteDeal };
+};
+
+export const useGetActivePublicDeals = (limit = 10) => {
+  const fetchActivePublicDeals = async () => {
+    const response = await axios.get(`${API_URL}/deals/public/active?limit=${limit}`);
+    return response.data;
+  };
+
+  const {
+    data: deals,
+    isLoading,
+    error,
+    refetch // You can use refetch if needed
+  } = useQuery({
+    queryKey: ['activePublicDeals', limit], // queryKey includes limit to refetch if limit changes
+    queryFn: fetchActivePublicDeals,
+    refetchOnWindowFocus: false, // Optional: configure as per your needs
+    // keepPreviousData: true, // Optional
+    onError: (err) => {
+      console.error('Error fetching active public deals:', err);
+    }
+  });
+
+  return {
+    deals: deals || [], // Ensure deals is always an array
+    isLoading,
+    error: error ? (error.response?.data?.message || 'Failed to fetch active public deals') : null,
+    refetch
+  };
 };

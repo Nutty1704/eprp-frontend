@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import useAuthStore from '@/src/stores/auth-store';
 import Logo from './Logo';
 
+
 // Placeholder for an icon library (e.g., Heroicons, react-icons)
 // You would typically import these like: import { MenuIcon, XIcon } from '@heroicons/react/outline';
 const MenuIcon = () => (
@@ -34,24 +35,26 @@ const Header = ({ isOwner = false }) => {
   const mobileLinkStyles = "block text-gray-900 hover:text-red-600 px-3 py-2 font-medium text-base";
 
 
+
+
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className=" mx-auto px-4 sm:px-6 ">
-        <div className="flex justify-between h-16 xl:h-24 items-center">
+        <div className="flex justify-between h-16 xl:h-16 items-center">
           <div>
             <Link to="/" className="flex items-center">
-              <Logo className="h-16 xl:h-24 w-auto" theme='light' />
+              <Logo className="h-16 xl:h-16 w-auto" theme='light' />
             </Link>
           </div>
           
           <div className="flex items-center space-x-4">
             {!isOwner && (
               <>
-                <Link to="/" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium text-base xl:text-xl">
+                <Link to="/" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium text-base ">
                   Home
                 </Link>
                 {isAuthenticated && (
-                  <Link to="/profile" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium text-base xl:text-xl">
+                  <Link to="/profile" className="text-gray-900 hover:text-red-600 px-3 py-2 font-medium text-base ">
                     Profile
                   </Link>
                 )}
@@ -59,17 +62,31 @@ const Header = ({ isOwner = false }) => {
             )}
             {isAuthenticated ? (
               <Logout redirect={isOwner ? '/owner' : '/'}>
-                <Button className="bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 xl:px-5 xl:py-6 rounded text-base xl:text-xl">
+                <Button className="bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 xl:px-4 xl:py-2 rounded text-base ">
                   Logout
                 </Button>
               </Logout>
             ) : (
               <AuthDialog isOwner={isOwner}>
-                <Button className="bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 xl:px-5 xl:py-6 rounded text-base xl:text-xl">
+                <Button className="bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 xl:px-4 xl:py-2 rounded text-base ">
                   Sign In
                 </Button>
               </AuthDialog>
             )}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={toggleMobileMenu}
+              type="button"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500"
+              aria-controls="mobile-menu"
+              aria-expanded={isMobileMenuOpen}
+            >
+              <span className="sr-only">Open main menu</span>
+              {isMobileMenuOpen ? <XIcon /> : <MenuIcon />}
+            </button>
           </div>
 
           {/* Mobile Menu Button */}

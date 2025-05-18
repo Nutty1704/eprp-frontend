@@ -4,7 +4,7 @@ import { Star } from 'lucide-react';
 const BusinessCard = ({ business, onClick }) => {
   return (
     <Card 
-      className="overflow-hidden cursor-pointer hover:shadow-md transition-shadow flex flex-row"
+      className="overflow-hidden cursor-pointer h-48 hover:shadow-md transition-shadow flex flex-row"
       onClick={() => onClick(business._id)}
     >
       <div className="w-1/4 overflow-hidden bg-gray-100">

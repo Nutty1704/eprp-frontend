@@ -11,6 +11,8 @@ import { reviewIcons } from '@/src/config/Icons.jsx'
 const formatReviewCount = (count) => {
   if (count >= 500) {
     return '500+';
+  } else if (count < 10) {
+    return count
   } else {
     return `${Math.floor(count / 10) * 10}+`
   }
@@ -28,7 +30,7 @@ const RestaurantCard = ({
   const formatRating = (rating) => {
     return Number(rating).toFixed(2);
   };
-  
+
   const subtitleClass = 'text-xs text-gray-500 inter-regular';
 
   return (
@@ -47,9 +49,11 @@ const RestaurantCard = ({
       <div className="px-4 flex flex-col items-start pt-1 mb-2 gap-2">
 
         {/* Cuisines */}
-        <div className='w-full'>
-          <InfoHeader cuisines={business.cuisines} className={subtitleClass} />
-        </div>
+        {business.cuisines?.length > 0 &&
+          <div className='w-full'>
+            <InfoHeader cuisines={business.cuisines} className={subtitleClass} />
+          </div>
+        }
 
         {/* Name, address, and view */}
         {/* <div className='grid grid-cols-6 w-full h-[4.5rem]'> */}
@@ -101,7 +105,7 @@ const RestaurantCard = ({
             <Info className='w-4 h-4 text-gray-500' />
           </div>
         </ToolTip>
-      </div>      
+      </div>
     </div>
   );
 };
