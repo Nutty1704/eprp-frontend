@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import DealCard from "./DealCard";
 import AddDealDialog from "./AddDealDialog";
-import { useGetMyDeals, useCreateDeal, useUpdateDeal, useDeleteDeal } from "@/src/lib/api/MyBusinessApi";
+import { useGetMyDeals, useCreateDeal, useUpdateDeal, useDeleteDeal, useGetDealsForBusiness } from "@/src/lib/api/MyBusinessApi";
 import { dealTypeOptions } from "@/src/config/DealTypes";
 
 const DealsPage = ({ businessId }) => {
-  const { deals, isLoading, refetch } = useGetMyDeals();
+  const { deals, isLoading, refetch } = useGetDealsForBusiness(businessId);
   const { createDeal } = useCreateDeal();
   const { updateDeal } = useUpdateDeal();
   const { deleteDeal } = useDeleteDeal();

@@ -319,6 +319,35 @@ export const useGetMyDeals = () => {
   return { deals, isLoading, error, refetch };
 };
 
+export const useGetDealsForBusiness = (businessId) => {
+  const [deals, setDeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchDeals = async () => {
+    if (!businessId) return;
+
+    try {
+      setIsLoading(true);
+      const res = await axios.get(`${API_URL}/deals/business/${businessId}`);
+      setDeals(res.data);
+    } catch (err) {
+      console.error("Error fetching business deals:", err);
+      setError("Failed to fetch business deals");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDeals();
+  }, [businessId]);
+
+  const refetch = () => fetchDeals();
+
+  return { deals, isLoading, error, refetch };
+};
+
 export const useCreateDeal = () => {
   const createDeal = async (dealData) => {
     const res = await axios.post(`${API_URL}/deals`, dealData);
