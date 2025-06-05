@@ -28,10 +28,10 @@ const BusinessInfoSection = ({ business }) => {
     const { isAuthenticated } = useAuthStore();
 
     return (
-        <div className='flex flex-col w-full py-4 px-4 gap-3'>
+        <div className='flex flex-col w-full py-4 px-4 gap-3 max-w-full'>
 
             <div className='space-y-3'>
-                <div className='flex items-center gap-3'>
+                <div className='flex items-center gap-3 overflow-x-auto no-scrollbar'>
                     {isAuthenticated
                         ? (
                             <CreateReviewDialog business={business}>
