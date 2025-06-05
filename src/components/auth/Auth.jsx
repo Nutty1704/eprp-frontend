@@ -43,6 +43,25 @@ const Auth = ({ isOwner = false }) => {
 
                 <AuthForm isSignUp={isSignUp} setIsSignUp={setIsSignUp} isOwner={isOwner} />
 
+                <div className="lg:hidden text-gray-600 text-center text-sm">
+                    {!isOwner ? (
+                        <span>
+                            Own a business?
+                            <a href="/owner" className="text-blue-500 hover:underline cursor-pointer ml-1">
+                                Click here
+                            </a>
+                        </span>
+                    ) : (
+                        <span>
+                            Not an owner?
+                            <a href="/" className="text-blue-500 hover:underline cursor-pointer ml-1">
+                                Click here
+                            </a>
+                        </span>
+                        )
+                    }
+                </div>
+
                 {/* Separator */}
                 <div className="flex items-center justify-center w-full my-4">
                     <div className="border-t border-gray-300 w-full" />

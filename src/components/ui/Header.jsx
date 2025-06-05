@@ -44,7 +44,7 @@ const Header = ({ isOwner = false }) => {
               <Logo className="h-16 xl:h-16 w-auto" theme='light' />
             </Link>
           </div>
-          
+
           <div className="hidden md:flex items-center space-x-4">
             {!isOwner && (
               <>
@@ -75,16 +75,26 @@ const Header = ({ isOwner = false }) => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
-            <button
-              onClick={toggleMobileMenu}
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500"
-              aria-controls="mobile-menu"
-              aria-expanded={isMobileMenuOpen}
-            >
-              <span className="sr-only">Open main menu</span>
-              {isMobileMenuOpen ? <XIcon /> : <MenuIcon />}
-            </button>
+            {!isAuthenticated && (
+              <AuthDialog isOwner={isOwner}>
+                <Button className="bg-primary hover:brightness-90 text-primary-foreground px-4 py-2 xl:px-4 xl:py-2 rounded text-base ">
+                  Sign In
+                </Button>
+              </AuthDialog>
+            )}
+
+            {isAuthenticated && (
+              <button
+                onClick={toggleMobileMenu}
+                type="button"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-500"
+                aria-controls="mobile-menu"
+                aria-expanded={isMobileMenuOpen}
+              >
+                <span className="sr-only">Open main menu</span>
+                {isMobileMenuOpen ? <XIcon /> : <MenuIcon />}
+              </button>
+            )}
           </div>
         </div>
       </div>
