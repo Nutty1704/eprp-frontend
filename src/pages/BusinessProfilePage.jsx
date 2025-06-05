@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { Loader2, Star, List, FileText, MessageCircle, Tag } from "lucide-react";
+import { Loader2, Star, List, FileText, MessageCircle, Tag, Menu, X } from "lucide-react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -30,7 +30,29 @@ const defaultOpeningHours = {
   sun: { isOpen: false, timeSlots: [] }
 };
 
+const navigationItems = [
+  { key: 'info', icon: FileText, label: 'Info' },
+  { key: 'reviews', icon: MessageCircle, label: 'Reviews' },
+  { key: 'menu', icon: List, label: 'Menu' },
+  { key: 'deals', icon: Tag, label: 'Deals' }
+];
+
+const NavButton = ({ item, isActive, onClick }) => {
+  const Icon = item.icon;
+  return (
+    <button
+      className={`flex items-center gap-2 text-left w-full px-3 py-2 rounded-md hover:bg-gray-100 transition-colors ${isActive ? 'bg-gray-100 font-semibold' : ''
+        }`}
+      onClick={onClick}
+    >
+      <Icon size={18} />
+      {item.label}
+    </button>
+  );
+};
+
 const BusinessProfilePage = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { businessId } = useParams();
   const {
@@ -94,8 +116,6 @@ const BusinessProfilePage = () => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-
-    console.log("Form Data:", data);
 
     if (data.website && !data.website.startsWith("http://") && !data.website.startsWith("https://")) {
       data.website = `https://${data.website}`;
@@ -163,28 +183,59 @@ const BusinessProfilePage = () => {
 
   return (
     <div className="flex gap-6 px-4 sm:px-6 py-6 container mx-auto">
-      {/* Sidebar */}
-      <aside className="w-40 shrink-0 space-y-2 sticky top-[88px] self-start">
-        <button className={`flex items-center gap-2 text-left w-full px-3 py-2 rounded-md hover:bg-gray-100 ${activeSection === 'info' ? 'bg-gray-100 font-semibold' : ''}`} onClick={() => setActiveSection("info")}>
-          <FileText size={18} />
-          Info
-        </button>
-        <button className={`flex items-center gap-2 text-left w-full px-3 py-2 rounded-md hover:bg-gray-100 ${activeSection === 'reviews' ? 'bg-gray-100 font-semibold' : ''}`} onClick={() => setActiveSection("reviews")}>
-          <MessageCircle size={18} />
-          Reviews
-        </button>
-        <button className={`flex items-center gap-2 text-left w-full px-3 py-2 rounded-md hover:bg-gray-100 ${activeSection === 'menu' ? 'bg-gray-100 font-semibold' : ''}`} onClick={() => setActiveSection("menu")}>
-          <List size={18} />
-          Menu
-        </button>
-          <button className={`flex items-center gap-2 text-left w-full px-3 py-2 rounded-md hover:bg-gray-100 ${activeSection === 'deals' ? 'bg-gray-100 font-semibold' : ''}`} onClick={() => setActiveSection("deals")}>
-          <Tag size={18} />
-          Deals
-        </button>
+      {/* Mobile Menu Button */}
+      <button
+        className="lg:hidden fixed top-12 left-2 z-50 p-2 bg-primary text-white rounded-md shadow-md border"
+        onClick={() => setIsMobileMenuOpen(true)}
+      >
+        <Menu size={20} />
+      </button>
+
+      {/* Mobile Drawer Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar - Desktop & Mobile Drawer */}
+      <aside className={`
+      w-40 shrink-0 space-y-2 bg-white
+      lg:sticky lg:top-[88px] lg:self-start lg:translate-x-0
+      lg:shadow-none lg:border-none lg:z-auto
+      fixed top-0 left-0 h-full z-50 shadow-lg border-r
+      transform transition-transform duration-300 ease-in-out
+      ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+    `}>
+        {/* Mobile Close Button */}
+        <div className="lg:hidden flex justify-end p-4">
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="p-1 hover:bg-gray-100 rounded-md"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Navigation Items */}
+        <div className="px-2 lg:px-0">
+          {navigationItems.map((item) => (
+            <NavButton
+              key={item.key}
+              item={item}
+              isActive={activeSection === item.key}
+              onClick={() => {
+                setActiveSection(item.key);
+                setIsMobileMenuOpen(false); // Close mobile menu when item is selected
+              }}
+            />
+          ))}
+        </div>
       </aside>
 
       {/* Content */}
-      <div className="flex-1">
+      <div className="flex-1 lg:ml-0 ml-0">
         {activeSection === "info" && (
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -238,7 +289,6 @@ const BusinessProfilePage = () => {
         {activeSection === "deals" && (
           <DealsPage businessId={businessData?._id} />
         )}
-
       </div>
     </div>
   );
