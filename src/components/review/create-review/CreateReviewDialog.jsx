@@ -44,7 +44,7 @@ const CreateReviewDialog = ({ children, business }) => {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>{children}</DialogTrigger>
             <DialogContent
-                className={`min-w-[70vw] 2xl:min-w-[25vw] min-h-[75vh] md:min-h-[50vh] ${success && 'p-0'}`}
+                className={`min-w-[70vw] 2xl:min-w-[25vw] min-h-[75vh] md:min-h-[50vh] max-w-full max-h-screen ${success && 'p-0'} overflow-auto`}
                 closeIconClass={success && 'hidden'}
             >
                 <DialogTitle className="sr-only">Write a Review</DialogTitle>
