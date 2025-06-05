@@ -11,8 +11,8 @@ const BusinessCard = ({
 	reviewCount,
 }) => {
 	return (
-		<div className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm flex h-32 items-stretch">
-			<div className="w-40 h-full bg-gray-100 flex items-center justify-center overflow-hidden">
+		<div className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm flex flex-col md:flex-row min-h-32 items-stretch">
+			<div className="w-full md:w-40 h-full bg-gray-100 flex items-center justify-center overflow-hidden">
 				{imageUrl ? (
 					<img
 						src={imageUrl}
@@ -25,7 +25,7 @@ const BusinessCard = ({
 			</div>
 
 			<div className="flex flex-1 px-6 py-4 gap-6 items-start overflow-hidden">
-        <div className="flex flex-col justify-between w-[55%] overflow-hidden">
+				<div className="flex flex-col justify-between w-[55%] overflow-hidden">
 					<h2 className="text-xl font-semibold text-gray-800 truncate">
 						{name}
 					</h2>
