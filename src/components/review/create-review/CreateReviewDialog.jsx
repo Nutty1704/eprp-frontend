@@ -3,7 +3,6 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/
 import ReviewForm from './ReviewForm';
 import ReviewSuccess from "./ReviewSuccess";
 import { createSuccessMessages as successMessages } from '@/src/config/Review';
-import useReviewStore from '@/src/stores/review-store';
 
 const MESSAGE_DURATION = 5500; // 5.5 seconds
 
@@ -16,7 +15,6 @@ const CreateReviewDialog = ({ children, business }) => {
     const [open, setOpen] = useState(false);
     const [success, setSuccess] = useState(false);
     const [reviewData, setReviewData] = useState(null);
-    const { setResetDeck } = useReviewStore();
 
     const handleSuccess = (formData) => {
         setReviewData(formData);
@@ -30,7 +28,6 @@ const CreateReviewDialog = ({ children, business }) => {
     const handleClose = () => {
         if (success) {
             setSuccess(false);
-            setResetDeck(true);
         }
     }
 

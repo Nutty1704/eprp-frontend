@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import BusinessHeader from '@/src/components/business/business_page/BusinessHeader';
 import { useParams } from 'react-router-dom';
 import BusinessInfoSection from '@/src/components/business/business_page/BusinessInfoSection';
@@ -26,7 +26,7 @@ const BusinessPage = () => {
                 ? <BusinessInfoSection business={business} />
                 : <BusinessInfoSection.Skeleton />
             }
-            <ReviewDeck businessId={id} />
+            <ReviewDeck businessId={id} business={business} />
         </div>
     )
 }

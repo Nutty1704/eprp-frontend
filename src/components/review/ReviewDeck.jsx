@@ -1,21 +1,37 @@
-import { ArrowDownUp, MessageSquareText } from 'lucide-react'
-import React, { useRef, useEffect, useState, useCallback } from 'react'
+import { ArrowDownUp, MessageSquareText, Pen } from 'lucide-react'
+import React, { useRef, useEffect, useState } from 'react'
 import ReviewCard from './ReviewCard'
 import { useReviews } from '@/src/hooks/useReviews'
 import { Skeleton } from '@/components/ui/skeleton'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { SORT_OPTIONS } from '@/src/config/Review'
 import useAuthStore from '@/src/stores/auth-store'
+import { Button } from '@/components/ui/button'
+import CreateReviewDialog from './create-review/CreateReviewDialog'
+import AuthDialog from '../auth/AuthDialog'
 
-const ReviewDeck = ({ businessId }) => {
+
+const ReviewButton = React.forwardRef((props, ref) => (
+    <Button
+        variant='outline'
+        className='flex items-center gap-2'
+        ref={ref}
+        {...props}
+    >
+        <Pen className='w-4 h-4' />
+        Write a review
+    </Button>
+));
+
+const ReviewDeck = ({ businessId, business }) => {
     const [sortOption, setSortOption] = useState(SORT_OPTIONS[0]);
     const loadMoreRef = useRef(null);
     const observerRef = useRef(null);
-    const { user } = useAuthStore();
-    
+    const { isAuthenticated, user } = useAuthStore();
+
     const {
         reviews,
-        isLoading, 
+        isLoading,
         isFetching,
         updateReview,
         error,
@@ -23,13 +39,10 @@ const ReviewDeck = ({ businessId }) => {
         hasMore
     } = useReviews({
         businessId,
-        customerId: !businessId && user ? user._id : undefined, 
+        customerId: !businessId && user ? user._id : undefined,
         sort: sortOption.value,
         infiniteScroll: true
     });
-    
-
-    console.log("Reviews:", reviews);
 
 
     // Setup the intersection observer
@@ -38,10 +51,10 @@ const ReviewDeck = ({ businessId }) => {
         if (observerRef.current) {
             observerRef.current.disconnect();
         }
-        
+
         // Only create a new observer if we have more reviews to load
         if (!hasMore) return;
-        
+
         // Create and store the observer
         observerRef.current = new IntersectionObserver(
             (entries) => {
@@ -53,12 +66,12 @@ const ReviewDeck = ({ businessId }) => {
             },
             { threshold: 0.1 }
         );
-        
+
         // Start observing if we have the element
         if (loadMoreRef.current) {
             observerRef.current.observe(loadMoreRef.current);
         }
-        
+
         // Cleanup on unmount or when dependencies change
         return () => {
             if (observerRef.current) {
@@ -70,7 +83,7 @@ const ReviewDeck = ({ businessId }) => {
     const onLikeChange = (reviewId, isLiked) => {
         const review = reviews.find(review => review._id === reviewId);
         if (!review) return;
-        
+
         updateReview(reviewId, {
             isLiked,
             upvotes: isLiked ? review.upvotes + 1 : review.upvotes - 1
@@ -85,9 +98,9 @@ const ReviewDeck = ({ businessId }) => {
 
 
     return (
-        <div className='bg-primary min-h-[50vh] w-full relative mt-40 flex items-start justify-center pt-10'>
+        <div className='bg-primary min-h-[50vh] md:min-h-[30vh] w-full relative mt-40 flex items-start justify-center pt-10'>
             <div
-                className="absolute -top-32 left-0 w-full h-96 bg-no-repeat bg-cover bg-center"
+                className="absolute -top-32 left-0 w-full h-[20vh] lg:h-96 bg-no-repeat bg-cover bg-center"
                 style={{
                     backgroundImage: "url('/assets/review-wave.svg')",
                 }}
@@ -103,7 +116,7 @@ const ReviewDeck = ({ businessId }) => {
                         </div>
                     </div>
 
-                    <div className='flex items-center justify-end gap-4 lg:pr-20 text-sm inter-medium'>
+                    <div className='flex items-center flex-col md:flex-row-reverse md:justify-between gap-4 lg:pr-20 text-sm inter-medium'>
                         <DropdownMenu>
                             <DropdownMenuTrigger className='flex items-center gap-2 rounded-full bg-slate-200 py-1 px-4 shadow-sm cursor-pointer hover:bg-slate-300'>
                                 <ArrowDownUp className='w-4 h-4' />
@@ -111,7 +124,7 @@ const ReviewDeck = ({ businessId }) => {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                                 {SORT_OPTIONS.map((option) => (
-                                    <DropdownMenuItem 
+                                    <DropdownMenuItem
                                         key={option.label}
                                         onClick={() => setSortOption(option)}
                                         className={sortOption.label === option.label ? 'bg-slate-100 font-medium' : ''}
@@ -122,6 +135,16 @@ const ReviewDeck = ({ businessId }) => {
                                 ))}
                             </DropdownMenuContent>
                         </DropdownMenu>
+
+                        {business && (isAuthenticated ? (
+                            <CreateReviewDialog business={business}>
+                                <ReviewButton />
+                            </CreateReviewDialog>
+                        ) : (
+                            <AuthDialog>
+                                <ReviewButton />
+                            </AuthDialog>
+                        ))}
                     </div>
                 </div>
 
@@ -173,16 +196,16 @@ const ReviewDeck = ({ businessId }) => {
                         Loading more reviews...
                     </div>
                 )}
-                
+
                 {/* Observer target - only render when hasMore is true */}
                 {hasMore && reviews.length > 0 && (
-                    <div 
-                        ref={loadMoreRef} 
+                    <div
+                        ref={loadMoreRef}
                         className="h-10 w-full mt-4"
                         aria-hidden="true"
                     />
                 )}
-                
+
                 {/* End of results message */}
                 {!hasMore && reviews.length > 0 && (
                     <div className='text-sm text-slate-400 mt-6 py-4 text-center'>
