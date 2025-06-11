@@ -37,7 +37,7 @@ A React-based web application for discovering and reviewing restaurants around M
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/Nutty1704/eprp-frontend.git
 cd eprp-frontend
 ```
 
