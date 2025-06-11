@@ -1,0 +1,70 @@
+[
+    {
+      "text": "Amazing food and very friendly service. The ambience was perfect for a cozy dinner.",
+      "foodRating": 5,
+      "serviceRating": 5,
+      "ambienceRating": 4,
+      "rating": 4.67,
+      "upvotes": 12,
+      "customerId": "6617bcfcd1e3a5a8b5fbc111",
+      "businessId": "6617bcfcd1e3a5a8b5fbcaaa",
+      "images": [
+        "https://res.cloudinary.com/demo/image/upload/v1/review/sample1.jpg"
+      ],
+      "createdAt": "2025-04-10T18:24:00.000Z"
+    },
+    {
+      "text": "Food was decent, but service was slow and the music was too loud.",
+      "foodRating": 3,
+      "serviceRating": 2,
+      "ambienceRating": 2,
+      "rating": 2.33,
+      "upvotes": 3,
+      "customerId": "6617bcfcd1e3a5a8b5fbc112",
+      "businessId": "6617bcfcd1e3a5a8b5fbcbbb",
+      "images": [],
+      "createdAt": "2025-04-09T14:10:00.000Z"
+    },
+    {
+      "text": "Absolutely delicious! Would come back just for the dessert. Service was on point too.",
+      "foodRating": 5,
+      "serviceRating": 4,
+      "ambienceRating": 5,
+      "rating": 4.67,
+      "upvotes": 8,
+      "customerId": "6617bcfcd1e3a5a8b5fbc113",
+      "businessId": "6617bcfcd1e3a5a8b5fbcccc",
+      "images": [
+        "https://res.cloudinary.com/demo/image/upload/v1/review/sample2.jpg",
+        "https://res.cloudinary.com/demo/image/upload/v1/review/sample3.jpg"
+      ],
+      "createdAt": "2025-04-07T09:15:00.000Z"
+    },
+    {
+      "text": "Service was excellent but food was underwhelming. Might try again.",
+      "foodRating": 2,
+      "serviceRating": 5,
+      "ambienceRating": 4,
+      "rating": 3.67,
+      "upvotes": 5,
+      "customerId": "6617bcfcd1e3a5a8b5fbc114",
+      "businessId": "6617bcfcd1e3a5a8b5fbcddd",
+      "images": [],
+      "createdAt": "2025-04-04T17:40:00.000Z"
+    },
+    {
+      "text": "Nice place with decent prices. Enjoyed the outdoor seating.",
+      "foodRating": 4,
+      "serviceRating": 4,
+      "ambienceRating": 5,
+      "rating": 4.33,
+      "upvotes": 7,
+      "customerId": "6617bcfcd1e3a5a8b5fbc115",
+      "businessId": "6617bcfcd1e3a5a8b5fbceee",
+      "images": [
+        "https://res.cloudinary.com/demo/image/upload/v1/review/sample4.jpg"
+      ],
+      "createdAt": "2025-04-02T11:30:00.000Z"
+    }
+  ]
+  
