@@ -98,9 +98,9 @@ const ReviewDeck = ({ businessId, business }) => {
 
 
     return (
-        <div className='bg-primary min-h-[50vh] md:min-h-[30vh] w-full relative mt-40 flex items-start justify-center pt-10'>
+        <div className='bg-primary min-h-[50vh] md:min-h-[30vh] w-full relative mt-40 xl:mt-52 flex items-start justify-center pt-10'>
             <div
-                className="absolute -top-32 left-0 w-full h-[20vh] lg:h-96 bg-no-repeat bg-cover bg-center"
+                className="absolute -top-32 2xl:-top-40 left-0 w-full h-[20vh] lg:h-96 2xl:h-[30rem] bg-no-repeat bg-cover bg-center"
                 style={{
                     backgroundImage: "url('/assets/review-wave.svg')",
                 }}
