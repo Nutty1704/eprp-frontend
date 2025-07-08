@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { apiClient } from './api-client';
 import { useState, useEffect } from 'react';
 
-const API_BASE_URL = 'http://localhost:5000/api'; 
+const baseRoute = '/api/business'; 
 
 export const useGetPopularBusinesses = (limit = 6) => {
   const [businesses, setBusinesses] = useState([]);
@@ -13,7 +13,7 @@ export const useGetPopularBusinesses = (limit = 6) => {
       try {
         setIsLoading(true);
         setError(null); 
-        const response = await axios.get(`${API_BASE_URL}/business/popular`, {
+        const response = await apiClient.get(`${baseRoute}/popular`, {
           params: { 
               limit     // Pass limit as query param
             } 
@@ -34,7 +34,7 @@ export const useGetPopularBusinesses = (limit = 6) => {
        try {
         setIsLoading(true);
         setError(null);
-        const response = await axios.get(`${API_BASE_URL}/business/popular`, {
+        const response = await apiClient.get(`${API_BASE_URL}/popular`, {
           params: { limit } 
         });
         setBusinesses(response.data);

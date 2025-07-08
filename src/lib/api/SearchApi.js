@@ -1,44 +1,38 @@
-// SearchApi.js
-import axios from 'axios';
-// 1. Import useCallback from react
 import { useState, useCallback } from 'react';
+import { apiClient } from './api-client';
 
-const API_URL = 'http://localhost:5000/api';
+const baseRoute = '/api/search';
 
-// Configure axios to include credentials
-axios.defaults.withCredentials = true;
 
 /**
  * Custom hook to search for businesses
  */
 export const useSearchBusinesses = () => {
-  // isLoading is still needed by SearchPage and SearchBar
   const [isLoading, setIsLoading] = useState(false);
-  // results and error state within the hook are not directly used by SearchPage,
-  // as it uses the returned data and its own try/catch. We can remove them from return.
 
-  // 2. Wrap the searchBusinesses function definition in useCallback
+  // useCallback to create a stable reference to the function
   const searchBusinesses = useCallback(async (
     searchQuery = '',
     selectedCuisines = '',
     page = 1,
-    pageSize = 10, // Default pageSize defined in the hook
-    sortOption = 'createdAt' // Added sortOption based on SearchPage usage
+    pageSize = 10, // Default pageSize
+    sortOption = 'createdAt' // Default sort option
   ) => {
-    setIsLoading(true); // Set loading true when the search starts
-    console.log(`[useSearchBusinesses] Called with: query='${searchQuery}', cuisines='${selectedCuisines}', page=${page}, pageSize=${pageSize}, sort='${sortOption}'`);
+    setIsLoading(true);
     try {
+      // initialize params
       const queryParams = new URLSearchParams();
       if (searchQuery) queryParams.append('searchQuery', searchQuery);
       if (selectedCuisines) queryParams.append('selectedCuisines', selectedCuisines);
+
+      // add params
       queryParams.append('page', String(page)); // Ensure params are strings
       queryParams.append('pageSize', String(pageSize));
       queryParams.append('sortOption', sortOption);
 
-      console.log(`[useSearchBusinesses] Making API Call: /search?${queryParams.toString()}`);
-      const response = await axios.get(`${API_URL}/search?${queryParams.toString()}`);
-      console.log('[useSearchBusinesses] API Call Success');
-      return response.data; // Return the data directly
+      // make API call
+      const response = await apiClient.get(`${baseRoute}?${queryParams.toString()}`);
+      return response.data;
 
     } catch (err) {
       console.error('[useSearchBusinesses] Error searching businesses:', err);
@@ -46,11 +40,8 @@ export const useSearchBusinesses = () => {
     } finally {
       setIsLoading(false); // Set loading false when search finishes (success or error)
     }
-  // 3. Add an empty dependency array for useCallback.
-  // This means the function reference will be stable and created only once.
-  }, []);
+  }, []); // function reference is stable
 
-  // 4. Return only the stable function and loading state needed by components
   return { searchBusinesses, isLoading };
 };
 
@@ -67,15 +58,14 @@ export const useGetPublicBusinessById = (businessId) => {
   const fetchBusiness = useCallback(async (id = businessId) => {
     if (!id) {
       setIsLoading(false);
-      setBusiness(null); // Ensure state is reset if no id
+      setBusiness(null);
       return null;
     }
 
-    setIsLoading(true); // Set loading before fetch
-    setError(null); // Clear previous errors
+    setIsLoading(true);
+    setError(null);
     try {
-      console.log(`[useGetPublicBusinessById] Fetching business: ${id}`);
-      const response = await axios.get(`${API_URL}/search/business/${id}`);
+      const response = await apiClient.get(`${baseRoute}/business/${id}`);
       setBusiness(response.data);
       return response.data;
     } catch (err) {
@@ -86,9 +76,7 @@ export const useGetPublicBusinessById = (businessId) => {
     } finally {
       setIsLoading(false);
     }
-  // Depend on businessId so the function updates if the ID prop changes
-  }, [businessId]);
+  }, [businessId]); // update fetchBusiness when businessId changes
 
-  // Return the stable function reference along with state
   return { business, isLoading, error, fetchBusiness };
 };

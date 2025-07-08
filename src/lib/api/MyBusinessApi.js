@@ -1,12 +1,9 @@
 import useAuthStore from '@/src/stores/auth-store';
-import axios from 'axios';
+import { apiClient } from './api-client';
 import { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
-const API_URL = 'http://localhost:5000/api';
-
-// Configure axios to include credentials
-axios.defaults.withCredentials = true;
+const baseRoute = '/api';
 
 /**
  * Custom hook to get all businesses for the logged-in owner
@@ -21,7 +18,7 @@ export const useGetMyBusinesses = () => {
     const fetchBusinesses = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get(`${API_URL}/business`);
+        const response = await apiClient.get(`${baseRoute}/business`);
         setBusinesses(response.data);
         setError(null);
       } catch (err) {
@@ -38,7 +35,7 @@ export const useGetMyBusinesses = () => {
   const refetch = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(`${API_URL}/business`);
+      const response = await apiClient.get(`${baseRoute}/business`);
       setBusinesses(response.data);
       setError(null);
     } catch (err) {
@@ -69,7 +66,7 @@ export const useGetBusinessById = (businessId) => {
 
       try {
         setIsLoading(true);
-        const response = await axios.get(`${API_URL}/business/${businessId}`);
+        const response = await apiClient.get(`${baseRoute}/business/${businessId}`);
         setBusiness(response.data);
         setError(null);
       } catch (err) {
@@ -87,7 +84,7 @@ export const useGetBusinessById = (businessId) => {
     if (!businessId) return;
     try {
       setIsLoading(true);
-      const response = await axios.get(`${API_URL}/business/${businessId}`);
+      const response = await apiClient.get(`${baseRoute}/business/${businessId}`);
       setBusiness(response.data);
       setError(null);
     } catch (err) {
@@ -146,7 +143,7 @@ export const useCreateMyBusiness = () => {
         formData = businessData;
       }
 
-      const response = await axios.post(`${API_URL}/business`, formData, {
+      const response = await apiClient.post(`${baseRoute}/business`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -203,7 +200,7 @@ export const useUpdateMyBusiness = (businessId) => {
         formData = businessData;
       }
 
-      const response = await axios.put(`${API_URL}/business/${targetId}`, formData, {
+      const response = await apiClient.put(`${baseRoute}/business/${targetId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -241,7 +238,7 @@ export const useDeleteBusiness = () => {
         throw new Error('Business ID is required');
       }
 
-      const response = await axios.delete(`${API_URL}/business/${businessId}`);
+      const response = await apiClient.delete(`${baseRoute}/business/${businessId}`);
 
       setSuccess(true);
       setError(null);
@@ -266,7 +263,7 @@ export const useBusinessStats = (businessId) => {
       return null;
     }
 
-    const response = await axios.get(`${API_URL}/business/${businessId}/stats`);
+    const response = await apiClient.get(`${baseRoute}/business/${businessId}/stats`);
     return response.data?.data;
   };
 
@@ -303,7 +300,7 @@ export const useGetMyDeals = () => {
   const fetchDeals = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.get(`${API_URL}/deals/my`);
+      const res = await apiClient.get(`${baseRoute}/deals/my`);
       setDeals(res.data);
     } catch (err) {
       console.error("Error fetching deals:", err);
@@ -329,7 +326,7 @@ export const useGetDealsForBusiness = (businessId) => {
 
     try {
       setIsLoading(true);
-      const res = await axios.get(`${API_URL}/deals/business/${businessId}`);
+      const res = await apiClient.get(`${baseRoute}/deals/business/${businessId}`);
       setDeals(res.data);
     } catch (err) {
       console.error("Error fetching business deals:", err);
@@ -350,7 +347,7 @@ export const useGetDealsForBusiness = (businessId) => {
 
 export const useCreateDeal = () => {
   const createDeal = async (dealData) => {
-    const res = await axios.post(`${API_URL}/deals`, dealData);
+    const res = await apiClient.post(`${baseRoute}/deals`, dealData);
     return res.data;
   };
   return { createDeal };
@@ -358,7 +355,7 @@ export const useCreateDeal = () => {
 
 export const useUpdateDeal = () => {
   const updateDeal = async (dealId, updatedData) => {
-    const res = await axios.put(`${API_URL}/deals/${dealId}`, updatedData);
+    const res = await apiClient.put(`${baseRoute}/deals/${dealId}`, updatedData);
     return res.data;
   };
   return { updateDeal };
@@ -366,7 +363,7 @@ export const useUpdateDeal = () => {
 
 export const useDeleteDeal = () => {
   const deleteDeal = async (dealId) => {
-    const res = await axios.delete(`${API_URL}/deals/${dealId}`);
+    const res = await apiClient.delete(`${baseRoute}/deals/${dealId}`);
     return res.data;
   };
   return { deleteDeal };
@@ -374,7 +371,7 @@ export const useDeleteDeal = () => {
 
 export const useGetActivePublicDeals = (limit = 10) => {
   const fetchActivePublicDeals = async () => {
-    const response = await axios.get(`${API_URL}/deals/public/active?limit=${limit}`);
+    const response = await apiClient.get(`${baseRoute}/deals/public/active?limit=${limit}`);
     return response.data;
   };
 

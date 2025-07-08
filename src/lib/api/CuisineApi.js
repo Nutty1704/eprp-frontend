@@ -1,8 +1,7 @@
-// src/lib/api/CuisineApi.js (or add to another API file)
-import axios from 'axios';
 import { useState, useEffect, useCallback } from 'react';
+import { apiClient } from './api-client';
 
-const API_URL = 'http://localhost:5000/api'; // Ensure this matches your setup
+const baseRoute = '/api/cuisines';
 
 export const useGetCuisineSummary = () => {
     const [cuisineSummary, setCuisineSummary] = useState([]);
@@ -13,12 +12,10 @@ export const useGetCuisineSummary = () => {
         setIsLoading(true);
         setError(null);
         try {
-            console.log('[useGetCuisineSummary] Fetching cuisine summary...');
-            const response = await axios.get(`${API_URL}/cuisines/summary`); // Use the new endpoint
+            const response = await apiClient.get(`${baseRoute}/summary`);
             // Map the result slightly for easier use (rename _id to name)
             const mappedData = response.data.map(item => ({ name: item._id, count: item.count }));
             setCuisineSummary(mappedData);
-            console.log('[useGetCuisineSummary] Success:', mappedData);
         } catch (err) {
             console.error('Error fetching cuisine summary:', err);
             setError(err.response?.data?.message || 'Failed to fetch cuisine summary');
