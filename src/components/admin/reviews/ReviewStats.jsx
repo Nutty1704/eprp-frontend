@@ -155,7 +155,7 @@ ReviewStats.Skeleton = () => {
                 <div className="p-6 border-b">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                         {[1, 2, 3, 4].map((_, index) => (
-                            <MetricCard.Skeleton />
+                            <MetricCard.Skeleton key={index} />
                         ))}
                     </div>
 
