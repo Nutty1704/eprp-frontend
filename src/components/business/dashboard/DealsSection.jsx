@@ -38,7 +38,7 @@ const DealsSection = () => {
         }}
         className="w-full" // Removed mt-8, spacing handled by header div now
       >
-        <CarouselContent className="-ml-3 sm:-ml-4">
+        <CarouselContent className="px-4">
           {deals.map((deal) => (
             <CarouselItem
               key={deal._id}
@@ -59,8 +59,8 @@ const DealsSection = () => {
         </CarouselContent>
         {deals.length > 1 && (
              <React.Fragment>
-                <CarouselPrevious className="absolute left-[-15px] min-[500px]:left-[-20px] top-1/2 -translate-y-1/2 hidden min-[500px]:inline-flex z-10 bg-white/80 hover:bg-white" />
-                <CarouselNext className="absolute right-[-15px] min-[500px]:right-[-20px] top-1/2 -translate-y-1/2 hidden min-[500px]:inline-flex z-10 bg-white/80 hover:bg-white" />
+                <CarouselPrevious className="absolute left-[-15px] min-[500px]:left-[-35px] top-1/2 -translate-y-1/2 hidden min-[500px]:inline-flex z-10 bg-white/80 hover:bg-white" />
+                <CarouselNext className="absolute right-[-15px] min-[500px]:right-[-35px] top-1/2 -translate-y-1/2 hidden min-[500px]:inline-flex z-10 bg-white/80 hover:bg-white" />
             </React.Fragment>
         )}
       </Carousel>
@@ -69,7 +69,7 @@ const DealsSection = () => {
 
   return (
     <section className="py-8 sm:py-12 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Inline Section Header */}
         <div className="text-center mb-8 md:mb-10">
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">

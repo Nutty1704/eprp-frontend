@@ -25,11 +25,15 @@ const Dashboard = () => {
           <SearchBar />
         </div>
       </div>
-      <DealsSection/>
 
-      <CuisineSection />
-      
-      <PopularSpots />
+      <div className='max-w-7xl mx-auto'>
+
+        <DealsSection/>
+
+        <CuisineSection />
+        
+        <PopularSpots />
+      </div>
 
     </div>
   );
