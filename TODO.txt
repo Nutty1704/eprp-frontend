@@ -1,5 +1,0 @@
-Add likes for reviews
-Add redirect for cuisines on business page (Done)
-Customer reviews page
-Pagination for reviews
-Fix business form image addition and removal
