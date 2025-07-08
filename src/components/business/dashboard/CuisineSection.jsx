@@ -43,7 +43,7 @@ const CuisineSection = () => {
                 }}
                 className="w-full mt-8" // `mt-8` provides space from the SectionHeader
             >
-                <CarouselContent className="-ml-4"> {/* Negative margin to visually align items with edge padding */}
+                <CarouselContent className="px-4"> {/* Negative margin to visually align items with edge padding */}
                     {cuisineSummary.map((cuisine) => (
                         <CarouselItem
                             key={cuisine.name}
@@ -74,7 +74,7 @@ const CuisineSection = () => {
 
     return (
         <section className="py-8 sm:py-12 px-4 bg-slate-50"> {/* Adjusted vertical padding */}
-            <div className="max-w-6xl mx-auto"> {/* Constrains width and centers content */}
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"> {/* Constrains width and centers content */}
                 <SectionHeader
                     title={<>Browse by <span className='text-primary'>Cuisine</span></>}
                     subtitle='Explore the diverse culinary scene'
