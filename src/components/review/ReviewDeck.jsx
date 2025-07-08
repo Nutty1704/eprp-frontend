@@ -106,7 +106,7 @@ const ReviewDeck = ({ businessId, business }) => {
                 }}
             />
 
-            <div className='shadow-[0_-8px_30px_rgba(0,0,0,0.1)] w-[90%] max-w-[1400px] bg-white rounded-t-[5rem] flex flex-col items-center px-10 py-12 z-10'>
+            <div className='shadow-[0_-8px_30px_rgba(0,0,0,0.1)] w-[90%] max-w-[1400px] bg-white rounded-t-[5rem] flex flex-col items-center px-3 md:px-10 py-12 z-10'>
                 {/* Header */}
                 <div className='flex flex-col gap-8 w-full px-10'>
                     <div className='rubik-bold text-2xl lg:text-4xl flex items-center justify-center py-3 gap-8 lg:gap-32'>
