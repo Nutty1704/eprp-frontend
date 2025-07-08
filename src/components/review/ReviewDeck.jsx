@@ -98,15 +98,15 @@ const ReviewDeck = ({ businessId, business }) => {
 
 
     return (
-        <div className='bg-primary min-h-[50vh] md:min-h-[30vh] w-full relative mt-40 flex items-start justify-center pt-10'>
+        <div className='bg-primary min-h-[50vh] md:min-h-[30vh] w-full relative mt-40 xl:mt-52 flex items-start justify-center pt-10'>
             <div
-                className="absolute -top-32 left-0 w-full h-[20vh] lg:h-96 bg-no-repeat bg-cover bg-center"
+                className="absolute -top-32 2xl:-top-40 left-0 w-full h-[20vh] lg:h-96 2xl:h-[30rem] bg-no-repeat bg-cover bg-center"
                 style={{
                     backgroundImage: "url('/assets/review-wave.svg')",
                 }}
             />
 
-            <div className='shadow-[0_-8px_30px_rgba(0,0,0,0.1)] w-[90%] max-w-[1400px] bg-white rounded-t-[5rem] flex flex-col items-center px-10 py-12 z-10'>
+            <div className='shadow-[0_-8px_30px_rgba(0,0,0,0.1)] w-[90%] max-w-[1400px] bg-white rounded-t-[5rem] flex flex-col items-center px-3 md:px-10 py-12 z-10'>
                 {/* Header */}
                 <div className='flex flex-col gap-8 w-full px-10'>
                     <div className='rubik-bold text-2xl lg:text-4xl flex items-center justify-center py-3 gap-8 lg:gap-32'>

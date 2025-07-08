@@ -25,11 +25,13 @@ const Dashboard = () => {
           <SearchBar />
         </div>
       </div>
-      <DealsSection/>
 
-      <CuisineSection />
-      
-      <PopularSpots />
+
+        <DealsSection/>
+
+        <CuisineSection />
+        
+        <PopularSpots />
 
     </div>
   );

@@ -69,7 +69,7 @@ const ReviewCard = ({
           </span>
         </div>
 
-        <p className="text-gray-700 my-3">{review.text}</p>
+        <p className="text-gray-700 my-3 text-wrap">{review.text}</p>
 
         {/* Review Images */}
         {hasImages && (
