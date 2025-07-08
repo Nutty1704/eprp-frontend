@@ -16,16 +16,23 @@ const DealsSection = () => {
   const nextBtnRef = useRef(null);
 
   useEffect(() => {
-    if (!nextBtnRef || !nextBtnRef.current) return;
+    // Don't start interval if data is still loading or there's an error
+    if (isLoading || error || !deals || deals.length === 0) {
+      return;
+    }
+
+    if (!nextBtnRef || !nextBtnRef.current) {
+      return;
+    }
 
     const scrollInterval = setInterval(() => {
       if (nextBtnRef.current) {
         nextBtnRef.current.click();
       }
-    }, [2000]);
+    }, 2000);
 
     return () => clearInterval(scrollInterval);
-  }, [nextBtnRef]);
+  }, [isLoading, error, deals]);
 
   const renderCarouselContent = () => {
     if (isLoading) {
@@ -44,7 +51,7 @@ const DealsSection = () => {
     const enableLoop = deals.length > itemsPerViewLarge;
     const showCarousel = deals.length >= itemsPerViewLarge;
 
-    
+
     return (
       <>
         <div className={`w-full px-4 justify-center hidden md:${showCarousel ? 'hidden' : 'flex'}`}>

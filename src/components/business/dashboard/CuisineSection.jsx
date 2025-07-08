@@ -15,8 +15,15 @@ const CuisineSection = () => {
     const { cuisineSummary, isLoading, error } = useGetCuisineSummary();
     const nextBtnRef = useRef(null);
 
-    useEffect(() => {
-        if (!nextBtnRef || !nextBtnRef.current) return;
+    useEffect(() => {        
+        // Don't start interval if data is still loading or there's an error
+        if (isLoading || error || !cuisineSummary || cuisineSummary.length === 0) {
+            return;
+        }
+        
+        if (!nextBtnRef || !nextBtnRef.current) {
+            return;
+        }
 
         const scrollInterval = setInterval(() => {
             if (nextBtnRef.current) {
@@ -25,7 +32,7 @@ const CuisineSection = () => {
         }, 2000);
 
         return () => clearInterval(scrollInterval);
-    }, [nextBtnRef]);
+    }, [isLoading, error, cuisineSummary]);
 
     // Helper function to render the main content (loading/error/carousel)
     const renderCarouselContent = () => {
