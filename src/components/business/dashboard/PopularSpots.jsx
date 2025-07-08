@@ -8,7 +8,7 @@ const PopularSpots = () => {
 
   return (
     <section className="py-6 sm:py-8"> {/* Adjusted vertical padding */}
-      <div className="max-w-6xl mx-auto px-4"> {/* Standard container for content */}
+      <div className="max-w-6xl mx-auto px-4 flex flex-col items-center"> {/* Standard container for content */}
         <SectionHeader
           title={<>Browse <span className='text-primary'>Popular Spots</span></>}
           subtitle='Browse top reviewed eating spots in Monash'

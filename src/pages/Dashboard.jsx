@@ -26,14 +26,12 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className='max-w-7xl mx-auto'>
 
         <DealsSection/>
 
         <CuisineSection />
         
         <PopularSpots />
-      </div>
 
     </div>
   );

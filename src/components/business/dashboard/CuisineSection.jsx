@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import SectionHeader from './SectionHeader';
 import CuisineCard from '@/src/components/business/cuisine/CuisineCard';
 import { useGetCuisineSummary } from '@/src/lib/api/CuisineApi';
@@ -13,6 +13,19 @@ import {
 
 const CuisineSection = () => {
     const { cuisineSummary, isLoading, error } = useGetCuisineSummary();
+    const nextBtnRef = useRef(null);
+
+    useEffect(() => {
+        if (!nextBtnRef || !nextBtnRef.current) return;
+
+        const scrollInterval = setInterval(() => {
+            if (nextBtnRef.current) {
+                nextBtnRef.current.click();
+            }
+        }, 2000);
+
+        return () => clearInterval(scrollInterval);
+    }, [nextBtnRef]);
 
     // Helper function to render the main content (loading/error/carousel)
     const renderCarouselContent = () => {
@@ -40,6 +53,7 @@ const CuisineSection = () => {
                 opts={{
                     align: "start",
                     loop: enableLoop,
+                    containScroll: "trimSnaps"
                 }}
                 className="w-full mt-8" // `mt-8` provides space from the SectionHeader
             >
@@ -48,7 +62,7 @@ const CuisineSection = () => {
                         <CarouselItem
                             key={cuisine.name}
                             // This responsive basis is excellent for mobile-friendliness
-                            className="pl-4 basis-1/2 min-[480px]:basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6"
+                            className="pl-4 basis-1/2 min-[480px]:basis-1/3 sm:basis-1/4 md:basis-1/5 3xl:basis-1/6"
                         >
                             <div className="py-1"> {/* Minimal vertical padding for the card itself within the item */}
                                 <CuisineCard
@@ -65,7 +79,10 @@ const CuisineSection = () => {
                 {enableLoop && ( // Or show them always if cuisineSummary.length > items visible at current breakpoint
                     <React.Fragment>
                         <CarouselPrevious className="absolute left-[-18px] sm:left-[-20px] md:left-[-25px] top-1/2 -translate-y-1/2 hidden sm:inline-flex z-10 bg-white/80 hover:bg-white" />
-                        <CarouselNext className="absolute right-[-18px] sm:right-[-20px] md:right-[-25px] top-1/2 -translate-y-1/2 hidden sm:inline-flex z-10 bg-white/80 hover:bg-white" />
+                        <CarouselNext
+                            ref={nextBtnRef}
+                            className="absolute right-[-18px] sm:right-[-20px] md:right-[-25px] top-1/2 -translate-y-1/2 hidden sm:inline-flex z-10 bg-white/80 hover:bg-white"
+                        />
                     </React.Fragment>
                 )}
             </Carousel>
