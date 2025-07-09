@@ -64,16 +64,44 @@ function isOpenNow(openingHours) {
     };
 }
 
+export const OPEN_BADGE_VARIANTS = ['default', 'lighter-larger'];
 
-
-const OpenBadge = ({ openingHours, className = '', showMessage = false, messageClass }) => {
+const OpenBadge = ({
+    openingHours,
+    variant = 'default',
+    className = '',
+    showMessage = false,
+    messageClass 
+}) => {
     const { isOpen, message } = isOpenNow(openingHours);
+
+    if (!OPEN_BADGE_VARIANTS.includes(variant)) {
+        throw new Error(`Invalid variant: ${variant}, expected one of ${OPEN_BADGE_VARIANTS}`);
+    }
+
+    // Define styles based on variant
+    const getVariantStyles = () => {
+        if (variant === 'lighter-larger') {
+            return {
+                open: 'bg-green-100 text-green-800 !px-3 !py-1 !text-sm',
+                closed: 'bg-red-100 text-red-800 !px-3 !py-1 !text-sm'
+            };
+        }
+        
+        // Default variant
+        return {
+            open: 'bg-green-600 text-white',
+            closed: 'bg-red-500 text-white'
+        };
+    };
+
+    const variantStyles = getVariantStyles();
+    const badgeStyles = isOpen ? variantStyles.open : variantStyles.closed;
 
     return (
         <div className={`flex items-center gap-2 ${className}`}>
             <span
-                className={`text-white text-xs font-semibold px-2.5 py-0.5 rounded ${isOpen ? 'bg-green-600' : 'bg-red-500 dark:bg-red-200 dark:text-red-900'
-                    }`}
+                className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${badgeStyles}`}
             >
                 {isOpen ? 'Open' : 'Closed'}
             </span>
@@ -85,7 +113,6 @@ const OpenBadge = ({ openingHours, className = '', showMessage = false, messageC
         </div>
     );
 };
-
 
 OpenBadge.Skeleton = () => {
     return (
