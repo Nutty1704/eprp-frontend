@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/carousel"; // Assuming this is from shadcn/ui
 // Import the hook for fetching deals
 import { useGetActivePublicDeals } from '@/src/lib/api/MyBusinessApi'; // Adjust path as needed, e.g., dealsApi.js or your main api file
+import SectionHeader from './SectionHeader';
 
 const DealsSection = () => {
   // Fetch real data, requesting 10 deals
@@ -119,12 +120,10 @@ const DealsSection = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Inline Section Header */}
         <div className="text-center mb-8 md:mb-10">
-          <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-            Latest <span className="text-red-600">Deals & Offers</span> {/* Assuming text-red-600 is your primary color, adjust if 'text-primary' is configured in Tailwind */}
-          </h2>
-          <p className="mt-3 max-w-2xl mx-auto text-base text-gray-500 sm:mt-4 sm:text-lg">
-            Grab these amazing offers before they&apos;re gone!
-          </p>
+          <SectionHeader
+            title={<>Latest <span className="text-red-600">Deals & Offers</span></>}
+            subtitle='Grab these amazing offers before they&apos;re gone!'
+          />
         </div>
         {renderCarouselContent()}
       </div>
