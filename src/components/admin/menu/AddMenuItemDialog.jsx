@@ -161,7 +161,7 @@ const AddMenuItemDialog = ({ open, onClose, onSave, editItem = null }) => {
           </div>
         </div>
 
-        <DialogFooter>
+        <DialogFooter className={"gap-2.5 md:gap-0"}>
           <Button type="button" variant="outline" onClick={onClose}>
             Cancel
           </Button>

@@ -98,15 +98,19 @@ const ReviewDeck = ({ businessId, business }) => {
 
 
     return (
-        <div className='bg-primary min-h-[50vh] md:min-h-[30vh] w-full relative mt-40 xl:mt-52 flex items-start justify-center pt-10'>
+        <div className='md:bg-primary min-h-[50vh] md:min-h-[30vh] w-full relative md:mt-40 xl:mt-52 flex items-start justify-center pt-10'>
             <div
-                className="absolute -top-32 2xl:-top-40 left-0 w-full h-[20vh] lg:h-96 2xl:h-[30rem] bg-no-repeat bg-cover bg-center"
+                className="hidden md:block absolute -top-32 2xl:-top-40 left-0 w-full h-[20vh] lg:h-96 2xl:h-[30rem] bg-no-repeat bg-cover bg-center"
                 style={{
                     backgroundImage: "url('/assets/review-wave.svg')",
                 }}
             />
 
-            <div className='shadow-[0_-8px_30px_rgba(0,0,0,0.1)] w-[90%] max-w-[1400px] bg-white rounded-t-[5rem] flex flex-col items-center px-3 md:px-10 py-12 z-10'>
+            <div
+                className='md:hidden absolute top-12 w-2/3 bg-primary h-0.5 z-20 left-1/2 -translate-x-1/2'
+            />
+
+            <div className='md:shadow-[0_-8px_30px_rgba(0,0,0,0.1)] w-full md:w-[90%] max-w-[1400px] bg-white rounded-t-[5rem] flex flex-col items-center px-3 md:px-10 py-12 z-10'>
                 {/* Header */}
                 <div className='flex flex-col gap-8 w-full px-10'>
                     <div className='rubik-bold text-2xl lg:text-4xl flex items-center justify-center py-3 gap-8 lg:gap-32'>
@@ -116,7 +120,7 @@ const ReviewDeck = ({ businessId, business }) => {
                         </div>
                     </div>
 
-                    <div className='flex items-center flex-col md:flex-row-reverse md:justify-between gap-4 lg:pr-20 text-sm inter-medium'>
+                    <div className='flex items-center flex-row-reverse justify-between gap-4 lg:pr-20 text-sm inter-medium'>
                         <DropdownMenu>
                             <DropdownMenuTrigger className='flex items-center gap-2 rounded-full bg-slate-200 py-1 px-4 shadow-sm cursor-pointer hover:bg-slate-300'>
                                 <ArrowDownUp className='w-4 h-4' />
@@ -169,7 +173,7 @@ const ReviewDeck = ({ businessId, business }) => {
 
                 {/* Reviews */}
                 {!isLoading && !error && (
-                    <div className='flex flex-col items-center gap-y-4 gap-8 mt-8 w-full'>
+                    <div className='flex flex-col items-center gap-0 md:gap-4 mt-8 w-full'>
                         {reviews.length === 0 ? (
                             <div className='col-span-full text-center py-12 text-slate-500'>
                                 {businessId ? (

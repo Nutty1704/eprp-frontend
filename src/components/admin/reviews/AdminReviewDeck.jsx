@@ -32,7 +32,7 @@ const AdminReviewDeck = ({ businessId, reviewsPerPage = 5 }) => {
     });
 
     return (
-        <Card className="shadow-md w-full">
+        <Card className="shadow-md w-full max-w-[100dvw]">
             <CardHeader className="bg-gray-50 border-b pb-4">
                 <div className="flex justify-between items-center">
                     <CardTitle className="text-xl font-bold">

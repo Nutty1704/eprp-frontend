@@ -182,7 +182,7 @@ const BusinessProfilePage = () => {
   }
 
   return (
-    <div className="flex gap-6 px-4 sm:px-6 py-6 container mx-auto">
+    <div className="flex gap-6 px-0 sm:px-6 py-6 container mx-auto">
       {/* Mobile Menu Button */}
       <button
         className="lg:hidden fixed top-12 left-2 z-50 p-2 bg-primary text-white rounded-md shadow-md border"

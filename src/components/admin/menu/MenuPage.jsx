@@ -189,7 +189,7 @@ const MenuPage = ({ businessId }) => {
             </DialogDescription>
           </DialogHeader>
 
-          <DialogFooter>
+          <DialogFooter className="gap-2.5 md:gap-0">
             <DialogClose asChild>
               <Button variant="outline">
                 Cancel

@@ -54,7 +54,7 @@ const ReviewCard = ({
   }
 
   return (
-    <div className="bg-slate-100 rounded-lg shadow-md mb-4 max-w-6xl w-full inter-regular overflow-hidden">
+    <div className="bg-transparent shadow-md md:border-none md:bg-slate-100 rounded-lg md:shadow-md mb-4 max-w-6xl w-full inter-regular overflow-hidden">
       <div className="p-4 pb-0">
         <div className="flex justify-between items-center mb-2 w-full">
           <div className='flex items-center min-w-1/2 justify-between gap-3'>
@@ -121,7 +121,7 @@ const ReviewCard = ({
 
       {/* Owner's Response */}
       {review.response && (
-        <div className="bg-blue-50 border-l-4 border-primary mt-4">
+        <div className="bg-slate-50 md:bg-blue-50 border-l-4 border-primary mt-4">
           <div className="p-4">
             <div className="flex items-center mb-2">
               <User className="h-5 w-5 text-primary mr-2" />
