@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Star, MapPin, UsersRound } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import OpenBadge from './OpenBadge';
-import { reviewIcons } from '@/src/config/Icons.jsx'
+import { getCuisineLabel } from '@/src/lib/utils';
 
 const formatReviewCount = (count) => {
     if (count >= 500) {
@@ -76,7 +76,7 @@ const RestaurantCard = ({
                                 className="px-3 py-1 bg-red-50 text-red-600 rounded-full text-xs font-medium capitalize transition-colors duration-200 hover:bg-red-100"
                                 style={{ backgroundColor: 'hsl(0 72.2% 50.6% / 0.1)', color: 'hsl(0 72.2% 50.6%)' }}
                             >
-                                {cuisine}
+                                { getCuisineLabel(cuisine) }
                             </span>
                         ))}
                         {business.cuisines.length > 3 && (

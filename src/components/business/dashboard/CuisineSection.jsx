@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import SectionHeader from './SectionHeader';
 import CuisineCard from '@/src/components/business/cuisine/CuisineCard';
 import { useGetCuisineSummary } from '@/src/lib/api/CuisineApi';
-
+import { getCuisineLabel } from '@/src/lib/utils';
 import {
     Carousel,
     CarouselContent,
     CarouselItem,
     CarouselPrevious,
     CarouselNext,
-} from "@/components/ui/carousel"; // Assuming this is from shadcn/ui or similar
+} from "@/components/ui/carousel";
 
 const CuisineSection = () => {
     const { cuisineSummary, isLoading, error } = useGetCuisineSummary();
@@ -29,7 +29,7 @@ const CuisineSection = () => {
             if (nextBtnRef.current) {
                 nextBtnRef.current.click();
             }
-        }, 2000);
+        }, 2500);
 
         return () => clearInterval(scrollInterval);
     }, [isLoading, error, cuisineSummary]);
@@ -73,7 +73,8 @@ const CuisineSection = () => {
                         >
                             <div className="py-1"> {/* Minimal vertical padding for the card itself within the item */}
                                 <CuisineCard
-                                    name={cuisine.name}
+                                    id={cuisine.name}
+                                    name={getCuisineLabel(cuisine.name)}
                                     spots={cuisine.count}
                                     image={`/assets/cuisines/${cuisine.name.toLowerCase()}.jpg`}
                                     // Ensure CuisineCard itself is responsive (image, text sizes)

@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import React from 'react'
 import Hours from '../Hours'
 import { Link } from 'react-router-dom'
+import { getCuisineLabel } from '@/src/lib/utils'
 
 const CuisineBadge = ({ cuisine }) => {
   const encodedCuisineName = encodeURIComponent(cuisine);
@@ -9,7 +10,7 @@ const CuisineBadge = ({ cuisine }) => {
   return (
     <Link to={`/search?selectedCuisines=${encodedCuisineName}`}>
         <span className='rounded-full bg-gray-100 shadow-sm px-2 py-1 cursor-pointer hover:bg-gray-200 text-gray-600'>
-            {cuisine}
+            {getCuisineLabel(cuisine)}
         </span>
     </Link>
   )

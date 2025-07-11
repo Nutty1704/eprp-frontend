@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-const CuisineCard = ({ name, spots, image }) => {
+const CuisineCard = ({ id, name, spots, image }) => {
 
-  const encodedCuisineName = encodeURIComponent(name);
+  const encodedCuisineName = encodeURIComponent(id);
 
   return (
     <Link 
